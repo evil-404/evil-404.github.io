@@ -1940,7 +1940,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #d590ff;
+  background: #2a2a5c;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3172,35 +3172,35 @@ body {
   background: rgba(241,241,241,0.9) none repeat scroll !important;
 }
 code {
-  background: rgba(241,241,241,0.9);
+  background: rgba(241,241,241,0.15);
   margin: 2px;
 }
 .highlight {
-  background: rgba(241,241,241,0.3);
+  background: rgba(241,241,241,0.7);
 }
 .highlight,
 pre {
   margin: 5px 0;
   padding: 5px;
   border-radius: 3px;
-  background: rgba(241,241,241,0.3);
+  background: rgba(241,241,241,0.7);
 }
 .highlight,
 td {
-  background: rgba(241,241,241,0.1);
+  background: rgba(241,241,241,0.7);
 }
 .highlight,
 gutter pre {
-  background: rgba(241,241,241,0.1);
+  background: rgba(241,241,241,0.7);
 }
 .highlight,
 code,
 pre {
   border: 1px solid #d6d6d6;
-  background: rgba(241,241,241,0.3);
+  background: rgba(241,241,241,0.7);
 }
 table>tbody>tr:nth-of-type(odd) {
-  background: rgba(241,241,241,0.1);
+  background: rgba(241,241,241,0.7);
 }
 .menu {
   text-align: center;
@@ -3210,6 +3210,11 @@ table>tbody>tr:nth-of-type(odd) {
 }
 .menu .menu-item {
   margin: 5px 15px;
+}
+.post-body a {
+  color: #507382;
+  border-bottom: none;
+  text-decoration: underline;
 }
 .menu .menu-item a {
   font-size: 15px;
