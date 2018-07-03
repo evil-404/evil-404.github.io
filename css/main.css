@@ -1940,7 +1940,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2b45fa;
+  background: #4e9dff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3157,7 +3157,7 @@ hr {
   }
 }
 body {
-  background: url("https://ws1.sinaimg.cn/large/baeae4e0gy1fsvidnyridj21hc0u0hdu.jpg");
+  background: url("https://ws1.sinaimg.cn/large/baeae4e0gy1fsvr55ktqwj22p81h24qp.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
