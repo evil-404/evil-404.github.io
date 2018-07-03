@@ -87,13 +87,13 @@
 
 
 
-<meta name="description" content="0x01 开始之前,有必要先稍微理解下基于dns beacon的大致通信过程,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 [DNS 深度理解 一] ,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了123-&amp;gt; beacon shell会向指定的域名发起正常的dns查询  -&amp;gt; 中间依然是经过一些列的常规dns迭代及递归查询,">
+<meta name="description" content="0x01 开始之前,有必要先稍微理解下基于dns beacon的大致通信过程,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 [DNS 深度理解 一] ,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了 123-&amp;gt; beacon shell会向指定的域名发起正常的dns查询  -&amp;gt; 中间依然是经过一些列的常规dns迭代及递归查询">
 <meta name="keywords" content="DNS隧道">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对 Cobalt Strike DNS隧道的理解与实战">
 <meta property="og:url" content="https://evil-404.github.io/2017-12-29-cobalt-strike-dns.html">
 <meta property="og:site_name" content="Evil-404">
-<meta property="og:description" content="0x01 开始之前,有必要先稍微理解下基于dns beacon的大致通信过程,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 [DNS 深度理解 一] ,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了123-&amp;gt; beacon shell会向指定的域名发起正常的dns查询  -&amp;gt; 中间依然是经过一些列的常规dns迭代及递归查询,">
+<meta property="og:description" content="0x01 开始之前,有必要先稍微理解下基于dns beacon的大致通信过程,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 [DNS 深度理解 一] ,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了 123-&amp;gt; beacon shell会向指定的域名发起正常的dns查询  -&amp;gt; 中间依然是经过一些列的常规dns迭代及递归查询">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://evil-404.github.io/img/vps%20demo.png">
 <meta property="og:image" content="https://evil-404.github.io/img/vps%20demo%20jdk.png">
@@ -104,10 +104,10 @@
 <meta property="og:image" content="https://evil-404.github.io/img/DNS%20tunnel%20payload%20exe%20res%20online.png">
 <meta property="og:image" content="https://evil-404.github.io/img/DNS%20tunnel%20payload%20wirehsark.png">
 <meta property="og:image" content="https://evil-404.github.io/img/DNS%20tunnel%20payload%20exe%20res.png">
-<meta property="og:updated_time" content="2018-07-01T13:24:32.000Z">
+<meta property="og:updated_time" content="2018-07-03T05:52:51.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对 Cobalt Strike DNS隧道的理解与实战">
-<meta name="twitter:description" content="0x01 开始之前,有必要先稍微理解下基于dns beacon的大致通信过程,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 [DNS 深度理解 一] ,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了123-&amp;gt; beacon shell会向指定的域名发起正常的dns查询  -&amp;gt; 中间依然是经过一些列的常规dns迭代及递归查询,">
+<meta name="twitter:description" content="0x01 开始之前,有必要先稍微理解下基于dns beacon的大致通信过程,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 [DNS 深度理解 一] ,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了 123-&amp;gt; beacon shell会向指定的域名发起正常的dns查询  -&amp;gt; 中间依然是经过一些列的常规dns迭代及递归查询">
 <meta name="twitter:image" content="https://evil-404.github.io/img/vps%20demo.png">
 
 
@@ -364,8 +364,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-01T21:24:32+08:00">
-                2018-07-01
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-03T13:52:51+08:00">
+                2018-07-03
               </time>
             
           </span>
@@ -454,7 +454,8 @@
       
 
       
-        <p>0x01 开始之前,有必要先稍微理解下基于<code>dns beacon的大致通信过程</code>,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 <a href="https://evil-404.github.io/2017/12/12/Dns-tips/">[DNS 深度理解 一] </a>,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-&gt; beacon shell会向指定的域名发起正常的dns查询</span><br><span class="line">  -&gt; 中间依然是经过一些列的常规dns迭代及递归查询,大致过程就是,一直从根开始找,直到找到我们自己的ns服务器,最后再定位到团队服务器ip,仅此而已</span><br><span class="line">    -&gt; 也就是说,第一次通信可能会慢点,后续就会稍微快些,不过说实话,dns再快也快不到哪里去,毕竟,我们要的是足够的隐蔽,而不一味追求速度,不然容易露点</span><br></pre></td></tr></table></figure></p>
+        <p>0x01 开始之前,有必要先稍微理解下基于<code>dns beacon的大致通信过程</code>,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 <a href="https://evil-404.github.io/2017-12-12-Dns-tips.html">[DNS 深度理解 一] </a>,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-&gt; beacon shell会向指定的域名发起正常的dns查询</span><br><span class="line">  -&gt; 中间依然是经过一些列的常规dns迭代及递归查询,大致过程就是,一直从根开始找,直到找到我们自己的ns服务器,最后再定位到团队服务器ip,仅此而已</span><br><span class="line">    -&gt; 也就是说,第一次通信可能会慢点,后续就会稍微快些,不过说实话,dns再快也快不到哪里去,毕竟,我们要的是足够的隐蔽,而不一味追求速度,不然容易露点</span><br></pre></td></tr></table></figure>
 <p>0x02 废话说完,我们就开始来尝试在实战中应用,首先,你要先买台<code>vps</code>,亚马逊或者<code>vultr</code>都挺不错的,自己也一直在用,之后装好系统,推荐用<code>ubuntu</code>,此处演示用的是<code>ubuntu 16.04.2</code>,具体的系统安装方法直接一路点点点就好了,全程傻瓜化,大概等个六七分钟,待系统初始化完成就可以用ssh连上去了<br><a id="more"></a><br><img src="/img/vps demo.png" alt=""></p>
 <p>0x03 成功连到vps上以后,接着就开始配置jdk,关于对jdk版本的选择需要稍微注意下,<code>jdk版本和cobalt strike版本务必要保持兼容</code>,因为演示的用的是<code>cobalt strike 3.8</code>,所以此处就用的<code>jdk1.8</code>,如下,则是jdk在Ubuntu中的具体配置过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget http://enos.itcollege.ee/~jpoial/allalaadimised/jdk8/jdk-8u152-linux-x64.tar.gz</span><br><span class="line">tar xf jdk-8u152-linux-x64.tar.gz</span><br><span class="line">mv jdk1.8.0_152/ /usr/local/</span><br><span class="line">ln -s /usr/local/jdk1.8.0_152/ /usr/local/jdk</span><br><span class="line"># vi /etc/profile</span><br><span class="line">  export JAVA_HOME=/usr/local/jdk/ </span><br><span class="line">  export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH </span><br><span class="line">  export CLASSPATH=.$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar</span><br><span class="line"># source /etc/profile</span><br><span class="line"># java -version</span><br></pre></td></tr></table></figure></p>
 <p><img src="/img/vps demo jdk.png" alt=""></p>
@@ -524,8 +525,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017-12-29-cobalt-strike-spawn.html" rel="next" title="灵活使用 cobalt strike 的 `spawn` 功能">
-                <i class="fa fa-chevron-left"></i> 灵活使用 cobalt strike 的 `spawn` 功能
+              <a href="/2017-12-27-powershell-pic-execute.html" rel="next" title="通过图片免杀执行远程powershell代码">
+                <i class="fa fa-chevron-left"></i> 通过图片免杀执行远程powershell代码
               </a>
             
           </div>
@@ -533,6 +534,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017-12-29-cobalt-strike-spawn.html" rel="prev" title="灵活使用 cobalt strike 的 `spawn` 功能">
+                灵活使用 cobalt strike 的 `spawn` 功能 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
