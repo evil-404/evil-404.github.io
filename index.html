@@ -12,6 +12,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://evil-404.github.io/"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+
 
   
   
@@ -309,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-12-29-cobalt-strike-dns.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2018-07-03-kali-linxu.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Evil-404">
@@ -328,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-12-29-cobalt-strike-dns.html" itemprop="url">对 Cobalt Strike DNS隧道的理解与实战</a></h1>
+                <a class="post-title-link" href="/2018-07-03-kali-linxu.html" itemprop="url">kali-linxu折腾记</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +355,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-29T04:09:17+08:00">
-                2017-12-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T15:57:44+08:00">
+                2018-07-03
               </time>
             
 
@@ -356,7 +371,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-03T13:52:51+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-03T16:37:30+08:00">
                 2018-07-03
               </time>
             
@@ -378,8 +393,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DNS隧道/" itemprop="url" rel="index">
-                    <span itemprop="name">DNS隧道</span>
+                  <a href="/categories/kali/" itemprop="url" rel="index">
+                    <span itemprop="name">kali</span>
                   </a>
                 </span>
 
@@ -409,7 +424,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,361
+                  12,348
                 </span>
               
 
@@ -425,7 +440,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  49
                 </span>
               
             </div>
@@ -447,12 +462,10 @@
 
       
         
-          <p>0x01 开始之前,有必要先稍微理解下基于<code>dns beacon的大致通信过程</code>,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 <a href="https://evil-404.github.io/2017-12-12-Dns-tips.html">[DNS 深度理解 一] </a>,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-&gt; beacon shell会向指定的域名发起正常的dns查询</span><br><span class="line">  -&gt; 中间依然是经过一些列的常规dns迭代及递归查询,大致过程就是,一直从根开始找,直到找到我们自己的ns服务器,最后再定位到团队服务器ip,仅此而已</span><br><span class="line">    -&gt; 也就是说,第一次通信可能会慢点,后续就会稍微快些,不过说实话,dns再快也快不到哪里去,毕竟,我们要的是足够的隐蔽,而不一味追求速度,不然容易露点</span><br></pre></td></tr></table></figure>
-<p>0x02 废话说完,我们就开始来尝试在实战中应用,首先,你要先买台<code>vps</code>,亚马逊或者<code>vultr</code>都挺不错的,自己也一直在用,之后装好系统,推荐用<code>ubuntu</code>,此处演示用的是<code>ubuntu 16.04.2</code>,具体的系统安装方法直接一路点点点就好了,全程傻瓜化,大概等个六七分钟,待系统初始化完成就可以用ssh连上去了<br>
+          <h1 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h1><p><strong>该篇文章需要密码访问</strong></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-12-29-cobalt-strike-dns.html#more" rel="contents">
+            <a class="btn" href="/2018-07-03-kali-linxu.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -646,6 +659,201 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017-12-29-cobalt-strike-spawn.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-12-29-cobalt-strike-dns.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017-12-29-cobalt-strike-dns.html" itemprop="url">对 Cobalt Strike DNS隧道的理解与实战</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-29T04:09:17+08:00">
+                2017-12-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-03T13:52:51+08:00">
+                2018-07-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNS隧道/" itemprop="url" rel="index">
+                    <span itemprop="name">DNS隧道</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,361
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 开始之前,有必要先稍微理解下基于<code>dns beacon的大致通信过程</code>,其实,非常非常简单,前提是你对dns的解析过程早已经烂透于心,不熟悉的朋友可以先去参考前段时间写的 <a href="https://evil-404.github.io/2017-12-12-Dns-tips.html">[DNS 深度理解 一] </a>,把基础打扎实了,再回过头来理解这些东西自然就易如反掌了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-&gt; beacon shell会向指定的域名发起正常的dns查询</span><br><span class="line">  -&gt; 中间依然是经过一些列的常规dns迭代及递归查询,大致过程就是,一直从根开始找,直到找到我们自己的ns服务器,最后再定位到团队服务器ip,仅此而已</span><br><span class="line">    -&gt; 也就是说,第一次通信可能会慢点,后续就会稍微快些,不过说实话,dns再快也快不到哪里去,毕竟,我们要的是足够的隐蔽,而不一味追求速度,不然容易露点</span><br></pre></td></tr></table></figure>
+<p>0x02 废话说完,我们就开始来尝试在实战中应用,首先,你要先买台<code>vps</code>,亚马逊或者<code>vultr</code>都挺不错的,自己也一直在用,之后装好系统,推荐用<code>ubuntu</code>,此处演示用的是<code>ubuntu 16.04.2</code>,具体的系统安装方法直接一路点点点就好了,全程傻瓜化,大概等个六七分钟,待系统初始化完成就可以用ssh连上去了<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017-12-29-cobalt-strike-dns.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2045,203 +2253,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-12-13-samba-sec.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017-12-13-samba-sec.html" itemprop="url">跨平台快速文件共享 Samba</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T04:09:17+08:00">
-                2017-12-13
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:39:56+08:00">
-                2017-12-30
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Samba/" itemprop="url" rel="index">
-                    <span itemprop="name">Samba</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,427
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>0x01 关于smaba<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">主要用于实现不同系统平台间的文件共享,配置非常简单,轻量,适合用于常规办公内网环境中</span><br><span class="line">linux &lt;==&gt; windows &lt;==&gt; unix</span><br></pre></td></tr></table></figure></p>
-<p>此次演示环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CentOS6.9 x86_64	ip:192.168.3.55 samba服务器</span><br><span class="line">CentOS6.9 x86_64	ip:192.168.3.57 用来模拟smb客户端进行访问测试</span><br></pre></td></tr></table></figure></p>
-<p>0x02 samba服务默认所监听的端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">137/udp,138/udp nmb 进程提供netbios解析,以满足基于 CIFS 协议的共享访问环境</span><br><span class="line">138/tcp,445/tcp smb 进程主要为客户端提供文件共享,打印机服务以及用户权限验证</span><br></pre></td></tr></table></figure></p>
-<p>0x03 使用samba客户端工具 <code>smbclient</code>,其实有些类似于ftp的客户端工具,也是一种交互式的访问</p>
-<p><code>在linux下使用smbclient访问windows中的共享目录</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># smbclient -L 192.168.3.23 -U administrator</span><br><span class="line"># smbclient //192.168.3.23/linux_dir -U dcadmin</span><br><span class="line"># mount -t cifs //192.168.3.23/linux_dir /mnt/windows/ -o username=dcadmin 注意,此处要使用cifs协议进行挂载</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017-12-13-samba-sec.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2296,7 +2307,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">156</span>
+                  <span class="site-state-item-count">157</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2307,7 +2318,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">111</span>
+                  <span class="site-state-item-count">112</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2454,7 +2465,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共284.8k字</span>
+  <span class="post-count">博客全站共297.2k字</span>
 </div>
 
   
