@@ -110,7 +110,7 @@
 <meta property="og:site_name" content="Evil-404">
 <meta property="og:description" content="环境说明该篇文章需要密码访问">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-03T09:05:34.770Z">
+<meta property="og:updated_time" content="2018-07-04T03:27:04.215Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kali-linxu折腾记">
 <meta name="twitter:description" content="环境说明该篇文章需要密码访问">
@@ -369,8 +369,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-03T17:05:34+08:00">
-                2018-07-03
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-04T11:27:04+08:00">
+                2018-07-04
               </time>
             
           </span>
@@ -465,16 +465,16 @@
 <p>Kali Linux 版本：2017.1 amd64。注：<a href="http://docs.kali.org/policy/kali-linux-relationship-with-debian" target="_blank" rel="noopener">Kali Linux 2017.1 基于 debian 的 stretch 版本</a>，因此在安装时常见问题可以参考 debian 系的通用解决方法。</p>
 <h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><p>这里没什么好说的，但要注意几个点：</p>
 <ul>
-<li><p>进入安装前安装引导选项的选择。出现引导界面进行安装时，不要选择 Advance Options 中的快速安装选项，虽然需要配置的地方很少，但是一个蛋疼的问题是安装后无法登录，因为不知道设置的 root 初始密码是多少（尝试了虚拟镜像下的默认密码 “toor” 但是提示错误了）。虽然可以<a href="https://secretwiki.org/2017/05/30/kali-install/#root-pass-rec" target="_blank" rel="noopener">通过单用户模式进行修复</a>，但是终归是比较烦心的事情。</p>
+<li><p>进入安装前安装引导选项的选择。出现引导界面进行安装时，不要选择 Advance Options 中的快速安装选项，虽然需要配置的地方很少，但是一个蛋疼的问题是安装后无法登录，因为不知道设置的 root 初始密码是多少（尝试了虚拟镜像下的默认密码 “toor” 但是提示错误了）。虽然可以<a href="/2018-07-03-kali-linxu.html#root-pass-rec">通过单用户模式进行修复</a>，但是终归是比较烦心的事情。</p>
 </li>
 <li><p>多硬盘环境下的硬盘选择。安装时选择安装到第一个硬盘，也就是在 BIOS 中第一个被识别的硬盘上。之前尝试过将硬盘拆下来分别安装系统，然后在系统启动时，在 BIOS 中选择不同硬盘进行引导，当时将 kali 安装在第二块硬盘上(原来光驱位置的 hdd 硬盘)，第一块硬盘(ssd)安装的 Windows 系统，发现在没有装回 ssd 时，kali 系统能够正常引导，但在将 ssd 装回电脑后，kali 系统死活就起不来了。摸索了几次后，决定直接将硬盘都装回电脑上，然后将 Kali 安装在第一块硬盘上，不考虑双系统的方案了。这里如果有朋友有研究的话，还请不吝赐教。关于这里的原因，参考了《鸟哥的 Linux 私房菜》,里面对于多硬盘主机的 Linux 安装有这样一段描述（《鸟哥的 Linux 私房菜 基础学习篇（第三版）》 4.4.2 章节，105 页）。</p>
 <blockquote>
 <p>因为 SATA 硬盘的设备文件名是利用检测的顺序来决定的，所以你如果这样调整来调整去的话，你的 SATA 设备文件名可能会产生不同，这对于 Linux 的运行会有问题，因此如果这样随时调整 BIOS 时，可能还是会造成无法开机成功的问题。</p>
 </blockquote>
 </li>
-<li><p>安装时语言的选择。安装时选择语言使用 English，否则安装完成后用户目录下的文件夹会变成中文（例如 Desktop 显示为“桌面”），不方便命令行操作。当然，如果不小心设置了中文，在实际使用时用户名下的目录名称又希望能以英文显示，可以<a href="https://secretwiki.org/2017/05/30/kali-install/#chg-dir-lang" target="_blank" rel="noopener">修改配置文件</a>进行调整。</p>
+<li><p>安装时语言的选择。安装时选择语言使用 English，否则安装完成后用户目录下的文件夹会变成中文（例如 Desktop 显示为“桌面”），不方便命令行操作。当然，如果不小心设置了中文，在实际使用时用户名下的目录名称又希望能以英文显示，可以<a href="/2018-07-03-kali-linxu.html#chg-dir-lang">修改配置文件</a>进行调整。</p>
 </li>
-<li><p>在安装时连接网络。在提示选择网络时，选择正确的网络，若都不进行配置，安装完成后在系统源中会没有任何一个源地址，也就是说 apt-get 无法获取网络源的最新软件包等信息。若安装时确实没有选择网络，那么可以<a href="https://secretwiki.org/2017/05/30/kali-install/#add-kali-src" target="_blank" rel="noopener">手动添加 kali 更新源</a>。</p>
+<li><p>在安装时连接网络。在提示选择网络时，选择正确的网络，若都不进行配置，安装完成后在系统源中会没有任何一个源地址，也就是说 apt-get 无法获取网络源的最新软件包等信息。若安装时确实没有选择网络，那么可以<a href="/2018-07-03-kali-linxu.html#add-kali-src">手动添加 kali 更新源</a>。</p>
 </li>
 </ul>
 <h1 id="安装后的配置–系统篇"><a href="#安装后的配置–系统篇" class="headerlink" title="安装后的配置–系统篇"></a>安装后的配置–系统篇</h1><h2 id="更新-Kali-Linux-中的软件包"><a href="#更新-Kali-Linux-中的软件包" class="headerlink" title="更新 Kali Linux 中的软件包"></a>更新 Kali Linux 中的软件包</h2><ol>
@@ -499,7 +499,7 @@
 <p><strong>Oh no! Something has gone wrong.</strong><br>A Problem has occurred and the system can’t recover. Please log out and try again.</p>
 </blockquote>
 <p>选择 Logout 选项，会尝试重新加载系统，但是仍旧会再次出现此报错页面，无法进入系统。</p>
-<p>如果不幸遇到了这个问题，可以参考 <a href="https://www.quora.com/" target="_blank" rel="noopener">quora</a> 上 <a href="https://www.quora.com/profile/Patrick-Himebaugh" target="_blank" rel="noopener">Patrick Himebaugh</a> 在问题 <a href="https://www.quora.com/How-can-I-fix-the-error-%E2%80%9Csomething-has-gone-wrong%E2%80%9D-on-Kali-Linux" target="_blank" rel="noopener">How can I fix the error “something has gone wrong” on Kali Linux?</a> 下的回答。如果遇到网址打不开的情况，也可以参考本文后的<a href="https://secretwiki.org/2017/05/30/kali-install/#restore-nvidia-driver-failure" target="_blank" rel="noopener">修复方法</a>。</p>
+<p>如果不幸遇到了这个问题，可以参考 <a href="https://www.quora.com/" target="_blank" rel="noopener">quora</a> 上 <a href="https://www.quora.com/profile/Patrick-Himebaugh" target="_blank" rel="noopener">Patrick Himebaugh</a> 在问题 <a href="https://www.quora.com/How-can-I-fix-the-error-%E2%80%9Csomething-has-gone-wrong%E2%80%9D-on-Kali-Linux" target="_blank" rel="noopener">How can I fix the error “something has gone wrong” on Kali Linux?</a> 下的回答。如果遇到网址打不开的情况，也可以参考本文后的<a href="/2018-07-03-kali-linxu.html#restore-nvidia-driver-failure">修复方法</a>。</p>
 <p>经过测试，双显卡(intel + Nvidia)电脑可用的安装方法可以参考<a href="https://forums.kali.org/" target="_blank" rel="noopener"> kali 论坛</a>中 <a href="https://forums.kali.org/member.php?53670-TiGER511&amp;s=a28e0da34524974831d0d68c86758975" target="_blank" rel="noopener">TiGER511</a> 推荐的 <a href="https://forums.kali.org/showthread.php?35748-TUTORIAL-Installing-official-NVIDIA-driver-in-Optimus-laptop" target="_blank" rel="noopener">Installing official NVIDIA driver in Optimus laptop </a>一文。大致步骤如下：</p>
 <ol>
 <li><p>确认使用了混合显卡 (hybrid graphics)。在命令行中输入</p>
@@ -540,7 +540,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install ocl-icd-libopencl1 nvidia-cuda-toolkit</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>至此，显卡驱动的安装就基本结束了。但是如果遇到某些场景下的屏幕撕裂问题（包括但不限于在 VLC 中播放视频，在 Chrome/Firefox 中观看 youtube 视频等），我们可以通过<a href="https://secretwiki.org/2017/05/30/kali-install/#enable-prime-sync" target="_blank" rel="noopener">启用 PRIME 同步 (PRIME Sync)</a> 的方法进行修复。如果卡在了启动屏幕处，也可以参考<a href="https://secretwiki.org/2017/05/30/kali-install/restore-nvidia-driver-failure" target="_blank" rel="noopener">这篇文章</a>进行还原和修复。</p>
+<p>至此，显卡驱动的安装就基本结束了。但是如果遇到某些场景下的屏幕撕裂问题（包括但不限于在 VLC 中播放视频，在 Chrome/Firefox 中观看 youtube 视频等），我们可以通过<a href="/2018-07-03-kali-linxu.html#enable-prime-sync">启用 PRIME 同步 (PRIME Sync)</a> 的方法进行修复。如果卡在了启动屏幕处，也可以参考<a href="/2018-07-03-kali-linxu.htmlrestore-nvidia-driver-failure">这篇文章</a>进行还原和修复。</p>
 <h2 id="挂载第二块硬盘"><a href="#挂载第二块硬盘" class="headerlink" title="挂载第二块硬盘"></a>挂载第二块硬盘</h2><p>由于系统中有两块硬盘，之前尝试的双系统方案各种蛋疼，那么干脆就把第二块硬盘作为存储盘进行扩展。在 Linux 中，一切皆目录，和 Windows 中分区，然后划分盘符的方式不一样， Linux 中新增的硬盘应当挂载至某个目录中，具体步骤如下(参考 <a href="https://wenku.baidu.com/view/09198b2e2af90242a895e51e.html" target="_blank" rel="noopener">linux 增加硬盘</a>，以将硬盘划分为一个区并挂载至 /storage 目录为例)：</p>
 <ol>
 <li><p>使用 fdisk -l 查看系统硬盘信息。</p>
@@ -841,7 +841,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd notepadqq</span><br><span class="line">./configure --prefix /usr</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="Linux-平台下的-Office-编辑套件-LibreOffice"><a href="#Linux-平台下的-Office-编辑套件-LibreOffice" class="headerlink" title="Linux 平台下的 Office 编辑套件 LibreOffice"></a>Linux 平台下的 Office 编辑套件 LibreOffice</h3><p>Office 系列文件的编辑和处理在 Linux 上一直是硬伤，由于微软没有提供 Microsoft Office 的 Linux 版本，要查看和编辑 Office 文档只能使用<a href="https://products.office.com/zh-cn/office-online/documents-spreadsheets-presentations-office-online" target="_blank" rel="noopener">在线版的 Office</a>，或者在 wine/crossover 中安装 Windows 版本的 MS Office 软件，此外，也可以使用支持 Linux 平台的编辑软件来实现。Linux 下的第三方 Office 编辑器主要有 <a href="https://zh-cn.libreoffice.org/" target="_blank" rel="noopener">LibreOffice</a>， <a href="https://secretwiki.org/2017/05/30/kali-install/linux.wps.cn/" target="_blank" rel="noopener">WPS Office</a>， <a href="http://www.yozosoft.com/products/yozooffice.htm" target="_blank" rel="noopener">永中 Office</a>， <a href="https://www.openoffice.org/zh-cn/" target="_blank" rel="noopener">OpenOffice</a> 等。在这些软件中，LibreOffice 相对来说已经是做得很不错的了。安装也很简单，直接在命令行中运行 <code>sudo apt-get install libreoffice</code> 即可成功安装。</p>
+<h3 id="Linux-平台下的-Office-编辑套件-LibreOffice"><a href="#Linux-平台下的-Office-编辑套件-LibreOffice" class="headerlink" title="Linux 平台下的 Office 编辑套件 LibreOffice"></a>Linux 平台下的 Office 编辑套件 LibreOffice</h3><p>Office 系列文件的编辑和处理在 Linux 上一直是硬伤，由于微软没有提供 Microsoft Office 的 Linux 版本，要查看和编辑 Office 文档只能使用<a href="https://products.office.com/zh-cn/office-online/documents-spreadsheets-presentations-office-online" target="_blank" rel="noopener">在线版的 Office</a>，或者在 wine/crossover 中安装 Windows 版本的 MS Office 软件，此外，也可以使用支持 Linux 平台的编辑软件来实现。Linux 下的第三方 Office 编辑器主要有 <a href="https://zh-cn.libreoffice.org/" target="_blank" rel="noopener">LibreOffice</a>， <a href="/2018-07-03-kali-linxu.htmllinux.wps.cn/">WPS Office</a>， <a href="http://www.yozosoft.com/products/yozooffice.htm" target="_blank" rel="noopener">永中 Office</a>， <a href="https://www.openoffice.org/zh-cn/" target="_blank" rel="noopener">OpenOffice</a> 等。在这些软件中，LibreOffice 相对来说已经是做得很不错的了。安装也很简单，直接在命令行中运行 <code>sudo apt-get install libreoffice</code> 即可成功安装。</p>
 <h3 id="MarkDown-编辑器-ReText"><a href="#MarkDown-编辑器-ReText" class="headerlink" title="MarkDown 编辑器 ReText"></a>MarkDown 编辑器 ReText</h3><p>MarkDown 虽然到现在尚无完全统一的语法和解析标准，但是大部分的规则是公认的，利用它来写笔记是个非常惬意的事情。自带的 gedit 文本编辑器虽然支持 MarkDown 语法，但是功能太过薄弱，因此安装 <a href="https://github.com/retext-project/retext" target="_blank" rel="noopener">ReText</a> 作为 MarkDown 编辑器，安装过程很简单，命令行输入 <code>sudo apt-get install retext</code> 即可完成安装。但是其强大的功能需要进一步配置后才能发挥作用。配置过程如下：</p>
 <ol>
 <li><p>为 ReText 配置 Github stylesheet。访问 <a href="https://gist.github.com/EndangeredMassa/8849279" target="_blank" rel="noopener">https://gist.github.com/EndangeredMassa/8849279</a>，下载 github.css 文件，然后在 ReText 中选择 <code>编辑-个人偏好-交互界面-样式表文件</code>，选择使用下载的 github.css 文件。重启 ReText 后即可生效。</p>
@@ -897,7 +897,7 @@
 <li><p>验证 docker 安装成功</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run hello-world</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>此时，docker 已经成功安装，正常使用即可。当然，也可以进行进一步的配置，比如<a href="https://secretwiki.org/2017/05/30/kali-install/#manage-docker-as-a-non-root-user" target="_blank" rel="noopener">使用非 root 用户管理 docker</a>，<a href="https://secretwiki.org/2017/05/30/kali-install/#configure-docker-to-start-on-boot" target="_blank" rel="noopener">配置 docker 随系统启动</a><a href="https://secretwiki.org/2017/05/30/kali-install/#change-default-image-container-location-docker" target="_blank" rel="noopener">修改 Docker 默认的镜像和容器存储位置</a>等。</p>
+<li><p>此时，docker 已经成功安装，正常使用即可。当然，也可以进行进一步的配置，比如<a href="/2018-07-03-kali-linxu.html#manage-docker-as-a-non-root-user">使用非 root 用户管理 docker</a>，<a href="/2018-07-03-kali-linxu.html#configure-docker-to-start-on-boot">配置 docker 随系统启动</a><a href="/2018-07-03-kali-linxu.html#change-default-image-container-location-docker">修改 Docker 默认的镜像和容器存储位置</a>等。</p>
 </li>
 </ol>
 <h2 id="安装多媒体播放器"><a href="#安装多媒体播放器" class="headerlink" title="安装多媒体播放器"></a>安装多媒体播放器</h2><h3 id="音乐播放器-DeaDBeeF"><a href="#音乐播放器-DeaDBeeF" class="headerlink" title="音乐播放器 DeaDBeeF"></a>音乐播放器 DeaDBeeF</h3><p>Windows 下的音乐播放器使用的是 Foobar2000，在 Linux 平台下没有对应的版本，可以使用 <a href="http://deadbeef.sourceforge.net/" target="_blank" rel="noopener">DeaDBeeF</a> 来代替。由于在 kali 源中并没有 DeaDBeeF，因此不能使用 apt-get 直接安装，而需要去 <a href="http://deadbeef.sourceforge.net/download.html" target="_blank" rel="noopener">DeaDBeeF 官网下载页面</a>进行下载。下载了 deb 包后，运行 ‘sudo dpgk -i deadbeef-static_0.7.2-2_amd64.deb` 进行安装即可完成。但是需要注意，DeaDBeeF 在播放无损音乐时，不是直接添加 cue 索引文件，而是在添加 ape，flac 等音乐文件时自动加载同一目录下的同名 cue 文件。另外，如果加载 cue 文件后发现是乱码，可以在 Deadbeef 菜单栏：编辑–偏好设置–用户界面/杂项 中，取消俄语编码选项，勾选中文 CP936 编码选项，然后清空播放列表，再次添加歌曲，即可顺利显示中文。</p>
@@ -919,7 +919,7 @@
 <ol>
 <li><p>下载 WineQQ 最新的 8.9 版本 <code>wineQQ8.9.3_21149.tar.xz</code>。</p>
 </li>
-<li><p>为了能正常运行 WineQQ，需要安装 <a href="https://wiki.winehq.org/" target="_blank" rel="noopener">winehq</a>。具体安装过程可以参考 <a href="https://wiki.winehq.org/Debian" target="_blank" rel="noopener">winehq 的官方文档</a><br>首先，<a href="https://secretwiki.org/2017/05/30/kali-install/#add-architecture-i386" target="_blank" rel="noopener">开启系统对32位的支持</a>，然后获取并导入签名</p>
+<li><p>为了能正常运行 WineQQ，需要安装 <a href="https://wiki.winehq.org/" target="_blank" rel="noopener">winehq</a>。具体安装过程可以参考 <a href="https://wiki.winehq.org/Debian" target="_blank" rel="noopener">winehq 的官方文档</a><br>首先，<a href="/2018-07-03-kali-linxu.html#add-architecture-i386">开启系统对32位的支持</a>，然后获取并导入签名</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -nc https://dl.winehq.org/wine-builds/Release.key</span><br><span class="line">sudo apt-key add Release.key</span><br></pre></td></tr></table></figure>
 <p>接着，在 /etc/apt/sources.list.d/ 目录下新建一个 <code>winehq.list</code> 文件（文件名可自定义，以 list 作为文件扩展名即可），文件内容为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb https://dl.winehq.org/wine-builds/debian/ stretch main</span><br></pre></td></tr></table></figure>
@@ -931,7 +931,7 @@
 <li><p>解压下载的压缩包至用户主目录</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xvf wineQQ8.9.2_20760.tar.xz -C ~/</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>此时，在系统菜单中已经能看见 Wine QQ，点击后运行，会提示需要下载某个软件包（MONO），选择下载即可。下载完成后，即可正常运行。<br>此外，如果之前未安装字体，会存在部分中文显示为方框的情况，这时参考前文的<a href="https://secretwiki.org/2017/05/30/kali-install/#install-fonts" target="_blank" rel="noopener">安装字体</a>部分进行配置后，重启即可正常显示。<br>当然，毕竟是修改版，存在着一些bug，目前已遇到问题：视频结束后会闪退，无法保存密码。但是作为一个及时消息型软件，最主要的文字沟通和文件传输之类的功能能够正常使用，已经满足了需求。</p>
+<li><p>此时，在系统菜单中已经能看见 Wine QQ，点击后运行，会提示需要下载某个软件包（MONO），选择下载即可。下载完成后，即可正常运行。<br>此外，如果之前未安装字体，会存在部分中文显示为方框的情况，这时参考前文的<a href="/2018-07-03-kali-linxu.html#install-fonts">安装字体</a>部分进行配置后，重启即可正常显示。<br>当然，毕竟是修改版，存在着一些bug，目前已遇到问题：视频结束后会闪退，无法保存密码。但是作为一个及时消息型软件，最主要的文字沟通和文件传输之类的功能能够正常使用，已经满足了需求。</p>
 </li>
 </ol>
 <h2 id="其他需要的软件"><a href="#其他需要的软件" class="headerlink" title="其他需要的软件"></a>其他需要的软件</h2><p>由于很少将 Linux 作为主办公环境，还有很多软件并没怎么用到，这里主要参考了[安全牛]上房苑弘的 [Kali Linux 渗透测试教程]上推荐的一些软件，也欢迎大家回复和推荐好应用:)。在命令行中输入：</p>
@@ -972,7 +972,7 @@
 </blockquote>
 <p>再在浏览器中打开 <a href="chrome://flash/" target="_blank" rel="noopener">chrome://flash/</a> 查看是否显示安装成功。</p>
 </li>
-<li><p>此时打开视频站，应该就可以正常观看视频了。如果遇到某些视频能看见播放框，但是没有内容，很有可能是浏览器默认禁用了第三方站点的数据和 cookie 所致，可以参考 <a href="https://secretwiki.org/2017/05/30/kali-install/#chromium-unblock-third-party-cookies" target="_blank" rel="noopener">FAQ 部分的解决方法</a>。</p>
+<li><p>此时打开视频站，应该就可以正常观看视频了。如果遇到某些视频能看见播放框，但是没有内容，很有可能是浏览器默认禁用了第三方站点的数据和 cookie 所致，可以参考 <a href="/2018-07-03-kali-linxu.html#chromium-unblock-third-party-cookies">FAQ 部分的解决方法</a>。</p>
 </li>
 </ol>
 <h3 id="关闭-GPU-加速"><a href="#关闭-GPU-加速" class="headerlink" title="关闭 GPU 加速"></a>关闭 GPU 加速</h3><p>使用 Chromium/Chrome 时，经常会发现风扇疯转，系统资源占用蹭蹭地往上涨，此外，偶尔会出现卡死的情况，一定要切换到其他窗口再切换回来才正常。查阅资料发现是由于 Chromium 系列浏览器的 GPU 加速功能导致的。于是乎我们来关闭 GPU 加速功能，步骤如下：</p>
@@ -1001,9 +1001,9 @@
 <li><a href="https://addons.mozilla.org/en-Us/firefox/addon/cookie-importer/" target="_blank" rel="noopener">Cookie Importer</a>：用于 cookie 的导入</li>
 <li><a href="https://addons.mozilla.org/en-US/firefox/addon/cookies-manager-plus/" target="_blank" rel="noopener">Cookie Manager</a>：强大的 cookie 管理扩展，可以替代浏览器自带的 cookie 查看器，管理网站 cookie 信息。</li>
 <li><a href="https://github.com/gantt/downloadyoutube" target="_blank" rel="noopener">Download YouTube Video as MP4</a>：如其名字所述，以 MP4 格式下载 YouTube 视频。</li>
-<li><a href="http://getfirebug.com/" target="_blank" rel="noopener">Firebug</a>：Firefox 下最出名的插件了，虽然我觉得没有 Chrome 自带的 F12 好用～<a href="https://secretwiki.org/2017/05/30/kali-install/Migrating%20from%20Firebug" target="_blank" rel="noopener">现在已经集成到了 Firefox 的 DevTools 中</a>。</li>
+<li><a href="http://getfirebug.com/" target="_blank" rel="noopener">Firebug</a>：Firefox 下最出名的插件了，虽然我觉得没有 Chrome 自带的 F12 好用～<a href="/2018-07-03-kali-linxu.htmlMigrating%20from%20Firebug">现在已经集成到了 Firefox 的 DevTools 中</a>。</li>
 <li><a href="https://flagfox.wordpress.com/" target="_blank" rel="noopener">Flagfox</a>：可以显示网站所在国家的国旗。</li>
-<li><a href="https://secretwiki.org/2017/05/30/kali-install/flashgot.net" target="_blank" rel="noopener">FlashGot</a>：下载扩展，可以提高下载的速度和稳定性，此外也有嗅探视音频资源的功能。</li>
+<li><a href="/2018-07-03-kali-linxu.htmlflashgot.net">FlashGot</a>：下载扩展，可以提高下载的速度和稳定性，此外也有嗅探视音频资源的功能。</li>
 <li><a href="https://addons.mozilla.org/zh-cn/firefox/addon/hackbar/" target="_blank" rel="noopener">HackBar</a>：web 渗透必备插件。快捷键 F9，遇到 HackBar 不显示也可以按下 F9 试试哦。</li>
 <li><a href="https://hashr.rogeriopvl.com/#/" target="_blank" rel="noopener">hashr</a>：可根据选择的主流算法计算字符串的哈希值。</li>
 <li><a href="http://livehttpheaders.mozdev.org/" target="_blank" rel="noopener">Live HTTP headers</a>：可以显示和修改 http 请求头。</li>
@@ -1123,7 +1123,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload </span><br><span class="line">sudo systemctl start docker</span><br></pre></td></tr></table></figure>
 <p>可以在命令行中输入 <code>docker info</code> ，查看其中的 <code>Docker Root Dir</code> 字段的值，以确认修改成功。</p>
 <p>ps:看过很多写kali初始配置的文章,却没有像这篇一样写得很细腻实在不错。</p>
-<p>参考原文：<a href="https://secretwiki.org/2017/05/30/kali-install/#add-kali-src" target="_blank" rel="noopener">点击我</a></p>
+<p>参考原文：<a href="/2018-07-03-kali-linxu.html#add-kali-src">点击我</a></p>
 </li>
 </ol>
 
