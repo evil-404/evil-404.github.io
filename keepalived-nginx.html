@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="keepalived 高可用," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x01 关于 keepalived12早期是专为 `LVS` 设计的,主要用来监控LVS集群中各个节点状态内部基于 `VRRP协议` 实现,即`虚拟路由冗余协议`,从名字不难看出,协议本身是用于保证实现路由节点高可用的 0x02 所谓的 VRRP 协议1234567简单来讲,即将N台提供相同功能的路由器组成一个路由器组,在这个组里有一个master和多个backup一般情况下,master是由选">
+<meta name="keywords" content="keepalived 高可用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="keepalived + nginx 初步实现高可用">
+<meta property="og:url" content="https://evil-404.github.io/keepalived-nginx.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="0x01 关于 keepalived12早期是专为 `LVS` 设计的,主要用来监控LVS集群中各个节点状态内部基于 `VRRP协议` 实现,即`虚拟路由冗余协议`,从名字不难看出,协议本身是用于保证实现路由节点高可用的 0x02 所谓的 VRRP 协议1234567简单来讲,即将N台提供相同功能的路由器组成一个路由器组,在这个组里有一个master和多个backup一般情况下,master是由选">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://evil-404.github.io/img/keepalived%20start%20status.gif">
+<meta property="og:image" content="https://evil-404.github.io/img/keepalived%20nginx.gif">
+<meta property="og:image" content="https://evil-404.github.io/img/keepalived%20nginx%20status.gif">
+<meta property="og:image" content="https://evil-404.github.io/img/keepalived%20brain.gif">
+<meta property="og:image" content="https://evil-404.github.io/img/keepalived%20log.gif">
+<meta property="og:updated_time" content="2017-12-30T12:06:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="keepalived + nginx 初步实现高可用">
+<meta name="twitter:description" content="0x01 关于 keepalived12早期是专为 `LVS` 设计的,主要用来监控LVS集群中各个节点状态内部基于 `VRRP协议` 实现,即`虚拟路由冗余协议`,从名字不难看出,协议本身是用于保证实现路由节点高可用的 0x02 所谓的 VRRP 协议1234567简单来讲,即将N台提供相同功能的路由器组成一个路由器组,在这个组里有一个master和多个backup一般情况下,master是由选">
+<meta name="twitter:image" content="https://evil-404.github.io/img/keepalived%20start%20status.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'Index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/keepalived-nginx.html"/>
+
+
+
+
+
+  <title>keepalived + nginx 初步实现高可用 | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/keepalived-nginx.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">keepalived + nginx 初步实现高可用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-24T04:09:17+08:00">
+                2017-12-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:06:34+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/keepalived-高可用/" itemprop="url" rel="index">
+                    <span itemprop="name">keepalived 高可用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,205
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>0x01 关于 keepalived<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">早期是专为 `LVS` 设计的,主要用来监控LVS集群中各个节点状态</span><br><span class="line">内部基于 `VRRP协议` 实现,即`虚拟路由冗余协议`,从名字不难看出,协议本身是用于保证实现路由节点高可用的</span><br></pre></td></tr></table></figure></p>
+<p>0x02 所谓的 VRRP 协议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">简单来讲,即将N台提供相同功能的路由器组成一个路由器组,在这个组里有一个master和多个backup</span><br><span class="line">一般情况下,master是由选举算法产生的,另外需要注意的是,只有在 master 上才有一个用于对外提供服务的虚拟ip</span><br><span class="line">其它的backup都是没有的,当master在对外提供服务时,其它的backup又在干什么呢</span><br><span class="line">很简单,当master在对外提供服务时,它同时也在不停的向所有的backup发送VRRP状态信息 `说白点儿就是心跳包`</span><br><span class="line">告诉所有backup们,说,&apos;我还没累死,你们先歇着,等我挂了,你们再上&apos;,然后,所有的backup就会一直在那儿闲着不停地接收这样的状态信息</span><br><span class="line">当某一时刻,backup突然没再接到这样的状态回应时,就说明master已经光荣牺牲了</span><br><span class="line">所有的backup会再重新用选举算法,把优先级最高的backup升级为master继续对外提供服务,以此保证了服务的持续可用性,即所谓的高可用</span><br></pre></td></tr></table></figure></p>
+<p>0x03 借助 keepalived 在web上的高可用实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">首先,在所有需要进行高可用的web节点机器上部署好keepalived,并在节点中设置一个master,其它的则全部设为backup</span><br><span class="line">一旦backup接收不到来自master的心跳数据,即认为master已挂掉,backup随即就会接管master的所有资源数据</span><br><span class="line">当master状态恢复时,backup会把所有的资源数据再移交给master处理,此,即为最简单的web高可用实现</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>演示环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Lvs		ip: 192.168.3.75  虚拟ip: 192.168.3.2	    对应域名: reverse.org		为keepalived 的MASTER节点</span><br><span class="line">NginxHttp	ip: 192.168.3.49  对应域名: reverse.org	    为keepalived 的BACKUP节点</span><br><span class="line">OldLamp		ip: 192.168.3.45  对应域名: www.bwapp.cc</span><br><span class="line">OldLnmp		ip: 192.168.3.42  对应域名: test.bwapp.org</span><br></pre></td></tr></table></figure></p>
+<p>0x04 务必保证 <code>Lvs 和 NginxHttp</code> 两台机器上的nginx配置是完全一致的,且nginx服务已处于成功启动状态,具体如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># cat /usr/local/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">worker_processes  1;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    </span><br><span class="line">    upstream default_pools&#123;</span><br><span class="line">	   server test.bwapp.org:80 weight=2;</span><br><span class="line">	   server www.bwapp.cc:80;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    upstream static_pools &#123;</span><br><span class="line">	   server test.bwapp.org:80;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    upstream dynamic_pools &#123;</span><br><span class="line">	   server www.bwapp.cc:80;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  reverse.org;</span><br><span class="line">        location / &#123;</span><br><span class="line">	    proxy_pass http://default_pools;</span><br><span class="line">	    proxy_set_header Host  $host;</span><br><span class="line">	    proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">        &#125;</span><br><span class="line">	</span><br><span class="line">	location /static/ &#123;</span><br><span class="line">	    proxy_pass http://static_pools;</span><br><span class="line">	    proxy_set_header Host  $host;</span><br><span class="line">	    proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	location /dynamic/ &#123;</span><br><span class="line">	    proxy_pass http://dynamic_pools;</span><br><span class="line">	    proxy_set_header Host  $host;</span><br><span class="line">	    proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>0x05 首先,同时在 <code>Lvs 和 NginxHttp</code> 这两台机器上安装keepalived并进行启动测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># yum install openssl openssl-devel -y	在装nginx其实已经装过</span><br><span class="line"># wget http://www.keepalived.org/software/keepalived-1.3.2.tar.gz</span><br><span class="line"># tar xf keepalived-1.3.2.tar.gz</span><br><span class="line"># cd keepalived-1.3.2</span><br><span class="line"># ln -s /usr/src/kernels/2.6.32-642.el6.x86_64/ /usr/src/linux</span><br><span class="line"># ll /usr/src/linux</span><br><span class="line"># ./configure &amp;&amp; make &amp;&amp; make install</span><br><span class="line"># cp /root/keepalived-1.3.2/keepalived/etc/init.d/keepalived /etc/init.d/</span><br><span class="line"># cp /usr/local/etc/sysconfig/keepalived /etc/sysconfig/</span><br><span class="line"># mkdir /etc/keepalived</span><br><span class="line"># cp /usr/local/etc/keepalived/keepalived.conf /etc/keepalived/</span><br><span class="line"># cp /usr/local/sbin/keepalived /usr/sbin/</span><br><span class="line"># /etc/init.d/keepalived start</span><br><span class="line"># ps -ef | grep keepalived	看到同时有三个keepalived进程起来,则说明安装成功</span><br><span class="line"># /etc/init.d/keepalived stop	之后再停掉keepalived,继续后面的配置</span><br></pre></td></tr></table></figure></p>
+<p>0x06 接着,再来配置<code>master节点的 keepalived.conf</code>,注意,里面只需保留如下配置,其余默认的配置可暂时先全部删掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># man keepalived.conf	查看keepalived.conf的详细配置帮助</span><br><span class="line"># cp /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.bak</span><br><span class="line"># vi /etc/keepalived/keepalived.conf</span><br><span class="line">  global_defs &#123; # 全局配置</span><br><span class="line">    notification_email &#123; # 报警通知联系人,该段可直接注释不用</span><br><span class="line">      klionsec@rootkit.org</span><br><span class="line">    &#125;</span><br><span class="line">    notification_email_from Alexandre.Cassen@firewall.loc</span><br><span class="line">    smtp_server 192.168.200.1</span><br><span class="line">    smtp_connect_timeout 30</span><br><span class="line">    router_id LVS_01		# 类似mysql的server id</span><br><span class="line">    vrrp_skip_check_adv_addr</span><br><span class="line">!   vrrp_strict			# 开启表示严格执行VRRP协议规范,此模式不支持节点单播,默认是开启的,建议关闭,否则你会发现绑不上虚拟ip</span><br><span class="line">    vrrp_garp_interval 0</span><br><span class="line">    vrrp_gna_interval 0</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  # keepalived的一个实例配置</span><br><span class="line">  vrrp_instance VI_1 &#123;	  # 设置实例名称</span><br><span class="line">    state MASTER	  # 当前实例角色,如,MASTER,BACKUP</span><br><span class="line">    interface eth0	  # 发送心跳的网卡接口</span><br><span class="line">    virtual_router_id 51  # 该实例id,MASTER和BACKUP端要保持一致,否则会出现裂脑</span><br><span class="line">    priority 150	  # 优先级设置,高的为MASTER,建议节点之间优先级步长为50</span><br><span class="line">    advert_int 1	  # 心跳包发送时间间隔,默认为1秒</span><br><span class="line">    authentication &#123;	  # MASTER和BACKUP通信验证</span><br><span class="line">       auth_type PASS	  # 使用PASS方式</span><br><span class="line">       auth_pass 1111	  # 默认密码为1111</span><br><span class="line">    &#125;</span><br><span class="line">    virtual_ipaddress &#123;	  # 绑定虚拟ip,相当于 `ip addr add 192.168.3.2/24 dev eth0`的效果</span><br><span class="line">       192.168.3.2/24</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"># scp /etc/keepalived/keepalived.conf root@192.168.3.49:/etc/keepalived/keepalived.conf</span><br><span class="line"># /etc/init.d/keepalived start</span><br><span class="line"># ip addr | grep &quot;192.168.3.2/24&quot;	先等一会儿,看下虚拟ip到底有没有加上</span><br></pre></td></tr></table></figure></p>
+<p>0x07 最后,配置<code>backup节点的keepalived.conf</code>,除了<code>server id,实例角色和优先级选项</code>,其余配置和master中的保持一致即可,如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/keepalived/keepalived.conf</span><br><span class="line"></span><br><span class="line">  global_defs &#123;</span><br><span class="line">    notification_email &#123;</span><br><span class="line">		klionsec@rootkit.org</span><br><span class="line">   &#125;</span><br><span class="line">     notification_email_from Alexandre.Cassen@firewall.loc</span><br><span class="line">     smtp_server 192.168.200.1</span><br><span class="line">     smtp_connect_timeout 30</span><br><span class="line">     router_id LVS_02	  # 务必保证id的唯一性,类似mysql的server id</span><br><span class="line">     vrrp_skip_check_adv_addr</span><br><span class="line">!    vrrp_strict</span><br><span class="line">     vrrp_garp_interval 0</span><br><span class="line">     vrrp_gna_interval 0</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  vrrp_instance VI_1 &#123;    # 两边使用同一个实例</span><br><span class="line">    state BACKUP	  # 角色要改</span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id 51</span><br><span class="line">    priority 100	  # 优先级要小50</span><br><span class="line">    advert_int 1</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.3.2/24</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"># /etc/init.d/keepalived start</span><br><span class="line"># ip addr | grep &quot;192.168.3.2/24&quot;  这个ip只有在master挂掉的时候才会有</span><br></pre></td></tr></table></figure></p>
+<p>下面是自动飘ip的实际效果,此时再配合着回想VRRP协议是不是更好理解些呢</p>
+<p><img src="/img/keepalived start status.gif" alt=""></p>
+<p>下面则是模拟keepalived配合nginx 实现web高可用的效果,当MASTER机器不幸down掉时,BACKUP几乎会瞬间接管,以此来保证web服务的持续可用,具体如下</p>
+<p><img src="/img/keepalived nginx.gif" alt=""></p>
+<p>注意,keepalived默认只对<code>系统级别的宕机</code>才会主动接管,对于各类常规服务它是不会自动接管的,解决办法很简单,写个脚本,手动把它俩关联上就好了,此处的所有脚本仅做demo参考,有兴趣请自行加强,如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># vi keepalived_nginx_check.sh</span><br><span class="line"># chmod +x keepalived_nginx_check.sh</span><br><span class="line">  #!/bin/bash</span><br><span class="line">  while true</span><br><span class="line">  do</span><br><span class="line">  NginxPid=`ps -C nginx --no-header |wc -l`</span><br><span class="line">  if  [ $NginxPid -eq 2 ]</span><br><span class="line">    then	# 检查worker数</span><br><span class="line">	/etc/init.d/keepalived stop &amp;&gt;/dev/null # 如果发现worker对不上,就自动让另一台backup去接管</span><br><span class="line">  fi</span><br><span class="line">  sleep 1	# 可以时间隔短点,不然,down半天了,那边还没反应</span><br><span class="line">  done</span><br><span class="line"></span><br><span class="line"># ./keepalived_nginx_check.sh &amp;</span><br><span class="line"># ps -ef | grep &quot;keepalived_nginx_check&quot;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/keepalived nginx status.gif" alt=""></p>
+<p>0x08 高可用的裂脑问题,所谓的裂脑,即只要backup收不到master发过来的状态信息就以为master挂掉了,但实际上master并没有挂,只是由于一些别的原因导致master和backup之间没法正常的通信,而backup却直接粗暴的理解成master挂掉了,随后就直接就接管资源,这也就导致了裂脑问题的发生,下面是一个检测裂脑的小脚本,原理比较简单,<code>如果我发现master能ping通,但backup本地又有虚拟ip存在,则说明已经裂脑了</code>,用法很简单,直接在backup节点上后台运行该脚本即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># check keepalived status</span><br><span class="line">while true</span><br><span class="line">do</span><br><span class="line">    addr=`ip addr | grep &quot;192.168.3.2/24&quot; | wc -l`</span><br><span class="line">    ping -c 5 -W 3 192.168.3.75 &amp;&gt;/dev/null</span><br><span class="line">    if [ $? -eq 0 -a  $addr  -eq 1 ] ;then</span><br><span class="line">        echo &quot;ha is brain.&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;ha is ok&quot;</span><br><span class="line">    fi</span><br><span class="line">    sleep 2</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/keepalived brain.gif" alt=""></p>
+<p>0x09 keepalived默认的日志在<code>/var/log/messages</code>文件中,不利于分析,所以,实际中最好改下keepalived的默认日志路径,方便后续排查问题,如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/sysconfig/keepalived</span><br><span class="line">  KEEPALIVED_OPTIONS=&quot;-D -S 0 -d&quot;</span><br><span class="line"># vi /etc/rsyslog.conf</span><br><span class="line">  local0.*         /var/log/keepalived.log</span><br><span class="line"># /etc/init.d/rsyslog restart</span><br><span class="line"># /etc/init.d/keepalived restart</span><br><span class="line"># tail -f /var/log/keepalived.log</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/keepalived log.gif" alt=""></p>
+<p><br><br>后话:<br>&nbsp;&nbsp;&nbsp;&nbsp;篇幅限制,这里仅仅只做了nginx的高可用,关于和LVS的配合应用我们会再单做说明,至于其它的一些基础服务高可用部署方式基本都大同小异,工具比较简单,此处不再赘述,有空的话,大家倒是可以去深入了解下 <code>VRRP</code>  ^_^</p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    klion
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/keepalived-nginx.html" title="keepalived + nginx 初步实现高可用">https://evil-404.github.io/keepalived-nginx.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/keepalived-高可用/" rel="tag"><i class="fa fa-tag"></i>keepalived 高可用</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/nginx-static-dynamic.html" rel="next" title="利用 `nginx反向代理` 实现的动静分离">
+                <i class="fa fa-chevron-left"></i> 利用 `nginx反向代理` 实现的动静分离
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/modify-webshell.html" rel="prev" title="实时精准侦测站点目录中的各类 webshell">
+                实时精准侦测站点目录中的各类 webshell <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">157</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="RoarTalk" target="_blank">RoarTalk</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共293.5k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

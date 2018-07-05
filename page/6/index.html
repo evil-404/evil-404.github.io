@@ -309,10 +309,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-08-01-bypasswaf-on-database.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/https-learn.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -328,200 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-08-01-bypasswaf-on-database.html" itemprop="url">bypasswaf for mysql [数据库层面之特殊字符篇]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T03:46:52+08:00">
-                2017-08-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:39:52+08:00">
-                2017-10-23
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bypasswaf/" itemprop="url" rel="index">
-                    <span itemprop="name">bypasswaf</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,024
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><br><br>0x01 先准备好用于测试库表及数据:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database injection;</span><br><span class="line">mysql&gt; use injection;</span><br><span class="line">mysql&gt; CREATE TABLE IF NOT EXISTS `user`(</span><br><span class="line">	`id` INT UNSIGNED AUTO_INCREMENT,</span><br><span class="line">	`username` VARCHAR(30) NOT NULL,</span><br><span class="line">	`password` VARCHAR(40) NOT NULL,</span><br><span class="line">	`email` VARCHAR(40) NOT NULL,</span><br><span class="line">	PRIMARY KEY ( `id` )</span><br><span class="line">	)ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;gentoo&apos;,&apos;superman&apos;,&apos;sec@rootkit.org&apos;);</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;arch&apos;,&apos;welcome&apos;,&apos;lin@hook.org&apos;);</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;admin&apos;,&apos;loginpass&apos;,&apos;xlion@priv.org&apos;);</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017-08-01-bypasswaf-on-database.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-08-01-https-learn.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017-08-01-https-learn.html" itemprop="url">深入理解 https 通信加密过程</a></h1>
+                <a class="post-title-link" href="/https-learn.html" itemprop="url">深入理解 https 通信加密过程</a></h1>
         
 
         <div class="post-meta">
@@ -646,7 +453,7 @@
 <p>0x04 不过,以上方式存在明显的中间人问题:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">假设,此时在客户端和服务器之间存在一个中间人,这个中间人只需要把原本双方通信互发的公钥,换成自己的公钥,这样中间人就可以轻松解密通信双方所发送的所有数据</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-08-01-https-learn.html#more" rel="contents">
+            <a class="btn" href="/https-learn.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -698,10 +505,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-07-28-nginx-lbd.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/waf-for-modsecurity.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -717,7 +524,204 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-07-28-nginx-lbd.html" itemprop="url">基于 nginx 的七层负载均衡实现初步</a></h1>
+                <a class="post-title-link" href="/waf-for-modsecurity.html" itemprop="url">ModSecurity 生产级WAF部署优化 [一]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T03:46:52+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-24T16:25:00+08:00">
+                2017-09-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ModSecurity/" itemprop="url" rel="index">
+                    <span itemprop="name">ModSecurity</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,609
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><br><br>0x01 用大白话来简单说明 WAF 最基本的工作流程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">捕获客户端的各种请求 -&gt; 匹配WAF拦截规则 -&gt; 命中规则后的处理动作 -&gt; 将整个拦截过程记录到指定的日志文件中 -&gt; 脚本绘制实时攻击图表</span><br></pre></td></tr></table></figure></p>
+<p>0x02 关于modsecurity<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一款老牌的开源 WAF,相信经常搞渗透的朋友,对市面上经常用的几款WAF,都早已非常熟悉,废话不多说,咱们直奔主题</span><br><span class="line">本次,我们只是单单把它部署到可用的状态,关于规则深度定制,绕过以及白名单设置是我们面的事情</span><br><span class="line">个人非常不建议把modsecurity和nginx一起用,实际测试中,问题还非常的多,关于nginx更推荐用naxsi[后面再单独说]</span><br><span class="line">至于源码包,可自行去 modsecurity 的官方站点下载  www.modsecurity.org</span><br></pre></td></tr></table></figure></p>
+<p>0x03 首先,先编译安装好基本的LAMP环境 [具体编译安装过程,可自行参考博客相关文章] ,这里暂时就直接用之前编译好的环境来演示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">httpd 2.4.27 + php 5.6.31 + mysql 5.5.57 + centOS6.8_x64</span><br></pre></td></tr></table></figure></p>
+<p>0x04 先停掉apache,因为等会儿要编译modsecurity生成对应的库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pkill httpd</span><br></pre></td></tr></table></figure></p>
+<p>0x05 开始编译安装 modsecurity,一如往常,务必先装好一些必要的依赖库,不然中间会有很多的麻烦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># yum install httpd-devel apr apr-util-devel apr-devel pcre pcre-devel libxml2 libxml2-devel curl-devel zlib zlib-devel openssl openssl-devel -y</span><br><span class="line"># cd modsecurity-2.9.2</span><br><span class="line"># ./configure --with-apxs=/usr/local/httpd/bin/apxs   生成modsecurity的so</span><br><span class="line"># make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/waf-for-modsecurity.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nginx-lbd.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/nginx-lbd.html" itemprop="url">基于 nginx 的七层负载均衡实现初步</a></h1>
         
 
         <div class="post-meta">
@@ -843,7 +847,7 @@
 <p>0x03 在 nginx 中可用来实现负载均衡的主要模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">upstream   模块 定义好后端节点及所使用调度算法,大致工作过程是这样的,它会先读取upstream中的配置,然后通过server标签中的proxy_pass来进行实际的调用</span><br><span class="line">http_proxy 模块	主要负责实际的转发行为</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-07-28-nginx-lbd.html#more" rel="contents">
+            <a class="btn" href="/nginx-lbd.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -895,10 +899,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-07-25-PSR-screen.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/PSR-screen.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -914,7 +918,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-07-25-PSR-screen.html" itemprop="url">利用win自带的 PSR 实现免杀截屏</a></h1>
+                <a class="post-title-link" href="/PSR-screen.html" itemprop="url">利用win自带的 PSR 实现免杀截屏</a></h1>
         
 
         <div class="post-meta">
@@ -1038,7 +1042,7 @@
 <p><img src="/img/win_screen_self_start.png" alt=""><br><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-07-25-PSR-screen.html#more" rel="contents">
+            <a class="btn" href="/PSR-screen.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1090,10 +1094,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-07-14-tor-change-ip.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/tor-change-ip.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1109,7 +1113,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-07-14-tor-change-ip.html" itemprop="url">如何更隐匿地渗透</a></h1>
+                <a class="post-title-link" href="/tor-change-ip.html" itemprop="url">如何更隐匿地渗透</a></h1>
         
 
         <div class="post-meta">
@@ -1232,7 +1236,7 @@
 <p>0x02 代码如下<br>&nbsp;&nbsp;&nbsp;&nbsp;随便写的,比较粗糙,大家将就着看吧,如下,有些地方还有问题,后期抽空想到好点子了,再完善下,对了,不知道为啥tor自己的切ip选项不管用,希望哪位兄弟如果找到原因麻烦也告诉我一声,谢谢……<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-07-14-tor-change-ip.html#more" rel="contents">
+            <a class="btn" href="/tor-change-ip.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1284,10 +1288,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-07-10-nginx-waf.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nginx-waf.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1303,7 +1307,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-07-10-nginx-waf.html" itemprop="url">利用 nginx_lua 定制高效灵活的专属WAF</a></h1>
+                <a class="post-title-link" href="/nginx-waf.html" itemprop="url">利用 nginx_lua 定制高效灵活的专属WAF</a></h1>
         
 
         <div class="post-meta">
@@ -1427,7 +1431,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># pkill nginx</span><br><span class="line"># netstat -tulnp | grep &quot;80&quot;</span><br><span class="line"># cp /usr/local/nginx/conf/nginx.conf /root/</span><br><span class="line"># cp /usr/local/nginx/conf/extra/bwapp.conf /root/</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-07-10-nginx-waf.html#more" rel="contents">
+            <a class="btn" href="/nginx-waf.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1479,10 +1483,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-07-09-readme-Framework.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/readme-Framework.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1498,7 +1502,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-07-09-readme-Framework.html" itemprop="url">关于各类环境部署简要说明</a></h1>
+                <a class="post-title-link" href="/readme-Framework.html" itemprop="url">关于各类环境部署简要说明</a></h1>
         
 
         <div class="post-meta">
@@ -1620,7 +1624,7 @@
           <p><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">为了更加贴近实战的学习,所有相关的部署配置,均是按照实际生产标准来的,力求做到真实,也是为了方便大家更靠谱的学习...</span><br><span class="line">作为一个对技术深度有追求的渗透者,你极度有必要熟知其中涉及到安全问题的每一个配置参数选项的具体作用,每一次权限映射背后所带来的实际利用价值...</span><br><span class="line">大家可能也看到了,在实际部署过程中,基本都特别标明了详细的版本号,比如,php5.2,php5.3及php5.5,因为有些漏洞特性只能针对特定的版本才会有用,所以不得不费点儿劲....</span><br><span class="line">就整个部署过程来讲,其实也是一个非常好的学习进步的机会,你完全可以通过这种实际部署更深的去理解某些漏洞产生的根因,而不用再人云亦云[用事实说话],说白点儿,这就是在潜移默化的积累,积累的多了,自然就触类旁通,根本不用什么高大上的东西</span><br><span class="line">你要做的只是把前人的优秀经验彻彻底底的真正变成你自己的知识储备,然后在此基础上灵活变通改进,足矣,虽然短时间会比别人走的慢点,但你会收获的更多,甚至看到很多别人看不见的东西,很显然,这种方式对于&apos;天才&apos;或者&apos;神童&apos;,是完全不适用的,但那毕竟只是极小的一部分人</span><br><span class="line">脚踏实地,一步步的来,不要总觉得这也不重要[觉得这也很low],那也不重要[ 那也很low],然后你就以这种态度持续了很多年,而等再回头看那些曾经一直默默踏踏实实坚持到现在的人,已经把你甩的很远了,再想追上,难于上青天...</span><br><span class="line">还是那句话,&quot;运维会的那一套,你要比他还精通,你才有可能搞定他,开发会的那一套,你要比他还娴熟,才有可能挖到更有价值的洞....&quot;,我跟大家起点都一样,也一直在为此而不懈努力着</span><br><span class="line">不为任何人,就为了你自己,学习吧,哪怕每天进步一点点,起码你不会因为一天碌碌无为而感到空虚....</span><br><span class="line">人生苦短,能做点自己喜欢的事情应该珍惜,个人一直坚信&quot;唯一不变的,就是一直在变&quot;,安于现状,不思进取,自以为是,乃致命毒药....</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-07-09-readme-Framework.html#more" rel="contents">
+            <a class="btn" href="/readme-Framework.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1672,10 +1676,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-07-09-nosql-redis.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nosql-redis.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1691,7 +1695,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-07-09-nosql-redis.html" itemprop="url">Nosql 攻防第二弹 [ redis ]</a></h1>
+                <a class="post-title-link" href="/nosql-redis.html" itemprop="url">Nosql 攻防第二弹 [ redis ]</a></h1>
         
 
         <div class="post-meta">
@@ -1815,7 +1819,7 @@
 <p>0x02 开始安装部署 redis,此处暂以最新版为例进行演示,为了避免redis自身的一些漏洞,建议使用最新版的稳定版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># wget http://download.redis.io/releases/redis-4.0.6.tar.gz</span><br><span class="line"># tar xf redis-4.0.6.tar.gz</span><br><span class="line"># cd redis-4.0.6</span><br><span class="line"># make MALLOC=jemalloc</span><br><span class="line"># make PREFIX=/usr/local/redis-4.0.6 install</span><br><span class="line"># ln -s /usr/local/redis-4.0.6/ /usr/local/redis</span><br><span class="line"># export PATH=/usr/local/redis/bin/:$PATH</span><br><span class="line"># echo &quot;export PATH=/usr/local/redis/bin/:$PATH&quot; &gt;&gt; ~/.bash_profile</span><br><span class="line"># redis-server -h</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-07-09-nosql-redis.html#more" rel="contents">
+            <a class="btn" href="/nosql-redis.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1867,10 +1871,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-07-08-ssh-key-mac.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/ssh-key-mac.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1886,7 +1890,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-07-08-ssh-key-mac.html" itemprop="url">基于 Ssh Key 的分发安全</a></h1>
+                <a class="post-title-link" href="/ssh-key-mac.html" itemprop="url">基于 Ssh Key 的分发安全</a></h1>
         
 
         <div class="post-meta">
@@ -2016,7 +2020,7 @@
 <p>0x04 再在分发机上创建好密钥对,准备发到各个客户机上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># su - sysadm		切到刚刚创建的用户下</span><br><span class="line">$ ssh-keygen -t dsa	一路回车即可</span><br><span class="line">$ ls -l .ssh/</span><br><span class="line">  -rw------- 1 sysadm sysadm 668 Nov 27 14:11 id_dsa	 私钥[钥匙]</span><br><span class="line">  -rw-r--r-- 1 sysadm sysadm 609 Nov 27 14:11 id_dsa.pub 公钥[锁],把公钥分发给所有要ssh的机器</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-07-08-ssh-key-mac.html#more" rel="contents">
+            <a class="btn" href="/ssh-key-mac.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2068,10 +2072,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-07-08-NFS-sec.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/NFS-sec.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -2087,7 +2091,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-07-08-NFS-sec.html" itemprop="url">服务安全 [ NFS ]</a></h1>
+                <a class="post-title-link" href="/NFS-sec.html" itemprop="url">服务安全 [ NFS ]</a></h1>
         
 
         <div class="post-meta">
@@ -2212,7 +2216,7 @@
 <p>nfs服务端:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NfsServer	ip: 192.168.4.2</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-07-08-NFS-sec.html#more" rel="contents">
+            <a class="btn" href="/NFS-sec.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2292,9 +2296,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
-                alt="Evil-404" />
+                alt="VK" />
             
-              <p class="site-author-name" itemprop="name">Evil-404</p>
+              <p class="site-author-name" itemprop="name">VK</p>
               <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
           </div>
 
@@ -2459,11 +2463,11 @@ show_date_time();
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Evil-404</span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共293.4k字</span>
+  <span class="post-count">博客全站共293.5k字</span>
 </div>
 
   
@@ -2478,15 +2482,12 @@ show_date_time();
 
 
 
-  <div class="theme-info">BY &mdash; <a class="theme-link" target="_blank" href="https://evil-404.github.io/">修改版.Mist</a> v</div>
-
 
 
 
 <span id="busuanzi_container_site_pv">
     本站总访问量<span id="busuanzi_value_site_pv"></span>次
 </span>
-
         
 
 

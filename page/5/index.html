@@ -309,10 +309,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-09-22-snortpentest.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/snortpentest.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-09-22-snortpentest.html" itemprop="url">入侵检测学习 Snort [一]</a></h1>
+                <a class="post-title-link" href="/snortpentest.html" itemprop="url">入侵检测学习 Snort [一]</a></h1>
         
 
         <div class="post-meta">
@@ -452,7 +452,7 @@
 <p>0x03 模块具体作用简介<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">数据包嗅探,让其它机器上的指定数据包都经过自己,以便snort分析数据,同样,用的也是libpcap库,包括在其它很多linux平台嗅探工具你都能看到它的身影</span><br><span class="line">预处理,包重组预处理器,主要是为了防止攻击包被拆分逃避Snort的检测,另一个是协议编码预处理器,主要负责把数据包协议解码成一个统一的格式,再丢给检测模块,最后一个是协议异常检测预处器</span><br><span class="line">规则匹配检测,也就是当预处理把数据包丢过来以后,规则引擎会将这些数据包逐个和规则库进行匹配,一旦发现数据包内容与某条规则匹配,就丢给报警模块去处理</span><br><span class="line">报警/日志模块,规则引擎将数据丢给报警模块以后,报警模块会根据snort事先定义好的规则动作(alert,log...)对其进行不同的处理(写到数据库或日志文件中)</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-09-22-snortpentest.html#more" rel="contents">
+            <a class="btn" href="/snortpentest.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -504,10 +504,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-09-21-mysql-mul-server.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/mysql-mul-server.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -523,7 +523,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-09-21-mysql-mul-server.html" itemprop="url">一分钟部署 MySql 多实例</a></h1>
+                <a class="post-title-link" href="/mysql-mul-server.html" itemprop="url">一分钟部署 MySql 多实例</a></h1>
         
 
         <div class="post-meta">
@@ -649,7 +649,7 @@
 <p>下载并编译 mysql-5.5.55<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># wget http://mirrors.sohu.com/mysql/MySQL-5.5/mysql-5.5.55.tar.gz</span><br><span class="line"># tar xf mysql-5.5.55.tar.gz</span><br><span class="line"># cd mysql-5.5.55</span><br><span class="line"># cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql-5.5.55 \</span><br><span class="line">-DMYSQL_DATADIR=/usr/local/mysql-5.5.55/data \</span><br><span class="line">-DMYSQL_UNIX_ADDR=/usr/local/mysql-5.5.55/tmp/mysql.sock \</span><br><span class="line">-DDEFAULT_CHARSET=utf8 \</span><br><span class="line">-DDEFAULT_COLLATION=utf8_general_ci \</span><br><span class="line">-DEXTRA_CHARSETS=all \</span><br><span class="line">-DENABLED_LOCAL_INFILE=ON \</span><br><span class="line">-DWITH_INNOBASE_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_FEDERATED_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_BLACKHOLE_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITHOUT_PARTITION_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_FAST_MUTEXES=1 \</span><br><span class="line">-DWITH_ZLIB=bundled \</span><br><span class="line">-DENABLED_LOCAL_INFILE=1 \</span><br><span class="line">-DWITH_READLINE=1 \</span><br><span class="line">-DWITH_EMBEDDED_SERVER=1 \</span><br><span class="line">-DWITH_DEBUG=0</span><br><span class="line"></span><br><span class="line"># make &amp;&amp; make install</span><br><span class="line"># ln -s /usr/local/mysql-5.5.55/ /usr/local/mysql</span><br><span class="line"># ll /usr/local/mysql/</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-09-21-mysql-mul-server.html#more" rel="contents">
+            <a class="btn" href="/mysql-mul-server.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -701,10 +701,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-09-19-naxsiwaf.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/naxsiwaf.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -720,7 +720,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-09-19-naxsiwaf.html" itemprop="url">定制轻量高效的WAF Naxsi [一]</a></h1>
+                <a class="post-title-link" href="/naxsiwaf.html" itemprop="url">定制轻量高效的WAF Naxsi [一]</a></h1>
         
 
         <div class="post-meta">
@@ -845,7 +845,7 @@
 <p>0x03 下载naxsi,重新编译安装nginx,主要是要把naxsi模块加载进去,这里的nginx直接用的最新版的稳定版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># git clone https://github.com/nbs-system/naxsi.git</span><br><span class="line"># wget http://nginx.org/download/nginx-1.12.1.tar.gz</span><br><span class="line"># yum install pcre pcre-devel openssl openssl-devel -y</span><br><span class="line"># useradd -s /sbin/nologin -M nginx</span><br><span class="line"># tar xf nginx-1.12.1.tar.gz</span><br><span class="line"># cd nginx-1.12.1</span><br><span class="line"># ./configure --prefix=/usr/local/nginx-1.12.1 --user=nginx --group=nginx --with-http_ssl_module --with-http_stub_status_module --with-http_gzip_static_module --with-file-aio --with-http_dav_module --add-module=../naxsi/naxsi_src/</span><br><span class="line"># make &amp;&amp; make install</span><br><span class="line"># ln -s /usr/local/nginx-1.12.1/ /usr/local/nginx</span><br><span class="line"># cd /usr/local/nginx/conf/</span><br><span class="line"># mv nginx.conf nginx.conf.bak &amp;&amp; egrep -v &quot;^$|#&quot; nginx.conf.bak &gt;&gt; nginx.conf</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-09-19-naxsiwaf.html#more" rel="contents">
+            <a class="btn" href="/naxsiwaf.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -897,10 +897,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-09-09-pentestaction.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/pentestaction.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -916,7 +916,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-09-09-pentestaction.html" itemprop="url">自己总结的常规入侵流程脑图</a></h1>
+                <a class="post-title-link" href="/pentestaction.html" itemprop="url">自己总结的常规入侵流程脑图</a></h1>
         
 
         <div class="post-meta">
@@ -1039,7 +1039,7 @@
 <p><center>个人始终坚信,只有深入理解入侵者的真实想法,不断学习,并能轻松熟练地模拟出入侵者的各类入侵手段,才是最切实有效的防御</center><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-09-09-pentestaction.html#more" rel="contents">
+            <a class="btn" href="/pentestaction.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1091,10 +1091,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-08-06-ew-tunnel.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/ew-tunnel.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1110,7 +1110,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-08-06-ew-tunnel.html" itemprop="url">利用 ew 轻松穿透目标多级内网</a></h1>
+                <a class="post-title-link" href="/ew-tunnel.html" itemprop="url">利用 ew 轻松穿透目标多级内网</a></h1>
         
 
         <div class="post-meta">
@@ -1239,7 +1239,7 @@
 <p>在win7上打开Proxifier根据上面监听的端口建立正常的socks代理即可<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-08-06-ew-tunnel.html#more" rel="contents">
+            <a class="btn" href="/ew-tunnel.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1291,10 +1291,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-08-03-navicat-dump.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/navicat-dump.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1310,7 +1310,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-08-03-navicat-dump.html" itemprop="url">利用 Navicat 自带的http隧道进行脱裤</a></h1>
+                <a class="post-title-link" href="/navicat-dump.html" itemprop="url">利用 Navicat 自带的http隧道进行脱裤</a></h1>
         
 
         <div class="post-meta">
@@ -1435,7 +1435,7 @@
 <p>0x03 我们最终要实现的效果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过lnmp01这台机器,脱取内网win7机器上的所有数据</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-08-03-navicat-dump.html#more" rel="contents">
+            <a class="btn" href="/navicat-dump.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1487,10 +1487,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-08-02-ELK-LOG.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/ELK-LOG.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1506,7 +1506,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-08-02-ELK-LOG.html" itemprop="url">利用 ELK 深度定制实时入侵日志分析平台初步</a></h1>
+                <a class="post-title-link" href="/ELK-LOG.html" itemprop="url">利用 ELK 深度定制实时入侵日志分析平台初步</a></h1>
         
 
         <div class="post-meta">
@@ -1630,7 +1630,7 @@
 <p>0x03 下载配置 elasticsearch:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.2.tar.gz</span><br><span class="line"># tar -xf elasticsearch-1.7.2.tar.gz</span><br><span class="line"># mv elasticsearch-1.7.2 /usr/local/</span><br><span class="line"># ln -s /usr/local/elasticsearch-1.7.2/ /usr/local/elasticsearch</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-08-02-ELK-LOG.html#more" rel="contents">
+            <a class="btn" href="/ELK-LOG.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1682,10 +1682,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-08-02-log-find.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/log-find.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1701,7 +1701,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-08-02-log-find.html" itemprop="url">入侵取证 [ web日志分析初步 ]</a></h1>
+                <a class="post-title-link" href="/log-find.html" itemprop="url">入侵取证 [ web日志分析初步 ]</a></h1>
         
 
         <div class="post-meta">
@@ -1826,7 +1826,7 @@
 <p>这时再回到 nginx 主配置文件中, 引用刚刚设置的cookie变量, 这样, 头里面的那几个字段数据就都可以被记录了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">...</span><br><span class="line">    log_format main &apos;$remote_addr - $remote_user  [$time_local]  &apos;</span><br><span class="line">    &apos; &quot;$request&quot; $request_body $status  $body_bytes_sent  &apos;</span><br><span class="line">    &apos; &quot;$http_referer&quot;  &quot;$http_user_agent&quot;  &quot;$http_x_forwarded_for&quot; &quot;$dm_cookie&quot; &apos;;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-08-02-log-find.html#more" rel="contents">
+            <a class="btn" href="/log-find.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1878,10 +1878,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-08-01-socat-meterpreter.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/socat-meterpreter.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1897,7 +1897,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-08-01-socat-meterpreter.html" itemprop="url">如何利用 socat 更方便地穿透目标内网</a></h1>
+                <a class="post-title-link" href="/socat-meterpreter.html" itemprop="url">如何利用 socat 更方便地穿透目标内网</a></h1>
         
 
         <div class="post-meta">
@@ -2023,7 +2023,7 @@
 <p>0x03 最终目的,实现双内网通信,即在我自己的内网中操作目标内网中的机器,当然,实现双内网通信的方式还有非常多,比如常用的几种方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">最传统的是通过在vps利用lcx listen做转发,然后再在本地bind上去</span><br><span class="line">另外,还是通过vps搭建vpn,本地先连到vpn内网中,再在vps上用lcx tran通过vpn内网转发到本地</span><br><span class="line">还有,利用meterpreter自带的端口转发功能,当然啦,那个是通过meterpreter隧道自己来实现的,也就是说你要先把meterpreter的shell先弹回来,因为这个并非今天重点,暂不多做介绍,有兴趣可自行深度挖掘研究</span><br><span class="line">再有,在一些高级点的马中也自带了各种内网代理功能....</span><br><span class="line">最后,就是接下来咱们要详细说明的这种,利用socat和目标DMZ建立双向通道,然后带出目标内网中所有机器的流量</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-08-01-socat-meterpreter.html#more" rel="contents">
+            <a class="btn" href="/socat-meterpreter.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2075,10 +2075,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-08-01-waf-for-modsecurity.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/bypasswaf-on-database.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -2094,7 +2094,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-08-01-waf-for-modsecurity.html" itemprop="url">ModSecurity 生产级WAF部署优化 [一]</a></h1>
+                <a class="post-title-link" href="/bypasswaf-on-database.html" itemprop="url">bypasswaf for mysql [数据库层面之特殊字符篇]</a></h1>
         
 
         <div class="post-meta">
@@ -2122,8 +2122,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-09-24T16:25:00+08:00">
-                2017-09-24
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:39:52+08:00">
+                2017-10-23
               </time>
             
           </span>
@@ -2144,8 +2144,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ModSecurity/" itemprop="url" rel="index">
-                    <span itemprop="name">ModSecurity</span>
+                  <a href="/categories/bypasswaf/" itemprop="url" rel="index">
+                    <span itemprop="name">bypasswaf</span>
                   </a>
                 </span>
 
@@ -2175,7 +2175,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,609
+                  1,024
                 </span>
               
 
@@ -2191,7 +2191,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8
+                  5
                 </span>
               
             </div>
@@ -2213,14 +2213,10 @@
 
       
         
-          <p><br><br>0x01 用大白话来简单说明 WAF 最基本的工作流程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">捕获客户端的各种请求 -&gt; 匹配WAF拦截规则 -&gt; 命中规则后的处理动作 -&gt; 将整个拦截过程记录到指定的日志文件中 -&gt; 脚本绘制实时攻击图表</span><br></pre></td></tr></table></figure></p>
-<p>0x02 关于modsecurity<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一款老牌的开源 WAF,相信经常搞渗透的朋友,对市面上经常用的几款WAF,都早已非常熟悉,废话不多说,咱们直奔主题</span><br><span class="line">本次,我们只是单单把它部署到可用的状态,关于规则深度定制,绕过以及白名单设置是我们面的事情</span><br><span class="line">个人非常不建议把modsecurity和nginx一起用,实际测试中,问题还非常的多,关于nginx更推荐用naxsi[后面再单独说]</span><br><span class="line">至于源码包,可自行去 modsecurity 的官方站点下载  www.modsecurity.org</span><br></pre></td></tr></table></figure></p>
-<p>0x03 首先,先编译安装好基本的LAMP环境 [具体编译安装过程,可自行参考博客相关文章] ,这里暂时就直接用之前编译好的环境来演示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">httpd 2.4.27 + php 5.6.31 + mysql 5.5.57 + centOS6.8_x64</span><br></pre></td></tr></table></figure></p>
-<p>0x04 先停掉apache,因为等会儿要编译modsecurity生成对应的库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pkill httpd</span><br></pre></td></tr></table></figure></p>
-<p>0x05 开始编译安装 modsecurity,一如往常,务必先装好一些必要的依赖库,不然中间会有很多的麻烦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># yum install httpd-devel apr apr-util-devel apr-devel pcre pcre-devel libxml2 libxml2-devel curl-devel zlib zlib-devel openssl openssl-devel -y</span><br><span class="line"># cd modsecurity-2.9.2</span><br><span class="line"># ./configure --with-apxs=/usr/local/httpd/bin/apxs   生成modsecurity的so</span><br><span class="line"># make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
+          <p><br><br>0x01 先准备好用于测试库表及数据:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database injection;</span><br><span class="line">mysql&gt; use injection;</span><br><span class="line">mysql&gt; CREATE TABLE IF NOT EXISTS `user`(</span><br><span class="line">	`id` INT UNSIGNED AUTO_INCREMENT,</span><br><span class="line">	`username` VARCHAR(30) NOT NULL,</span><br><span class="line">	`password` VARCHAR(40) NOT NULL,</span><br><span class="line">	`email` VARCHAR(40) NOT NULL,</span><br><span class="line">	PRIMARY KEY ( `id` )</span><br><span class="line">	)ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;gentoo&apos;,&apos;superman&apos;,&apos;sec@rootkit.org&apos;);</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;arch&apos;,&apos;welcome&apos;,&apos;lin@hook.org&apos;);</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;admin&apos;,&apos;loginpass&apos;,&apos;xlion@priv.org&apos;);</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-08-01-waf-for-modsecurity.html#more" rel="contents">
+            <a class="btn" href="/bypasswaf-on-database.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2300,9 +2296,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
-                alt="Evil-404" />
+                alt="VK" />
             
-              <p class="site-author-name" itemprop="name">Evil-404</p>
+              <p class="site-author-name" itemprop="name">VK</p>
               <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
           </div>
 
@@ -2467,11 +2463,11 @@ show_date_time();
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Evil-404</span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共293.4k字</span>
+  <span class="post-count">博客全站共293.5k字</span>
 </div>
 
   
@@ -2486,15 +2482,12 @@ show_date_time();
 
 
 
-  <div class="theme-info">BY &mdash; <a class="theme-link" target="_blank" href="https://evil-404.github.io/">修改版.Mist</a> v</div>
-
 
 
 
 <span id="busuanzi_container_site_pv">
     本站总访问量<span id="busuanzi_value_site_pv"></span>次
 </span>
-
         
 
 

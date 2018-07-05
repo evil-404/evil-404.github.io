@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Tomcat 安全部署实战指南," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x01 关于Tomcat,更多详情大家可直接参考百科说明1https://zh.wikipedia.org/wiki/Apache_Tomcat 此次演示环境12CentOS7 x86_64 	ip: 192.168.3.64Apache Tomcat/8.5.24 	建议大家使用较新版的稳定版本 0x02 首先,在正式部署Tomcat之前,需要先来准备好jdk环境,因为毕竟底层还是在靠java">
+<meta name="keywords" content="Tomcat 安全部署实战指南">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat 安全部署实战指南">
+<meta property="og:url" content="https://evil-404.github.io/tomcat-sec.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="0x01 关于Tomcat,更多详情大家可直接参考百科说明1https://zh.wikipedia.org/wiki/Apache_Tomcat 此次演示环境12CentOS7 x86_64 	ip: 192.168.3.64Apache Tomcat/8.5.24 	建议大家使用较新版的稳定版本 0x02 首先,在正式部署Tomcat之前,需要先来准备好jdk环境,因为毕竟底层还是在靠java">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://evil-404.github.io/img/java%20web.jpg">
+<meta property="og:image" content="https://evil-404.github.io/img/virtual%20host%20tomcat.png">
+<meta property="og:image" content="https://evil-404.github.io/img/dir%20list.png">
+<meta property="og:image" content="https://evil-404.github.io/img/tomcat%20version.png">
+<meta property="og:image" content="https://evil-404.github.io/img/version%20tomcat%20display.png">
+<meta property="og:image" content="https://evil-404.github.io/img/host%20allow.png">
+<meta property="og:image" content="https://evil-404.github.io/img/new%20log%20format.png">
+<meta property="og:updated_time" content="2017-12-30T12:34:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomcat 安全部署实战指南">
+<meta name="twitter:description" content="0x01 关于Tomcat,更多详情大家可直接参考百科说明1https://zh.wikipedia.org/wiki/Apache_Tomcat 此次演示环境12CentOS7 x86_64 	ip: 192.168.3.64Apache Tomcat/8.5.24 	建议大家使用较新版的稳定版本 0x02 首先,在正式部署Tomcat之前,需要先来准备好jdk环境,因为毕竟底层还是在靠java">
+<meta name="twitter:image" content="https://evil-404.github.io/img/java%20web.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'Index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/tomcat-sec.html"/>
+
+
+
+
+
+  <title>Tomcat 安全部署实战指南 | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/tomcat-sec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tomcat 安全部署实战指南</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T04:09:17+08:00">
+                2017-12-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:34:50+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tomcat-安全部署实战指南/" itemprop="url" rel="index">
+                    <span itemprop="name">Tomcat 安全部署实战指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,257
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>0x01 关于Tomcat,更多详情大家可直接参考百科说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://zh.wikipedia.org/wiki/Apache_Tomcat</span><br></pre></td></tr></table></figure></p>
+<p>此次演示环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CentOS7 x86_64 	ip: 192.168.3.64</span><br><span class="line">Apache Tomcat/8.5.24 	建议大家使用较新版的稳定版本</span><br></pre></td></tr></table></figure></p>
+<p>0x02 首先,在正式部署Tomcat之前,需要先来准备好jdk环境,因为毕竟底层还是在靠java来处理,所以必须要先得有java的运行环境才行,其实,在实际生产环境中,也可以单独使用<code>jre</code>,不过个人觉得这和安全的关系并不大,试想,如果你手里都已经拿到了一个可以运行java的环境了,我在本地用对应版本的jdk编译好了再丢上运行也是一样,防不住啥,太泛泛<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># tar xf jdk-8u151-linux-x64.tar.gz</span><br><span class="line"># mv jdk1.8.0_151/ /usr/local/</span><br><span class="line"># ln -s /usr/local/jdk1.8.0_151/ /usr/local/jdk</span><br><span class="line"># tar xf apache-tomcat-8.5.24.tar.gz</span><br><span class="line"># mv apache-tomcat-8.5.24 /usr/local/</span><br><span class="line"># ln -s /usr/local/apache-tomcat-8.5.24/ /usr/local/tomcat</span><br><span class="line"># ll /usr/local/</span><br><span class="line"># vi /etc/profile</span><br><span class="line">  export JAVA_HOME=/usr/local/jdk/ </span><br><span class="line">  export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH </span><br><span class="line">  export CLASSPATH=.$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar</span><br><span class="line">  export TOMCAT_HOME=/usr/local/tomcat</span><br><span class="line"># source /etc/profile</span><br><span class="line"># java -version</span><br><span class="line"># javac</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>0x03 <code>务必专门创建一个普通用户来运行tomcat服务,防止入侵者直接拿到root权限的webshell</code>,极度建议大家实际应用中在满足当前及拓展业务需求的前提下,尽量把tomcat压缩在一个极小的系统权限下,最好,除了指定的事儿,其它的让它啥也干不了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># useradd -u 301 tomcat</span><br><span class="line"># passwd tomcat</span><br><span class="line"># chown -R tomcat:tomcat /usr/local/tomcat/</span><br><span class="line"># chown -R tomcat:tomcat /usr/local/jdk/</span><br><span class="line"># ll /usr/local/jdk/ /usr/local/tomcat/</span><br><span class="line"># su - tomcat</span><br><span class="line">$ /usr/local/tomcat/bin/catalina.sh start</span><br><span class="line">$ netstat -tulnp</span><br><span class="line">$ cat /usr/local/tomcat/logs/catalina.out  启动过程中如果有什么问题可以去该日志</span><br></pre></td></tr></table></figure></p>
+<p>0x04 理解Tomcat的基本目录结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># tree -L 1 /usr/local/tomcat/</span><br><span class="line">/usr/local/tomcat/</span><br><span class="line">├── bin		   主要用来放置各种tomcat服务管理脚本</span><br><span class="line">├── conf	   用于存放Tomcat服务的各类配置文件</span><br><span class="line">├── lib		   此目录用于存放Tomcat的核心类库文件</span><br><span class="line">├── LICENSE</span><br><span class="line">├── logs	   主要用于放置Tomcat的启动和访问日志文件</span><br><span class="line">├── NOTICE</span><br><span class="line">├── RELEASE-NOTES</span><br><span class="line">├── RUNNING.txt</span><br><span class="line">├── temp	   存放一些缓存临时数据的目录</span><br><span class="line">├── webapps	   默认的站点根目录</span><br><span class="line">└── work	   把jsp代码转换为java代码[class]文件时的存放目录,这就是为什么访问速度极快的原因之一,只需编译一次,后续直接访问`缓存`</span><br></pre></td></tr></table></figure></p>
+<p>0x05 理解Tomcat各个配置文件的主要功用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># tree -L 1 /usr/local/tomcat/conf/</span><br><span class="line">/usr/local/tomcat/conf/</span><br><span class="line">├── Catalina				</span><br><span class="line">├── catalina.policy	  当带上-security选项启动tomcat时,会自动读取并应用该文件中的策略配置</span><br><span class="line">├── catalina.properties	  有关Tomcat内部各种类加载器的一些配置</span><br><span class="line">├── context.xml		  此处的context.xml是作用于域全局的,一般情况下,每个站点目录下都应有一个context.xml文件,用于定义会话管理器,JDBC等</span><br><span class="line">├── jaspic-providers.xml</span><br><span class="line">├── jaspic-providers.xsd</span><br><span class="line">├── logging.properties	  指定不同类日志的格式</span><br><span class="line">├── server.xml		  tomcat主配置文件</span><br><span class="line">├── tomcat-users.xml	  用于tomcat web管理端认证的配置文件</span><br><span class="line">├── tomcat-users.xsd</span><br><span class="line">└── web.xml		  站点被部署时使用的默认部署配置项</span><br></pre></td></tr></table></figure></p>
+<p>0x05 深入理解tomcat的运作细节及常用组件</p>
+<p>简单回顾Tomcat的基本运作细节<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-&gt; 此处,以请求 http://www.rootkit.org:8080/demo/index.jsp 为例</span><br><span class="line">  -&gt; 首先,客户端来请求www.rootkit.org的8080端口,正好被监听于此的Http Connector所捕获</span><br><span class="line">    -&gt; 随后,Connector会把该请求交给它所在的Service中的Engine去处理并等待Engine回应</span><br><span class="line">      -&gt; 当Engine拿到这个请求后,会自动根据请求中的www.rootkit.org这个域名来匹配到它内部属于哪个Host,然后直接丢给那个Host</span><br><span class="line">	-&gt; 当请求到达指定的Host时,Host会自动匹配出Path为/demo所在的Context</span><br><span class="line">	  -&gt; 之后,对应Context会拿到/index.jsp请求,再到映射表中找出对应的Servlet类去处理,如,构造HttpServletRequest和HttpServletResponse对象</span><br><span class="line">	    -&gt; Context会把处理好之后的HttpServletResponse对象返回给Host</span><br><span class="line">	      -&gt; Host再把HttpServletResponse对象返回给Engine</span><br><span class="line">		-&gt; 最后,Engine把HttpServletResponse对象返回对应的Connector,至此,一次相对完整的Tomcat请求响应过程就基本完成了</span><br></pre></td></tr></table></figure></p>
+<p>关于上述提到的各个组件功用简介<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Server	   一个Server即对应一个Tomcat实例,实际中机器性能好的情况下,建议直接分成多实例,不建议用它自带的虚拟主机,虚拟主机之间对性能影响较大	</span><br><span class="line">Service    通常由一个Engine以及一个或多个Connector组成</span><br><span class="line">Connector  主要就是用来监听指定端口,然后把指定端口的请求都交给Engine</span><br><span class="line">Engine	   其实就是实际的处理引擎,下面可以同时配置多个虚拟主机,它自身会根据域名来匹配到对应的虚拟主机</span><br><span class="line">Host	   即虚拟主机,一个Host即一个虚拟主机</span><br><span class="line">Context	   Context在创建的时候会根据配置文件$CATALINA_HOME/conf/web.xml</span><br><span class="line">	   和$WEBAPP_HOME/WEB-INF/web.xml载入Servlet类,当Context收到请求时</span><br><span class="line">	   将到自己的映射表 [mapping table]中寻找相匹配的Servlet类,如果找到,则执行该类,并回应该请求</span><br></pre></td></tr></table></figure></p>
+<p>tomcat 主配置文件结构大致如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;Server&gt;</span><br><span class="line">  &lt;Service&gt;</span><br><span class="line">    &lt;Connector/&gt;</span><br><span class="line">    &lt;Engine&gt;</span><br><span class="line">      &lt;Host&gt;</span><br><span class="line">        &lt;Context&gt;&lt;/Context&gt;</span><br><span class="line">      &lt;/Host&gt;</span><br><span class="line">     &lt;/Engine&gt;</span><br><span class="line">  &lt;/Service&gt;</span><br><span class="line">  &lt;Service&gt;</span><br><span class="line">   ...</span><br><span class="line">  &lt;/Service&gt;</span><br><span class="line">&lt;/Server&gt;</span><br></pre></td></tr></table></figure></p>
+<p>0x06 一个标准的 <code>Java web</code> 目录结构,如下</p>
+<p><img src="/img/java web.jpg" alt=""></p>
+<p>0x07 如何快速纯手工在Tomcat中自定义一个基于域名的虚拟主机,还是那句话,实际中机器性能够的情况下,建议用tomcat多实例,不建议用虚拟主机</p>
+<p>先准备好站点所需的各种目录,务必要严格按照上面的java web标准来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /data/&#123;javaweb,logs&#125; -p</span><br><span class="line"># chown -R tomcat:tomcat /data/</span><br><span class="line">$ su - tomcat</span><br><span class="line">$ cd /data/javaweb/</span><br><span class="line">$ mkdir secapp/&#123;lib,classes,WEB-INF,META-INF&#125; -p</span><br><span class="line">$ vi secapp/index.jsp</span><br><span class="line">  &lt;html&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  &lt;br&gt;</span><br><span class="line">  &lt;center&gt;&lt;h1&gt;This is a Tomcat Server 8.x &lt;/h1&gt; </span><br><span class="line">  &lt;br&gt;&lt;h2&gt;Now time is: &lt;%=new java.util.Date()%&gt;&lt;/h2&gt;&lt;/center&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">  &lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>再到tomcat主配置文件中添加Host标签段,记得禁用自动部署和自动解war包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/server.xml</span><br><span class="line">  &lt;Host name=&quot;www.sec.org&quot; appBase=&quot;/data/javaweb/secapp&quot; autoDeploy=&quot;false&quot; unpackWARs=&quot;true&quot;&gt;</span><br><span class="line">    &lt;Context path=&quot;&quot; docBase=&quot;.&quot; debug=&quot;0&quot; /&gt;</span><br><span class="line">    &lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;/data/logs&quot;</span><br><span class="line">        prefix=&quot;www.sec.org_access_log&quot; suffix=&quot;.txt&quot;</span><br><span class="line">        pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;</span><br><span class="line">  &lt;/Host&gt;</span><br><span class="line"></span><br><span class="line">$ /usr/local/tomcat/bin/catalina.sh stop</span><br><span class="line">$ cd /usr/local/tomcat/	  重启前最好把下面两个目录中的内容清空,防止缓存作祟</span><br><span class="line">$ rm -fr ./temp/*</span><br><span class="line">$ rm -fr ./work/*</span><br><span class="line">$ /usr/local/tomcat/bin/catalina.sh start </span><br><span class="line">$ cat /usr/local/tomcat/logs/catalina.out	查看tomcat启动日志,一般来这儿都是为了看报错</span><br><span class="line">$ tail -f /data/logs/www.sec.org_access_log.2017-12-17.txt</span><br><span class="line">$ tree /usr/local/tomcat/work/</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/virtual host tomcat.png" alt=""></p>
+<p>0x08 配置Tomcat的web端管理功能,此功能比较危险,容易被人跑到管理账号密码,直接进来即可部署webshell,如非必须,建议删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/tomcat-users.xml</span><br><span class="line">  &lt;role rolename=&quot;manager-gui&quot;/&gt;</span><br><span class="line">  &lt;role rolename=&quot;admin-gui&quot;/&gt;</span><br><span class="line">  &lt;user username=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;manager-gui,admin-gui&quot;/&gt; 让tomcat同时应用于两个角色</span><br><span class="line"></span><br><span class="line">$ /usr/local/tomcat/bin/catalina.sh start    修改完配置后重启tomcat</span><br><span class="line">$ /usr/local/tomcat/bin/catalina.sh stop</span><br></pre></td></tr></table></figure></p>
+<p>0x09 修改管理端口及用于关闭服务的字符串,默认为<code>8005,SHUTDOWN</code>,实际中,一般也不会用这种方式来关闭tomcat,所以,可以把关闭字符串设的更长更随机一些,不过,好在最新版本tomcat默认只监听在127.0.0.1,所以对此项不必太过紧张<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/server.xml</span><br><span class="line">  &lt;Server port=&quot;9301&quot; shutdown=&quot;a8HelEd45fm43LseDF&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>0x10 修改AJP协议通信端口,其实你可以直接把该项注释掉,因为绝大多数情况下我们都只会使用http协议进行反向代理,而不会用AJP协议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/server.xml</span><br><span class="line">  &lt;!-- &lt;Connector port=&quot;8010&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt;--&gt;</span><br></pre></td></tr></table></figure></p>
+<p>0x11 禁止tomcat目录遍历,将<code>param-value</code>标签中的值改为false,其实默认就是禁止的,只不过为了保险,还是需要再确认一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/web.xml</span><br><span class="line">  &lt;init-param&gt;</span><br><span class="line">    &lt;param-name&gt;listings&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;false&lt;/param-value&gt;   &lt;!-- false即表示禁止目录遍历 --&gt; </span><br><span class="line">  &lt;/init-param&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;welcome-file-list&gt; &lt;!-- 设置主页索引文件 --&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;demo.jsp&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/dir list.png" alt=""></p>
+<p>0x12 隐藏服务器版本信息,为了能一定程度上防止被人用0day批量打,我们需要将tomcat的详细版本稍微隐藏下,比如,在出现403,404,500这样的状态码时,就很容易会暴露我们web服务器的详细版本,当然,你也可以直接把指定的状态码重定向到指定的页面上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/tomcat/lib/</span><br><span class="line">$ unzip catalina.jar</span><br><span class="line">$ cd org/apache/catalina/util/</span><br><span class="line">$ vi ServerInfo.properties</span><br><span class="line">  server.info=Microsoft-IIS/7.5</span><br><span class="line">  server.number=7.5</span><br><span class="line">  server.built=Nov 27 2017 13:05:30 UTC</span><br><span class="line">$ cd /usr/local/tomcat/lib/</span><br><span class="line">$ jar uvf catalina.jar org/apache/catalina/util/ServerInfo.properties</span><br><span class="line">$ /usr/local/tomcat/bin/catalina.sh stop</span><br><span class="line">$ /usr/local/tomcat/bin/catalina.sh start</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/tomcat version.png" alt=""></p>
+<p>0x13 修改http响应头中的server字段名称,只需要在http连接器中添加指定的server属性即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/server.xml</span><br><span class="line">  &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">    connectionTimeout=&quot;20000&quot;</span><br><span class="line">    redirectPort=&quot;8443&quot; server=&quot;Microsoft-IIS/7.5&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/version tomcat display.png" alt=""></p>
+<p>0x14 最好把所有Host组件中的自动部署选项全部关掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/server.xml</span><br><span class="line">  &lt;Host name=&quot;www.sec.org&quot; appBase=&quot;/data/javaweb/secapp&quot; autoDeploy=&quot;false&quot; unpackWARs=&quot;true&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>0x15 如果我们是在前面使用apache或者nginx做的反向代理,也可通过限制特定ip的方式来访问,如下,表示仅允许<code>192.168.3.0/24</code>这个内网段来访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/server.xml</span><br><span class="line">  &lt;Host&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;Context path=&quot;&quot; docBase=&quot;.&quot; debug=&quot;0&quot; /&gt;</span><br><span class="line">      &lt;Valve className=&quot;org.apache.catalina.valves.RemoteAddrValve&quot; allow=&quot;192.168.4.*&quot; deny=&quot;*.*.*.*&quot; /&gt;</span><br><span class="line">    ...  </span><br><span class="line">  &lt;/Host&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/host allow.png" alt=""></p>
+<p>0x16 限制其他用户对tomcat各类服务管理工具的使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chmod -R 744 /usr/local/tomcat/bin/*</span><br></pre></td></tr></table></figure></p>
+<p>0x17 配置更加详细的访问日志格式,方便后续做入侵审查,如添加记录 user-agent,referer 字段数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/server.xml</span><br><span class="line">  &lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;/data/logs&quot;</span><br><span class="line">    prefix=&quot;www.sec.org_access_log&quot; suffix=&quot;.txt&quot;</span><br><span class="line">    pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b %&#123;Referer&#125;i %&#123;User-Agent&#125;i %D&quot; resolveHosts=&quot;false&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/new log format.png" alt=""></p>
+<p>0x18 关于Tomcat 7.x 版本,你可能还需要手工去禁用一些危险请求方法,将<code>readonly</code>的值设为<code>true</code>,即禁止<code>DELETE</code>及<code>PUT</code>方法,如下,不过在新版中,默认就处于禁用状态,无需关心<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/tomcat/conf/web.xml</span><br><span class="line">  &lt;init-param&gt;</span><br><span class="line">    &lt;param-name&gt;readonly&lt;/param-name&gt; </span><br><span class="line">    &lt;param-value&gt;true&lt;/param-value&gt; </span><br><span class="line">  &lt;/init-param&gt;</span><br></pre></td></tr></table></figure></p>
+<p>0x19 必要情况下,可直接禁用tomcat提供的默认web管理端,防止入侵者用此方式部署webshell,此处采用的禁用方式只是把原来web管理端的文件都重新放到别的目录中,而后再到主配置文件中去注释掉默认的locahost所对应的host组件,最后重启tomcat即可,话说回来,status可以留着,因为可能后续还要靠此来监控jvm的一些性能参数,大家还是酌情而定吧<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/tomcat/webapps/</span><br><span class="line">$ mkdir tmp</span><br><span class="line">$ mv docs/ examples/ host-manager/ manager/ ROOT/ ./tmp/</span><br><span class="line"></span><br><span class="line">&lt;!-- </span><br><span class="line">&lt;Host name=&quot;localhost&quot;  appBase=&quot;webapps&quot;</span><br><span class="line">   unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;</span><br><span class="line">--&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">&lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot;</span><br><span class="line">   prefix=&quot;localhost_access_log&quot; suffix=&quot;.txt&quot;</span><br><span class="line">   pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;</span><br><span class="line">&lt;/Host&gt;</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure></p>
+<p>0x20 最后,时常去关注tomcat官方发布的一些高危漏洞补丁,tomcat 8.x 已经相对比较稳定了,所以也建议大家,务必在稳定的前提下使用更新一点的版本</p>
+<p><br><br>后话:<br>&nbsp;&nbsp;&nbsp;&nbsp;因为关注的点不同,所以肯定有所偏颇,此处还是旨在防入侵,至于<code>针对jvm的各种性能优化</code>,后续有机会我们再单独说明,因为tomcat几乎都不会直接面向用户,大多都是通过反向代理的方式来提供服务的,另外,java自身的安全性和性能<code>采用编译的方式来运行</code>都要优于php,所以,针对tomcat的安全并没有像nginx或者apache压力那么大,而且由于tomcat是在后端,也相对比较好控制,虽然它到现在对java的一些类库支持的还不是很完整,但那些对我们而言暂时无需关心,以上部署仅供参考,并不完整,后续还会不断更新,大家可根据自己的实际业务需求再做进更进一步调整,关于java对渗透的功用,比如,免杀…想必大家也都非常熟悉了,这里就不多说了,更多其它内容,也非常欢迎大家来一起私信交流 ^_^</p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    klion
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/tomcat-sec.html" title="Tomcat 安全部署实战指南">https://evil-404.github.io/tomcat-sec.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tomcat-安全部署实战指南/" rel="tag"><i class="fa fa-tag"></i>Tomcat 安全部署实战指南</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/samba-sec.html" rel="next" title="跨平台快速文件共享 Samba">
+                <i class="fa fa-chevron-left"></i> 跨平台快速文件共享 Samba
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/ldap-sec.html" rel="prev" title="初探 LDAP 安全 [ 一 ]">
+                初探 LDAP 安全 [ 一 ] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">157</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="RoarTalk" target="_blank">RoarTalk</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共293.5k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

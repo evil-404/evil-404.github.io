@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="protect of waf," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x01 什么是Lua123关于Lua,就不用多说了吧,想必朋友们应该也都非常熟悉了,众多脚本语言中的一种,不过相对于其它脚本来说,性能要略高一点在nginx中也提供了一个nginx_lua的模块,主要是为了方便用户,可以灵活的通过lua来扩展nginx功能,比如lua_waf有兴趣可自行深入了解,这里就不细说了,我们今天的重点主要还是想利用它来快速部署一个简易版的Waf 0x02 这里,我还是拿">
+<meta name="keywords" content="protect of waf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 nginx_lua 定制高效灵活的专属WAF">
+<meta property="og:url" content="https://evil-404.github.io/nginx-waf.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="0x01 什么是Lua123关于Lua,就不用多说了吧,想必朋友们应该也都非常熟悉了,众多脚本语言中的一种,不过相对于其它脚本来说,性能要略高一点在nginx中也提供了一个nginx_lua的模块,主要是为了方便用户,可以灵活的通过lua来扩展nginx功能,比如lua_waf有兴趣可自行深入了解,这里就不细说了,我们今天的重点主要还是想利用它来快速部署一个简易版的Waf 0x02 这里,我还是拿">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://evil-404.github.io/img/lua_info.png">
+<meta property="og:image" content="https://evil-404.github.io/img/lua_regx.png">
+<meta property="og:image" content="https://evil-404.github.io/img/lua_cmd.png">
+<meta property="og:image" content="https://evil-404.github.io/img/lua_code.png">
+<meta property="og:image" content="https://evil-404.github.io/img/lua_sqli.png">
+<meta property="og:image" content="https://evil-404.github.io/img/lua_xss.png">
+<meta property="og:image" content="https://evil-404.github.io/img/lua_log.png">
+<meta property="og:updated_time" content="2017-10-24T02:02:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用 nginx_lua 定制高效灵活的专属WAF">
+<meta name="twitter:description" content="0x01 什么是Lua123关于Lua,就不用多说了吧,想必朋友们应该也都非常熟悉了,众多脚本语言中的一种,不过相对于其它脚本来说,性能要略高一点在nginx中也提供了一个nginx_lua的模块,主要是为了方便用户,可以灵活的通过lua来扩展nginx功能,比如lua_waf有兴趣可自行深入了解,这里就不细说了,我们今天的重点主要还是想利用它来快速部署一个简易版的Waf 0x02 这里,我还是拿">
+<meta name="twitter:image" content="https://evil-404.github.io/img/lua_info.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'Index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/nginx-waf.html"/>
+
+
+
+
+
+  <title>利用 nginx_lua 定制高效灵活的专属WAF | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nginx-waf.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">利用 nginx_lua 定制高效灵活的专属WAF</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-10T11:11:52+08:00">
+                2017-07-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-24T10:02:44+08:00">
+                2017-10-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/env/" itemprop="url" rel="index">
+                    <span itemprop="name">env</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,351
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><br><br>0x01 什么是Lua<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">关于Lua,就不用多说了吧,想必朋友们应该也都非常熟悉了,众多脚本语言中的一种,不过相对于其它脚本来说,性能要略高一点</span><br><span class="line">在nginx中也提供了一个nginx_lua的模块,主要是为了方便用户,可以灵活的通过lua来扩展nginx功能,比如lua_waf</span><br><span class="line">有兴趣可自行深入了解,这里就不细说了,我们今天的重点主要还是想利用它来快速部署一个简易版的Waf</span><br></pre></td></tr></table></figure></p>
+<p>0x02 这里,我还是拿之前已经编译好的lnmp环境来演示,因为等会儿要重新编译nginx,所以就直接把之前nginx的整个安装目录干掉,因为是源码编译安装的,所以也不会有啥残留[源码编译安装的好处],记得在干掉之前先把nginx服务停掉,配置文件[nginx.conf]也备份一下,方便等会儿再直接拿过来用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php5.5.38 + mysql-5.5.32 + nginx-1.12.1 + centOS6.8_x64</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># pkill nginx</span><br><span class="line"># netstat -tulnp | grep &quot;80&quot;</span><br><span class="line"># cp /usr/local/nginx/conf/nginx.conf /root/</span><br><span class="line"># cp /usr/local/nginx/conf/extra/bwapp.conf /root/</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>0x03 准备好所需的所有源码包,注意,这里的nginx尽量先不要用太高的版本,高版本自身还有些问题,在实际编译时错误的解决也比较周折,暂不推荐用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LuaJIT-2.0.5.tar.gz				</span><br><span class="line">lua-nginx-module-0.9.13.tar.gz</span><br><span class="line">ngx_devel_kit-0.2.19.tar.gz</span><br><span class="line">nginx-1.8.1.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>0x04 编译安装 LuaJIT ,lua脚本的解释器,因为这里是64位系统,防止等会儿找不到库,所以就提前把它链到32位的库中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># tar xf LuaJIT-2.0.5.tar.gz</span><br><span class="line"># cd LuaJIT-2.0.5</span><br><span class="line"># make &amp;&amp; make install</span><br><span class="line"># ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2</span><br><span class="line"># echo &quot;LUAJIT_LIB=/usr/local/lib&quot; &gt;&gt; /etc/profile</span><br><span class="line"># echo &quot;LUAJIT_INC=/usr/local/include/luajit-2.0/&quot; &gt;&gt; /etc/profile</span><br><span class="line"># source /etc/profile</span><br></pre></td></tr></table></figure></p>
+<p>0x05 重新编译安装nginx,其实,我自己这里的依赖库本身是不用再装的,因为之前装nginx时已经都装过了,如果你是第一次全新安装nginx,可能还是要装一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># wget http://nginx.org/download/nginx-1.8.1.tar.gz</span><br><span class="line"># yum install pcre pcre-devel openssl openssl-devel -y</span><br><span class="line"># useradd -s /sbin/nologin -M nginx</span><br><span class="line"># tar xf ../lua-nginx-module-0.9.16.tar.gz</span><br><span class="line"># tar xf ../ngx_devel_kit-0.2.19.tar.gz</span><br><span class="line"># tar xf nginx-1.8.1.tar.gz</span><br><span class="line"># cd nginx-1.8.1</span><br><span class="line"># ./configure --prefix=/usr/local/nginx-1.8.1 --user=nginx --group=nginx --with-http_ssl_module --with-http_stub_status_module --with-http_gzip_static_module --with-file-aio --with-http_dav_module --add-module=./lua-nginx-module-0.9.16 --add-module=./ngx_devel_kit-0.2.19/</span><br><span class="line"># make &amp;&amp; make install</span><br><span class="line"># ln -s /usr/local/nginx-1.8.1/ /usr/local/nginx</span><br><span class="line"># cd /usr/local/nginx/conf/</span><br><span class="line"># mv nginx.conf nginx.conf.bak &amp;&amp; egrep -v &quot;^$|#&quot; nginx.conf.bak &gt;&gt; nginx.conf</span><br></pre></td></tr></table></figure></p>
+<p>0x06 重新配置nginx,在nginx中配置文件中加入以下语句,之后重启nginx,主要是为了测试lua是否可用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># vi /usr/local/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    .....</span><br><span class="line">    log_format main &apos;$remote_addr - $remote_user  [$time_local]  &apos;</span><br><span class="line">    &apos; &quot;$request&quot; $request_body $status  $body_bytes_sent  &apos;</span><br><span class="line">    &apos; &quot;$http_referer&quot;  &quot;$http_user_agent&quot;  &quot;$http_x_forwarded_for&quot; &apos;;</span><br><span class="line">	</span><br><span class="line">    server &#123;</span><br><span class="line">    ....</span><br><span class="line">        location /lua &#123;</span><br><span class="line">            default_type &apos;text/plain&apos;;</span><br><span class="line">            content_by_lua &apos;ngx.say(&quot;Lua say Hello to you!&quot;)&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">    ....</span><br><span class="line">    &#125;</span><br><span class="line">    .....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># /usr/local/nginx-1.8.1/sbin/nginx -t</span><br><span class="line"># /usr/local/nginx-1.8.1/sbin/nginx</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/lua_info.png" alt=""><br></p>
+<p>0x07 在nginx主配置文件中加载lua_waf,具体配置如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># git clone https://github.com/loveshell/ngx_lua_waf.git</span><br><span class="line"># cp -r ngx_lua_waf/ /usr/local/nginx/conf/waf</span><br><span class="line"># cd /usr/local/nginx/conf/</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># vi nginx.conf</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">	....</span><br><span class="line">    lua_package_path &quot;/usr/local/nginx/conf/waf/?.lua&quot;;</span><br><span class="line">    lua_shared_dict limit 10m;</span><br><span class="line">    init_by_lua_file  /usr/local/nginx/conf/waf/init.lua;</span><br><span class="line">    access_by_lua_file /usr/local/nginx/conf/waf/waf.lua;</span><br><span class="line">	....</span><br><span class="line">	</span><br><span class="line">	log_format main &apos;$remote_addr - $remote_user  [$time_local]  &apos;</span><br><span class="line">    &apos; &quot;$request&quot; $request_body $status  $body_bytes_sent  &apos;</span><br><span class="line">    &apos; &quot;$http_referer&quot;  &quot;$http_user_agent&quot;  &quot;$http_x_forwarded_for&quot; &quot;$dm_cookie&quot; &apos;;</span><br><span class="line">	</span><br><span class="line">	include extra/bwapp.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>0x08 编辑waf配置,非常简单,从名字都能看出来是干啥的,非常简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vi /usr/local/nginx/conf/waf/config.lua</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">RulePath = &quot;/usr/local/nginx/conf/waf/wafconf/&quot;</span><br><span class="line">attacklog = &quot;on&quot;		# 开启日志记录</span><br><span class="line">logdir = &quot;/usr/local/nginx/logs/hack/&quot;</span><br><span class="line">UrlDeny=&quot;on&quot;			# 从url中拦截</span><br><span class="line">Redirect=&quot;on&quot;</span><br><span class="line">CookieMatch=&quot;on&quot;		# 从cookie中拦截</span><br><span class="line">postMatch=&quot;on&quot;			# 从post包中拦截</span><br><span class="line">whiteModule=&quot;on&quot;</span><br><span class="line">black_fileExt=&#123;&quot;php&quot;,&quot;jsp&quot;&#125;	# 黑名单后缀</span><br><span class="line">ipWhitelist=&#123;&quot;127.0.0.1&quot;&#125;	# ip白名单</span><br><span class="line">ipBlocklist=&#123;&quot;1.0.0.1&quot;&#125;		# ip黑名单</span><br><span class="line">CCDeny=&quot;on&quot;			# 开启防CC攻击</span><br><span class="line">CCrate=&quot;100/60&quot;</span><br><span class="line">html=[[</span><br><span class="line">&lt;center&gt;&lt;h1&gt;No sir! &lt;/h1&gt;&lt;/center&gt;</span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /usr/local/nginx/logs/hack/</span><br><span class="line"># chown -R nginx.nginx /usr/local/nginx/logs/hack/	注意,这里一定要nginx可写,不然你会发现拦截不了,因为log文件根本没法创建</span><br><span class="line"># mkdir /usr/local/nginx-1.8.1/conf/extra</span><br><span class="line"># cp bwapp.conf /usr/local/nginx/conf/extra/</span><br><span class="line"># /usr/local/nginx/sbin/nginx -t</span><br><span class="line"># /usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<p>0x09 最后,再来看看最核心的地方,规则目录,这里的规则和上面的配置项功能都是一一对应的,还是那句话,这里默认的规则如果实际用当然是远远不够的,不过好在,我们可以直接往里面写正则,这样就显得简单灵活多了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ls /usr/local/nginx/conf/waf/wafconf</span><br></pre></td></tr></table></figure></p>
+<p>参数正则,确实太简陋了,不过,好在定制空间非常大,而且lua相对比较简单,花费的时间周期也比较短<br><img src="/img/lua_regx.png" alt=""><br></p>
+<p>尝试命令执行<br><img src="/img/lua_cmd.png" alt=""><br></p>
+<p>尝试php代码执行<br><img src="/img/lua_code.png" alt=""><br></p>
+<p>尝试sql注入<br><img src="/img/lua_sqli.png" alt=""><br></p>
+<p>尝试 xss<br><img src="/img/lua_xss.png" alt=""><br></p>
+<p>0x10 通过日志观察攻击行为,利用脚本绘制动态图实时显示到前端页面上<br><img src="/img/lua_log.png" alt=""><br></p>
+<p>0x11 小结:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">部署简单,灵活高效,可扩展性较强,后期会把自己加强版的正则给大家,待续....</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    klion
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/nginx-waf.html" title="利用 nginx_lua 定制高效灵活的专属WAF">https://evil-404.github.io/nginx-waf.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/protect-of-waf/" rel="tag"><i class="fa fa-tag"></i>protect of waf</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/readme-Framework.html" rel="next" title="关于各类环境部署简要说明">
+                <i class="fa fa-chevron-left"></i> 关于各类环境部署简要说明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/tor-change-ip.html" rel="prev" title="如何更隐匿地渗透">
+                如何更隐匿地渗透 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">157</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="RoarTalk" target="_blank">RoarTalk</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共293.5k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
