@@ -1940,7 +1940,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #3c30e2;
+  background: #f2ff28;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3171,17 +3171,12 @@ hr {
 }
 .menu .menu-item a {
   font-size: 14px;
-  color: #0f2e41;
+  color: rgba(253,254,255,0.902);
   border-radius: 4px;
 }
 .site-meta {
   margin-left: 0px;
   text-align: center;
-}
-.site-meta .site-title {
-  font-size: 28px;
-  font-family: 'Comic Sans MS', sans-serif;
-  color: #fff;
 }
 .footer {
   background: none;
@@ -3191,6 +3186,11 @@ hr {
   font-family: 'Comic Sans MS', sans-serif;
   text-align: center;
   color: #4c618f;
+}
+.site-meta .site-title {
+  font-size: 50px;
+  font-family: 'Comic Sans MS', sans-serif;
+  color: #17435f;
 }
 .site-subtitle {
   font-size: 15px;
@@ -3248,6 +3248,9 @@ table>tbody>tr:nth-of-type(odd) {
   margin-bottom: 0px;
   padding: 5px;
 }
+.menu .menu-item a:hover {
+  background: rgba(209,207,207,0.6);
+}
 .menu .menu-item {
   margin: 5px 15px;
 }
@@ -3283,7 +3286,7 @@ table>tbody>tr:nth-of-type(odd) {
   text-decoration: underline;
 }
 .menu .menu-item a {
-  font-size: 15px;
+  font-size: 18px;
 }
 .brand {
   background: transparent;
@@ -3496,6 +3499,10 @@ img.img-topic {
   -moz-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   -o-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
   transform: translateX(-50%);
   border-radius: 50%;
   width: 150px;
@@ -3503,9 +3510,9 @@ img.img-topic {
   padding: 0 0;
   border: none;
   font-size: 18px;
-  text-indent: 4px;
-  color: #00bfff;
-  border: 2px #fa8072 solid;
+  text-indent: 11px;
+  color: #25b721;
+  border: 2px rgba(20,18,18,0.902) solid;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
@@ -3518,7 +3525,7 @@ input:-webkit-autofill:focus {
   margin: 0 auto;
   display: block;
   background: #fff;
-  border: 3px solid #87ceeb;
+  border: 3px solid rgba(25,93,210,0.8);
   width: 100px;
   font-size: 16px;
   font-weight: 600;
@@ -3527,5 +3534,12 @@ input:-webkit-autofill:focus {
 }
 .orz-container .final-key:hover,
 .final-key:focus {
-  background: #ff0;
+  background: rgba(85,204,73,0.902);
+}
+.post-copyright {
+  margin: 2em 0 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid rgba(14,15,15,0.4);
+  background-color: rgba(249,249,249,0.2);
+  list-style: none;
 }
