@@ -2074,7 +2074,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/socat-meterpreter.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/https-learn.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="VK">
@@ -2093,7 +2093,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/socat-meterpreter.html" itemprop="url">如何利用 socat 更方便地穿透目标内网</a></h1>
+                <a class="post-title-link" href="/https-learn.html" itemprop="url">深入理解 https 通信加密过程</a></h1>
         
 
         <div class="post-meta">
@@ -2121,8 +2121,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:38:06+08:00">
-                2017-10-23
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-15T09:31:40+08:00">
+                2017-10-15
               </time>
             
           </span>
@@ -2143,8 +2143,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/socat/" itemprop="url" rel="index">
-                    <span itemprop="name">socat</span>
+                  <a href="/categories/https/" itemprop="url" rel="index">
+                    <span itemprop="name">https</span>
                   </a>
                 </span>
 
@@ -2174,7 +2174,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,114
+                  1,239
                 </span>
               
 
@@ -2212,14 +2212,13 @@
 
       
         
-          <p><br><br>0x01 此次环境说明:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lnmp01	假设为目标DMZ段机器,等会儿会作为proxy端</span><br><span class="line">假设其公网ip为 192.168.3.30</span><br><span class="line">假设其内网ip为 192.168.32.167</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">win7  假设为目标内网机器</span><br><span class="line">假设其内网ip为 192.168.32.144</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本地机器</span><br><span class="line">假设本地内网ip为 192.168.3.15</span><br></pre></td></tr></table></figure>
-<p>0x02 需要注意的一些前提条件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本地机器能ping通lnmp01,lnmp01和目标内网中的win7能互通</span><br></pre></td></tr></table></figure></p>
-<p>0x03 最终目的,实现双内网通信,即在我自己的内网中操作目标内网中的机器,当然,实现双内网通信的方式还有非常多,比如常用的几种方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">最传统的是通过在vps利用lcx listen做转发,然后再在本地bind上去</span><br><span class="line">另外,还是通过vps搭建vpn,本地先连到vpn内网中,再在vps上用lcx tran通过vpn内网转发到本地</span><br><span class="line">还有,利用meterpreter自带的端口转发功能,当然啦,那个是通过meterpreter隧道自己来实现的,也就是说你要先把meterpreter的shell先弹回来,因为这个并非今天重点,暂不多做介绍,有兴趣可自行深度挖掘研究</span><br><span class="line">再有,在一些高级点的马中也自带了各种内网代理功能....</span><br><span class="line">最后,就是接下来咱们要详细说明的这种,利用socat和目标DMZ建立双向通道,然后带出目标内网中所有机器的流量</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+          <p><br><br>0x01 对<code>对称加密</code>的通俗理解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">即通信的双方都使用同一个秘钥进行加解密</span><br></pre></td></tr></table></figure></p>
+<p>0x02 对非对称加密算法的通俗理解 [ <code>RSA</code> ]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">私钥 + 公钥= 密钥对</span><br><span class="line">即用私钥加密的数据,只有对应的公钥才能解密,用公钥加密的数据,只有对应的私钥才能解密</span><br><span class="line">其实这个很容易理解,因为通信双方的手里都有一套自己的密钥对,通信之前双方会先把自己的公钥都先发给对方</span><br><span class="line">然后对方再拿着这个公钥来加密数据响应给对方,等到到了对方那里,对方再用自己的私钥进行解密,就这么简单</span><br></pre></td></tr></table></figure></p>
+<p>0x03 非对称加密所造成的速度慢的问题解决办法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1) 先生成一个对称加密算法的密钥,用RSA的方式先安全的发给对方  </span><br><span class="line">(2) 随后就不再用RSA了,只用这个对称加密的密钥来互相通信</span><br></pre></td></tr></table></figure></p>
+<p>0x04 不过,以上方式存在明显的中间人问题:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">假设,此时在客户端和服务器之间存在一个中间人,这个中间人只需要把原本双方通信互发的公钥,换成自己的公钥,这样中间人就可以轻松解密通信双方所发送的所有数据</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/socat-meterpreter.html#more" rel="contents">
+            <a class="btn" href="/https-learn.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2361,7 +2360,7 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="evil-404@protonmail.com" target="_blank" title="E-Mail">
+                    <a href="mailto:evil-404@protonmail.com" target="_blank" title="E-Mail">
                       
                         <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   </span>
@@ -2470,7 +2469,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共294.9k字</span>
+  <span class="post-count">博客全站共294.8k字</span>
 </div>
 
   
