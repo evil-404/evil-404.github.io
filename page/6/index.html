@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/bypasswaf-on-database.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/https-learn.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="VK">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/bypasswaf-on-database.html" itemprop="url">bypasswaf for mysql [数据库层面之特殊字符篇]</a></h1>
+                <a class="post-title-link" href="/https-learn.html" itemprop="url">深入理解 https 通信加密过程</a></h1>
         
 
         <div class="post-meta">
@@ -356,8 +356,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:39:52+08:00">
-                2017-10-23
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-15T09:31:40+08:00">
+                2017-10-15
               </time>
             
           </span>
@@ -378,8 +378,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bypasswaf/" itemprop="url" rel="index">
-                    <span itemprop="name">bypasswaf</span>
+                  <a href="/categories/https/" itemprop="url" rel="index">
+                    <span itemprop="name">https</span>
                   </a>
                 </span>
 
@@ -409,7 +409,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,024
+                  1,239
                 </span>
               
 
@@ -425,7 +425,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  4
                 </span>
               
             </div>
@@ -447,10 +447,13 @@
 
       
         
-          <p><br><br>0x01 先准备好用于测试库表及数据:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database injection;</span><br><span class="line">mysql&gt; use injection;</span><br><span class="line">mysql&gt; CREATE TABLE IF NOT EXISTS `user`(</span><br><span class="line">	`id` INT UNSIGNED AUTO_INCREMENT,</span><br><span class="line">	`username` VARCHAR(30) NOT NULL,</span><br><span class="line">	`password` VARCHAR(40) NOT NULL,</span><br><span class="line">	`email` VARCHAR(40) NOT NULL,</span><br><span class="line">	PRIMARY KEY ( `id` )</span><br><span class="line">	)ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;gentoo&apos;,&apos;superman&apos;,&apos;sec@rootkit.org&apos;);</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;arch&apos;,&apos;welcome&apos;,&apos;lin@hook.org&apos;);</span><br><span class="line">mysql&gt; insert into user(username,password,email) values(&apos;admin&apos;,&apos;loginpass&apos;,&apos;xlion@priv.org&apos;);</span><br></pre></td></tr></table></figure></p>
+          <p><br><br>0x01 对<code>对称加密</code>的通俗理解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">即通信的双方都使用同一个秘钥进行加解密</span><br></pre></td></tr></table></figure></p>
+<p>0x02 对非对称加密算法的通俗理解 [ <code>RSA</code> ]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">私钥 + 公钥= 密钥对</span><br><span class="line">即用私钥加密的数据,只有对应的公钥才能解密,用公钥加密的数据,只有对应的私钥才能解密</span><br><span class="line">其实这个很容易理解,因为通信双方的手里都有一套自己的密钥对,通信之前双方会先把自己的公钥都先发给对方</span><br><span class="line">然后对方再拿着这个公钥来加密数据响应给对方,等到到了对方那里,对方再用自己的私钥进行解密,就这么简单</span><br></pre></td></tr></table></figure></p>
+<p>0x03 非对称加密所造成的速度慢的问题解决办法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1) 先生成一个对称加密算法的密钥,用RSA的方式先安全的发给对方  </span><br><span class="line">(2) 随后就不再用RSA了,只用这个对称加密的密钥来互相通信</span><br></pre></td></tr></table></figure></p>
+<p>0x04 不过,以上方式存在明显的中间人问题:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">假设,此时在客户端和服务器之间存在一个中间人,这个中间人只需要把原本双方通信互发的公钥,换成自己的公钥,这样中间人就可以轻松解密通信双方所发送的所有数据</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/bypasswaf-on-database.html#more" rel="contents">
+            <a class="btn" href="/https-learn.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2399,7 +2402,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.4hou.com" title="RoarTalk" target="_blank">RoarTalk</a>
+                    <a href="http://www.4hou.com" title="嘶吼" target="_blank">嘶吼</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.anquanke.com" title="安全客" target="_blank">安全客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.aqniu.com" title="安全牛" target="_blank">安全牛</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.easyaq.com" title="E安全" target="_blank">E安全</a>
                   </li>
                 
               </ul>
@@ -2465,7 +2480,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共294.8k字</span>
+  <span class="post-count">博客全站共294.7k字</span>
 </div>
 
   
