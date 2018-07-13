@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vsftpd," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="0x01 首先,我们先来简单思考下,当你面对一台 ftp 时,到底能做些什么1234567挖0day,抱歉,并不在今天的讨论范畴 ^_^允许匿名可写,直接上传webshell,一般极小的个人站才有可能,ftp目录即网站目录允许匿名下载,造成的敏感文件信息泄露爆破,亦可造成敏感配置泄露嗅探,搜集各种明文账号密码,然后再拿着这些账号密码,去撞目标的其它入口,或以此进行进一步的内网渗透提权,linux平">
+<meta name="keywords" content="vsftpd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简述 FTP 入侵与防御 [ vsftpd ]">
+<meta property="og:url" content="https://evil-404.github.io/vsftp-secfig.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="0x01 首先,我们先来简单思考下,当你面对一台 ftp 时,到底能做些什么1234567挖0day,抱歉,并不在今天的讨论范畴 ^_^允许匿名可写,直接上传webshell,一般极小的个人站才有可能,ftp目录即网站目录允许匿名下载,造成的敏感文件信息泄露爆破,亦可造成敏感配置泄露嗅探,搜集各种明文账号密码,然后再拿着这些账号密码,去撞目标的其它入口,或以此进行进一步的内网渗透提权,linux平">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://evil-404.github.io/img/facl%20vsftpd.png">
+<meta property="og:image" content="https://evil-404.github.io/img/facl%20vsftpd%20anon.png">
+<meta property="og:image" content="https://evil-404.github.io/img/local%20user%20login.png">
+<meta property="og:image" content="https://evil-404.github.io/img/local%20user%20login%20list.png">
+<meta property="og:image" content="https://evil-404.github.io/img/virutal%20user%20login.png">
+<meta property="og:image" content="https://evil-404.github.io/img/virutal%20user%20login%20res.png">
+<meta property="og:image" content="https://evil-404.github.io/img/virutal%20user%20login%20tcpdump.png">
+<meta property="og:image" content="https://evil-404.github.io/img/virutal%20user%20login%20flashftp.png">
+<meta property="og:image" content="https://evil-404.github.io/img/virutal%20user%20login%20access.png">
+<meta property="og:updated_time" content="2017-12-23T02:02:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简述 FTP 入侵与防御 [ vsftpd ]">
+<meta name="twitter:description" content="0x01 首先,我们先来简单思考下,当你面对一台 ftp 时,到底能做些什么1234567挖0day,抱歉,并不在今天的讨论范畴 ^_^允许匿名可写,直接上传webshell,一般极小的个人站才有可能,ftp目录即网站目录允许匿名下载,造成的敏感文件信息泄露爆破,亦可造成敏感配置泄露嗅探,搜集各种明文账号密码,然后再拿着这些账号密码,去撞目标的其它入口,或以此进行进一步的内网渗透提权,linux平">
+<meta name="twitter:image" content="https://evil-404.github.io/img/facl%20vsftpd.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/vsftp-secfig.html"/>
+
+
+
+
+
+  <title>简述 FTP 入侵与防御 [ vsftpd ] | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/vsftp-secfig.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">简述 FTP 入侵与防御 [ vsftpd ]</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T04:09:17+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-23T10:02:47+08:00">
+                2017-12-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vsftp/" itemprop="url" rel="index">
+                    <span itemprop="name">vsftp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,570
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>0x01 首先,我们先来简单思考下,当你面对一台 ftp 时,到底能做些什么<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">挖<span class="number">0</span><span class="built_in">day</span>,抱歉,并不在今天的讨论范畴 ^_^</span><br><span class="line">允许匿名可写,直接上传webshell,一般极小的个人站才有可能,ftp目录即网站目录</span><br><span class="line">允许匿名下载,造成的敏感文件信息泄露</span><br><span class="line">爆破,亦可造成敏感配置泄露</span><br><span class="line">嗅探,搜集各种明文账号密码,然后再拿着这些账号密码,去撞目标的其它入口,或以此进行进一步的内网渗透</span><br><span class="line">提权,linux平台下基本不可能</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>0x02 相对主流的一些ftp工具<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">vsftpd</span></span> proftpd filezilla ...</span><br></pre></td></tr></table></figure></p>
+<p>0x03 深入理解ftp的主动与被动工作模式</p>
+<p><code>命令连接</code><br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在客户端向ftp服务端发起连接请求时,客户端会随机选择本地的某个tcp端口与ftp服务端的<span class="number">21</span>端口进行连接</span><br><span class="line">这中间会进行一系列的身份验证过程,待验证通过后,客户端与ftp服务端即会成功建立 `命令连接`</span><br><span class="line">所谓的 `命令传输连接` 也就是说,仅仅只会用这个连接来传输命令本身</span><br></pre></td></tr></table></figure></p>
+<p><code>主动模式</code><br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">在 `命令连接` 建立成功后,客户端可能还需要进行一系列的数据传输动作,如,上传,下载文件...</span><br><span class="line">此时,客户端会先在本地另启一个端口监听等待连接,并利用先前与ftp客户端建立好的`命令连接`通道,告诉ftp服务端客户端所监听的端口</span><br><span class="line">而后,ftp服务端会利用自身的<span class="number">20</span>端口和刚才ftp客户端所告知的端口进行数据连接,随后就开始利用此连接来进行各类数据传输</span><br><span class="line">注意,此时`数据连接`在建立的过程中,是ftp服务端的<span class="number">20</span>端口主动连接FTP客户端的随机端口的,也就是我们所说的`主动模式`</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p><code>被动模式</code><br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">依然是在成功建立`命令连接`之后,客户端需要进行文件上传下载...</span><br><span class="line">与主动模式不同的是,此时,ftp客户端将通过`命令连接`通道告诉ftp服务端的并不是客户端本地的那个随机端口</span><br><span class="line">而是会向服务端发出一个PASV指令,该指令的作用就是告诉ftp服务端,准备采用被动模式来建立连接</span><br><span class="line">当ftp服务端采用被动模式来连接时,会先读取自己配置文件中事先设置好的那个端口范围</span><br><span class="line">从中随机取出一个端口在服务端本地进行监听,而后再通过命令连接通道将ftp服务端本地监听的那个随机端口告给知客户端</span><br><span class="line">最后,客户端则会在本地随机起一个端口与刚刚服务端监听的那个数据端口进行连接,而后即可进行正常的数据传输</span><br></pre></td></tr></table></figure></p>
+<p><code>如何选择主动与被动</code><br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">在常规内网环境中,主动和被动模式的意义并不是非常大,但,如果你是直接给公网提供的ftp服务这个就稍微有意义了</span><br><span class="line">主动模式,也就意味着`客户端本地的数据端口是随机的`,如果被客户端本地防火墙所限制则无法进行数据传输</span><br><span class="line">被动模式,此时意味着`服务端的数据传输端口是随机的`,你需要在服务端的防火墙中放开对指定端口范围的限制,否则一样无法进行数据传输</span><br><span class="line">相比之下,被动模式可能更适用于公网环境,了解即可,我们言归正传,如何部署一个安全的ftp服务</span><br></pre></td></tr></table></figure></p>
+<p>0x04 此次演示环境<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">RHEL6</span><span class="selector-class">.6_i386</span> 	<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.57</span></span><br><span class="line"><span class="selector-tag">win7cn</span>		<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.70</span></span><br></pre></td></tr></table></figure></p>
+<p>0x05 安装<code>vsftpd 2.2.2</code>,我这个版本已经比较旧了<code>直接用的是iso 包里的提供的</code>,建议大家尽量还是用新一点的版本,毕竟只是个ftp工具而已,大可不必像web那样,对每个版本选择都小心谨慎,用新一点的版本,也能在一定程度上帮大家避免一些已知高危漏洞,ftp的溢出还是非常非常多的,废话不多说,咱们真奔主题<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> rpm -qa vsftpd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install -y vsftpd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mv /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak</span></span><br></pre></td></tr></table></figure></p>
+<p>0x06 详细配置 vsftpd,这里暂以配置<code>虚拟用户登陆</code>为主,关于<code>匿名用户</code>和<code>本地系统用户登陆</code>配置,只做顺带说明,不做详述,另外,请务必注意,<code>在配置vsftpd.conf时,每个选项前后都务必不能有空格</code>,不然,你会发现,虽然重启服务看似没什么问题,但选项会一直不生效</p>
+<p>下面是 vsftpd 自身配置的一些常用选项说明<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/vsftpd/vsftpd.conf</span></span><br><span class="line"></span><br><span class="line">ftpd_banner=Welcome klion's FTP server!	<span class="comment"># ftp服务端登陆欢迎信息</span></span><br><span class="line">listen=YES				<span class="comment"># 以standalone模式运行vsftpd</span></span><br><span class="line">listen_ipv6=NO				<span class="comment"># 禁用ipv6</span></span><br><span class="line">listen_port=21				<span class="comment"># 默认监听的命令连接端口,大多数情况下,我们其实都不需要改</span></span><br><span class="line">tcp_wrappers=YES			<span class="comment"># 默认就是开启的,主要可以用它来限制ip访问,到/etc/hosts.allow中配置即可</span></span><br><span class="line">idle_session_timeout=300		<span class="comment"># 指定连接闲置时长,当闲置指定秒数后就自动断开连接</span></span><br><span class="line">data_connection_timeout=150		<span class="comment"># 指定数据连接超时时长,如果超过规定秒数数据连接还没建立就自动断开</span></span><br><span class="line">ascii_upload_enable=NO			<span class="comment"># 禁止以文本格式传输数据,防止数据被破坏,虽然默认就是NO,但习惯性还是给上</span></span><br><span class="line">ascii_download_enable=NO</span><br><span class="line">write_enable=YES			<span class="comment"># 是否允许ftp用户写,如果想让他上传文件务必要能写才行</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件上传后的默认权限,为了不让其他人看,可以设为077,注意,这里只是ftp用户权限的unmsk跟系统权限的unmask没任何关系</span></span><br><span class="line">local_umask=077							</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主要用来对ftp下的各个目录作用进行简要描述</span></span><br><span class="line"><span class="comment"># 使用方法很简单,只需在指定的ftp目录下创建.message文件,之后在里面写上具体的说明内容即可</span></span><br><span class="line"><span class="comment"># 这样每次只要用户进到该目录中就会自动读取该文件中的内容并提示给用户</span></span><br><span class="line">dirmessage_enable=YES					</span><br><span class="line"></span><br><span class="line"><span class="comment"># vsftpd日志设置</span></span><br><span class="line">xferlog_enable=YES</span><br><span class="line">xferlog_std_format=YES			<span class="comment"># 指定日志格式,使用默认的标准格式即可</span></span><br><span class="line">xferlog_file=/var/log/vsftpd.log	<span class="comment"># vsftpd日志存放位置,这里默认只记录了上传下载的数据,并没有记录登陆状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用被控模式进行数据连接,vsftpd在此模式下会自动从此端口范围内随机选择一个进行监听</span></span><br><span class="line">pasv_enable=YES</span><br><span class="line">pasv_min_port=65200	<span class="comment"># 指定数据连接端口最小为多少,端口尽量给高点</span></span><br><span class="line">pasv_max_port=65410	<span class="comment"># 指定数据连接端口最大为多少</span></span><br><span class="line"></span><br><span class="line">max_clients=100		<span class="comment"># 设置vsftpd最大并发连接数</span></span><br><span class="line">max_per_ip=2		<span class="comment"># 设置单个ip的最大连接数</span></span><br></pre></td></tr></table></figure></p>
+<p>0x07 <code>允许匿名用户登陆</code>的相关配置,此设配置极不安全,虽然配置简单,但绝不推荐,如果有实际需求,不如用http下载代替<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">anonymous_enable</span>=<span class="literal">NO</span>	# 是否启用匿名登陆</span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否允许匿名用户上传文件,单单这样启用还是上传不了的</span></span><br><span class="line"><span class="attr">anon_upload_enable</span>=<span class="literal">NO</span>		</span><br><span class="line"><span class="attr">anon_mkdir_write_enable</span>=<span class="literal">NO</span>   # 是否允许匿名用户新建目录</span><br><span class="line"><span class="attr">anon_other_write_enable</span>=<span class="literal">NO</span>   # 是否允许匿名用户其它的写权限,比如,允许匿名用户删除目录或文件</span><br><span class="line"><span class="attr">anon_world_readable_only</span>=<span class="literal">YES</span> # 允许匿名用户下载</span><br><span class="line"><span class="attr">anon_max_rate</span>=<span class="number">10000</span>	     # 匿名用户最大的数据传输速度</span><br></pre></td></tr></table></figure></p>
+<p>匿名用户想上传文件的单独授权过程,默认vsftpd是以<code>ftp</code>的系统用户身份在运行,所以需要配合setfacl来进行单独授权才行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ls -dl /var/ftp	</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mkdir /var/ftp/upfiles</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> setfacl -m u:ftp:rwx /var/ftp/upfiles</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> getfacl /var/ftp/upfiles	此时就可以正常上传文件,创建目录了</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/facl vsftpd.png" alt=""><br><img src="/img/facl vsftpd anon.png" alt=""></p>
+<p>0x08 <code>允许本地系统用户登陆</code>的相关配置,默认ftp用户登陆成功后都会进到自己的家目录下,如果配置不当,允许ftp用户随意切换到其它的系统目录下,很容易造成系统敏感信息泄露,极不安全,另外,大批量权限控制也比较繁琐,容易遗漏,不推荐用于实战<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> vi /etc/vsftpd/vsftpd.conf</span></span><br><span class="line">  pam_service_name=vsftpd	# 启用pam认证,其实默认就是启用的,否则本地是登陆不成功的</span><br><span class="line">  local_enable=YES		# 启用本地用户登陆</span><br><span class="line"></span><br><span class="line"><span class="meta">  #</span><span class="bash"> 禁止所有ftp用户访问其它的系统目录,尽可能把它严格控制在自己的家目录下,实际测试多次测试并未成功</span></span><br><span class="line">  chroot_local_user=YES</span><br><span class="line">  chroot_list_enable=NO</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> useradd -s /sbin/nologin admin</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"admin"</span> | passwd --stdin admin</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> useradd -s /sbin/nologin sysadm</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"admin"</span> | passwd --stdin sysadm</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/local user login.png" alt=""></p>
+<p>只让指定的ftp用户能访问到其它的系统目录<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/vsftpd/vsftpd.conf</span></span><br><span class="line">  <span class="attribute">chroot_local_user</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">chroot_list_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">chroot_list_file</span>=/etc/vsftpd.chroot_list	</span><br><span class="line">  <span class="attribute">local_max_rate</span>=10000	# 限制本地用户最大的数据传输速度</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把所有能访问到其它系统目录的用户名都事先写到改文件中,每行对应一个用户名</span></span><br><span class="line"><span class="comment"># vi /etc/vsftpd.chroot_list</span></span><br><span class="line">  admin</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/local user login list.png" alt=""></p>
+<p>0x09 <code>基于虚拟用户登陆</code>的相关配置,注意,虚拟用户<code>不是系统账号,跟系统账号压根就没有任何关系,所有的ftp虚拟用户到最后统统都会被压缩映射为一个指定的低权限系统账户</code>,我们在前面说nfs时也提到过权限压缩,这跟那其实是一个意思,实战中推荐以此方式来部署ftp</p>
+<p>首先,创建虚拟用户口令文件,注意,<code>奇数行是账号,偶数行为对应的密码</code>,实际的密码务必要严格遵守<code>密码复杂性要求</code>,可千万不能像我下面这么干<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/vsftpd/vsftpd_user.txt</span></span><br><span class="line">  webadmin</span><br><span class="line">  admin110</span><br><span class="line">  web</span><br><span class="line">  123456</span><br></pre></td></tr></table></figure></p>
+<p>其次,将上面创建的口令文件转换成系统识别的口令文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install db4 db4-utils -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rpm -qa | grep db4-utils</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> db_load -T -t <span class="built_in">hash</span> -f /etc/vsftpd/vsftpd_user.txt /etc/vsftpd/vsftpd_passwd.db</span></span><br></pre></td></tr></table></figure></p>
+<p>而后,再来修改vsftpd的PAM认证文件,将文件中的原有内容先全部注释掉,添加如下两句,其实,意思就是让它到这儿来读密码<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/pam.d/vsftpd</span></span><br><span class="line">  auth required <span class="regexp">/lib/</span>security<span class="regexp">/pam_userdb.so db=/</span>etc<span class="regexp">/vsftpd/</span>vsftpd_passwd</span><br><span class="line">  account required <span class="regexp">/lib/</span>security<span class="regexp">/pam_userdb.so db=/</span>etc<span class="regexp">/vsftpd/</span>vsftpd_passwd</span><br></pre></td></tr></table></figure></p>
+<p>再者,创建好要映射到的系统用户并修改该用户默认的家目录权限<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> useradd -d /home/ftpdata -s /sbin/nologin nosir</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> chmod go+rx /home/ftpdata/</span></span><br></pre></td></tr></table></figure></p>
+<p>最后,到vsftpd.conf中去<code>启用虚拟用户功能</code>,并为每个虚拟用户单独赋予指定的ftp权限,个人认为这个权限并不是很彻底,算了,又不是军工级别,不必太过强求 ^_^<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/vsftpd/vsftpd.conf</span></span><br><span class="line">  <span class="attribute">anonymous_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">local_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">write_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">anon_upload_enable</span>=<span class="literal">NO</span></span><br><span class="line">  <span class="attribute">anon_mkdir_write_enable</span>=<span class="literal">NO</span></span><br><span class="line">  <span class="attribute">chroot_local_user</span>=<span class="literal">YES</span></span><br><span class="line">  </span><br><span class="line">  <span class="attribute">pam_service_name</span>=vsftpd</span><br><span class="line">  <span class="attribute">guest_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">guest_username</span>=nosir</span><br><span class="line">  <span class="attribute">user_config_dir</span>=/etc/vsftpd/vusers_config</span><br></pre></td></tr></table></figure></p>
+<p>为不同的虚拟用户指定不同的ftp权限<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /etc/vsftpd/vusers_config/</span></span><br><span class="line"><span class="comment"># cd /etc/vsftpd/vusers_config/</span></span><br><span class="line"><span class="comment"># touch web webadmin			此处的文件名务必和ftp用户同名</span></span><br><span class="line"><span class="comment"># vi /etc/vsftpd/vusers_config/web 	让web用户能进行正常的上传下载,创建,删除...</span></span><br><span class="line">  <span class="attribute">local_root</span>=/var/ftp/upfiles		# 也可单独指定某个虚拟用户的根目录</span><br><span class="line">  <span class="attribute">anon_upload_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">anon_mkdir_write_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">anon_other_write_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">anon_world_readable_only</span>=<span class="literal">YES</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vi /etc/vsftpd/vusers_config/webadmin	让webadmin用户只能干看着</span></span><br><span class="line">  <span class="attribute">anon_upload_enable</span>=<span class="literal">NO</span></span><br><span class="line">  <span class="attribute">anon_mkdir_write_enable</span>=<span class="literal">NO</span></span><br><span class="line">  <span class="attribute">anon_other_write_enable</span>=<span class="literal">NO</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/virutal user login.png" alt=""><br><img src="/img/virutal user login res.png" alt=""></p>
+<p>0x10 在针对ftp的所有入侵中,除了各类RCE之外的首要危害就是默认数据全部使用<code>明文传输</code>,这也就直接导致了我们的账号密码,极易被入侵者捕获并深度利用,如下<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#  tcpdump -i eth0 -nn -XX -s <span class="number">0</span> host <span class="number">192.168</span><span class="number">.3</span><span class="number">.57</span> and tcp dst port <span class="number">21</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/virutal user login tcpdump.png" alt=""></p>
+<p>为了更好的解决上述问题,我们需要在vsftpd的数据外面再上加一层ssl,来暂时性对抗此类嗅探<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ldd `which vsftpd`|grep ssl  	检查当前的vsftpd是否支持ssl</span></span><br><span class="line"><span class="comment"># openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem</span></span><br><span class="line"><span class="comment"># chmod 400 vsftpd.pem</span></span><br><span class="line"><span class="comment"># cp vsftpd.pem /etc/ssl/certs/</span></span><br><span class="line"><span class="comment"># vi /etc/vsftpd/vsftpd.conf</span></span><br><span class="line">  <span class="attribute">ssl_enable</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">allow_anon_ssl</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">force_local_data_ssl</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">force_local_logins_ssl</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">force_anon_logins_ssl</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">force_anon_data_ssl</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">ssl_tlsv1</span>=<span class="literal">YES</span></span><br><span class="line">  <span class="attribute">ssl_sslv2</span>=<span class="literal">NO</span></span><br><span class="line">  <span class="attribute">ssl_sslv3</span>=<span class="literal">NO</span></span><br><span class="line">  <span class="attribute">rsa_cert_file</span>=/etc/ssl/certs/vsftpd.pem</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/virutal user login flashftp.png" alt=""></p>
+<p>重启vsftpd,让所有配置生效,并让vsftpd随系统自启动<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> systemctl start vsftpd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> chkconfig vsftpd on</span></span><br></pre></td></tr></table></figure></p>
+<p>0x11 观察vsftpd的各种日志信息<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> tail -f /var/<span class="built_in">log</span>/secure	可自行写脚本来实时提取爆破ip,比较简单,这里就不多说了</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tail -f /var/<span class="built_in">log</span>/vsftpd.log</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/virutal user login access.png" alt=""></p>
+<p>0x12 勤于关注官方所发布的各类高危补丁,及时进行修补,vsftpd不比其它工具,漏洞是经常的,而且一般还都是可直接被远程利用的,所以,务必多留点儿心<br><br></p>
+<p>小结:<br>&nbsp;&nbsp;&nbsp;&nbsp;关于ftp安全,其实,差不多就这些了,只要时刻记住不要让客户端直接以本地系统用户身份来登陆操作,让ftp服务始终运行在一个较低的系统权限下,禁止匿名或者禁止匿名可写,别人此时再想通过ftp来拿到服务器权限就比较困难了,而且像ftp这种极小规模的文件共享服务,适用场景绝大多数都在内网,另外,vsftpd虚拟用户身份验证除了上面在这种基于文件的方式,同样也可以基于数据库来进行认证,如,mysql,非常简单,换汤不换药,大家有兴趣可以去自己尝试,只不过,基于数据库会更加灵活,因为非常方便通过脚本进行进一步处理,如,php,python…今天就先到这里吧,祝大家好运,也欢迎多来一起交流 ^_^</p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    klion
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/vsftp-secfig.html" title="简述 FTP 入侵与防御 [ vsftpd ]">https://evil-404.github.io/vsftp-secfig.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vsftpd/" rel="tag"><i class="fa fa-tag"></i>vsftpd</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/apache-sec.html" rel="next" title="如何将你的 apache 把控的'密不透风'">
+                <i class="fa fa-chevron-left"></i> 如何将你的 apache 把控的'密不透风'
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/svn-config-sec.html" rel="prev" title="不再让 `泄露` 拖你的后腿 [ subversion篇 ]">
+                不再让 `泄露` 拖你的后腿 [ subversion篇 ] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="嘶吼" target="_blank">嘶吼</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.anquanke.com" title="安全客" target="_blank">安全客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.aqniu.com" title="安全牛" target="_blank">安全牛</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.easyaq.com" title="E安全" target="_blank">E安全</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共298.9k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

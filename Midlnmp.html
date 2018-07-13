@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="env," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、首先,部署nginx 0x01 依旧接着我们之前准备好的系统继续,首先,将所有准备安装的源码包上传至服务器,软件包列表如下:1234libiconv-1.14.tar.gzmysql-5.5.32-linux2.6-x86_64.tar.gznginx-1.12.1.tar.gzphp-5.5.38.tar.gz 此次要实现的大致架构如下:1php5.5.38 + mysql-5.5.32">
+<meta name="keywords" content="env">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php5.5.38 + mysql-5.5.32 + nginx-1.12.1 + centOS6.8_x64">
+<meta property="og:url" content="https://evil-404.github.io/Midlnmp.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="一、首先,部署nginx 0x01 依旧接着我们之前准备好的系统继续,首先,将所有准备安装的源码包上传至服务器,软件包列表如下:1234libiconv-1.14.tar.gzmysql-5.5.32-linux2.6-x86_64.tar.gznginx-1.12.1.tar.gzphp-5.5.38.tar.gz 此次要实现的大致架构如下:1php5.5.38 + mysql-5.5.32">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-30T13:47:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php5.5.38 + mysql-5.5.32 + nginx-1.12.1 + centOS6.8_x64">
+<meta name="twitter:description" content="一、首先,部署nginx 0x01 依旧接着我们之前准备好的系统继续,首先,将所有准备安装的源码包上传至服务器,软件包列表如下:1234libiconv-1.14.tar.gzmysql-5.5.32-linux2.6-x86_64.tar.gznginx-1.12.1.tar.gzphp-5.5.38.tar.gz 此次要实现的大致架构如下:1php5.5.38 + mysql-5.5.32">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/Midlnmp.html"/>
+
+
+
+
+
+  <title>php5.5.38 + mysql-5.5.32 + nginx-1.12.1 + centOS6.8_x64 | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/Midlnmp.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">php5.5.38 + mysql-5.5.32 + nginx-1.12.1 + centOS6.8_x64</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-24T10:13:41+08:00">
+                2016-06-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-11-30T21:47:45+08:00">
+                2017-11-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/env/" itemprop="url" rel="index">
+                    <span itemprop="name">env</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,440
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><br></p>
+<p>一、首先,部署nginx</p>
+<p>0x01 依旧接着我们之前准备好的系统继续,首先,将所有准备安装的源码包上传至服务器,软件包列表如下:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">libiconv-1</span><span class="selector-class">.14</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br><span class="line"><span class="selector-tag">mysql-5</span><span class="selector-class">.5</span><span class="selector-class">.32-linux2</span><span class="selector-class">.6-x86_64</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br><span class="line"><span class="selector-tag">nginx-1</span><span class="selector-class">.12</span><span class="selector-class">.1</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br><span class="line"><span class="selector-tag">php-5</span><span class="selector-class">.5</span><span class="selector-class">.38</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br></pre></td></tr></table></figure></p>
+<p>此次要实现的大致架构如下:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">php5</span><span class="selector-class">.5</span><span class="selector-class">.38</span> + <span class="selector-tag">mysql-5</span><span class="selector-class">.5</span><span class="selector-class">.32</span> + <span class="selector-tag">nginx-1</span><span class="selector-class">.12</span><span class="selector-class">.1</span> + <span class="selector-tag">centOS6</span><span class="selector-class">.8_x64</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>0x02 开始编译安装nginx-1.10.3</p>
+<p>安装所需的各种依赖库<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install pcre pcre-devel gcc gcc-c++ automake zlib zlib-devel openssl openssl-devel -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> useradd -s /sbin/nologin -M nginx</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf nginx-1.12.1.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> nginx-1.12.1</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./configure --prefix=/usr/local/nginx-1.12.1 \</span></span><br><span class="line"><span class="built_in">--user=nginx</span> <span class="built_in">--group=nginx</span> \</span><br><span class="line"><span class="built_in">--with-http_ssl_module</span> \</span><br><span class="line"><span class="built_in">--with-http_stub_status_module</span></span><br><span class="line"><span class="built_in">#</span> <span class="string">make </span>&amp;&amp; <span class="string">make </span><span class="string">install</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/nginx-1.12.1/ /usr/<span class="built_in">local</span>/nginx</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/nginx/sbin/nginx -v</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> lsof -i :80</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/nginx/sbin/nginx -s quit</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"/usr/local/nginx/sbin/nginx"</span> &gt;&gt; /etc/rc.local</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/conf/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> egrep -v <span class="string">"^$|#"</span> nginx.conf.default &gt; nginx.conf</span></span><br></pre></td></tr></table></figure>
+<p>0x03 详细配置nginx</p>
+<p>添加基于域名的虚拟主机,顺便测试url重写是否真正可用<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">mkdir</span> /usr/<span class="keyword">local</span>/nginx/html/&#123;bwapp,wp,discuz,drupal,joomla,phpcms,phpbb,dvwa&#125; -p</span><br><span class="line"># <span class="keyword">mkdir</span> /usr/<span class="keyword">local</span>/nginx/<span class="keyword">conf</span>/extra &amp;&amp; <span class="keyword">cd</span> /usr/<span class="keyword">local</span>/nginx/<span class="keyword">conf</span>/extra</span><br><span class="line"># touch bwapp.<span class="keyword">conf</span> wp.<span class="keyword">conf</span> discuz.<span class="keyword">conf</span> drupal.<span class="keyword">conf</span> joomla.<span class="keyword">conf</span> phpcms.<span class="keyword">conf</span> phpbb.<span class="keyword">conf</span> dvwa.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /usr/local/nginx/conf/nginx.conf</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">worker_processes</span>  <span class="number">1</span>;</span><br><span class="line"><span class="attribute">error_log</span> logs/error.log <span class="literal">error</span>;</span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line">    <span class="attribute">log_format</span> main <span class="string">'<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span>  [<span class="variable">$time_local</span>]  '</span> </span><br><span class="line">    <span class="string">' "<span class="variable">$request</span>"  <span class="variable">$status</span>  <span class="variable">$body_bytes_sent</span>  '</span></span><br><span class="line">    <span class="string">' "<span class="variable">$http_referer</span>"  "<span class="variable">$http_user_agent</span>"  "<span class="variable">$http_x_forwarded_for</span>" <span class="variable">$dm_cookie</span>" '</span>;    </span><br><span class="line"></span><br><span class="line">    <span class="attribute">include</span> extra/bwapp.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /usr/local/nginx/conf/extra/bwapp.conf</span></span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    <span class="builtin-name">set</span> <span class="variable">$dm_cookie</span> <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$http_cookie</span> ~* <span class="string">"(.+)(?:;|$)"</span>) &#123;</span><br><span class="line">        <span class="builtin-name">set</span> <span class="variable">$dm_cookie</span> <span class="variable">$1</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">    listen 80;</span><br><span class="line">    server_name  www.midbwapp.org;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root   html/bwapp;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">        rewrite /hack /hellohacker.html permanent;</span><br><span class="line">    &#125;</span><br><span class="line">    access_log logs/access_midbwapp.log main;</span><br><span class="line">    error_page   500 502 503 504  /50x.html;</span><br><span class="line">    location = /50x.html &#123;</span><br><span class="line">        root   html/bwapp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tail -f /usr/<span class="built_in">local</span>/nginx/logs/access_bwapp.log</span></span><br></pre></td></tr></table></figure>
+<p>0x04 关于nginx访问日志轮询,可自行用shell实现</p>
+<p>二,开始部署mysql,节省时间,我们还是直接用二进制包来配置部署<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> useradd mysql -s /sbin/nologin -M</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf mysql-5.5.32-linux2.6-x86_64.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mv mysql-5.5.32-linux2.6-x86_64 /usr/<span class="built_in">local</span>/mysql-5.5.32</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/mysql-5.5.32/ /usr/<span class="built_in">local</span>/mysql</span></span><br></pre></td></tr></table></figure></p>
+<p>快速初始化mysql<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/mysql/scripts/mysql_install_db --basedir=/usr/<span class="built_in">local</span>/mysql --datadir=/usr/<span class="built_in">local</span>/mysql/data/ --user=mysql</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> chown -R mysql.mysql /usr/<span class="built_in">local</span>/mysql/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> cp /usr/<span class="built_in">local</span>/mysql/support-files/my-small.cnf /etc/my.cnf</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/mysql/bin/mysqld_safe &amp;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"/usr/local/mysql/bin/mysqld_safe &amp;"</span> &gt;&gt; /etc/rc.local</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> lsof -i :3306</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"export PATH=<span class="variable">$PATH</span>:/usr/local/mysql/bin/"</span> &gt;&gt; /etc/profile</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">source</span> /etc/profile</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mysqladmin -uroot password <span class="string">"admin"</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mysql -uroot -p</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select user,host from mysql.user;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> drop user <span class="string">''</span>@<span class="string">'localhost'</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> drop user <span class="string">'root'</span>@<span class="string">'::1'</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> drop user <span class="string">'root'</span>@<span class="string">'NewLNMP'</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> grant all on *.* to <span class="string">'root'</span>@<span class="string">'%'</span> identified by <span class="string">'admin'</span> with grant option;flush privileges;</span></span><br></pre></td></tr></table></figure>
+<p>三,部署php</p>
+<p>安装各种依赖库<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install -y zlib-devel libxml2-devel libjpeg-devel freetype-devel libpng-devel gd-devel curl-devel libxslt-devel</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install epel-release -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install openssl openssl-devel libmcrypt libmcrypt-devel mcrypt mhash mhash-devel -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf libiconv-1.14.tar.gz &amp;&amp; <span class="built_in">cd</span> libiconv-1.14</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ./configure --prefix=/usr/<span class="built_in">local</span>/libiconv &amp;&amp; make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure></p>
+<p>0x02 编译安装 php-5.5.38<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># tar xf php-5.5.38.tar.gz</span><br><span class="line"># cd php-5.5.38</span><br><span class="line"></span><br><span class="line"># ./configure \</span><br><span class="line">-<span class="ruby">-prefix=<span class="regexp">/usr/local</span><span class="regexp">/php-5.5.38 \</span></span></span><br><span class="line"><span class="ruby">--with-config-file-path=<span class="regexp">/usr/local</span><span class="regexp">/php-5.5.38/etc</span> \</span></span><br><span class="line"><span class="ruby">--with-mysql=<span class="regexp">/usr/local</span><span class="regexp">/mysql \</span></span></span><br><span class="line"><span class="ruby">--with-mysqli=<span class="regexp">/usr/local</span><span class="regexp">/mysql/bin</span><span class="regexp">/mysql_config \</span></span></span><br><span class="line"><span class="ruby">--with-pdo-mysql=<span class="regexp">/usr/local</span><span class="regexp">/mysql \</span></span></span><br><span class="line"><span class="ruby">--with-iconv-dir=<span class="regexp">/usr/local</span><span class="regexp">/libiconv \</span></span></span><br><span class="line"><span class="ruby">--with-freetype-dir \</span></span><br><span class="line"><span class="ruby">--with-jpeg-dir \</span></span><br><span class="line"><span class="ruby">--with-png-dir \</span></span><br><span class="line"><span class="ruby">--with-zlib \</span></span><br><span class="line"><span class="ruby">--with-libxml-dir=<span class="regexp">/usr \</span></span></span><br><span class="line"><span class="ruby">--enable-xml \</span></span><br><span class="line"><span class="ruby">--disable-rpath \</span></span><br><span class="line"><span class="ruby">--enable-bcmath \</span></span><br><span class="line"><span class="ruby">--enable-shmop \</span></span><br><span class="line"><span class="ruby">--enable-sysvsem \</span></span><br><span class="line"><span class="ruby">--enable-inline-optimization \</span></span><br><span class="line"><span class="ruby">--with-curl \</span></span><br><span class="line"><span class="ruby">--enable-mbregex \</span></span><br><span class="line"><span class="ruby">--enable-fpm \</span></span><br><span class="line"><span class="ruby">--enable-mbstring \</span></span><br><span class="line"><span class="ruby">--with-mcrypt \</span></span><br><span class="line"><span class="ruby">--with-gd \</span></span><br><span class="line"><span class="ruby">--enable-gd-native-ttf \</span></span><br><span class="line"><span class="ruby">--with-openssl \</span></span><br><span class="line"><span class="ruby">--with-mhash \</span></span><br><span class="line"><span class="ruby">--enable-pcntl \</span></span><br><span class="line"><span class="ruby">--enable-sockets \</span></span><br><span class="line"><span class="ruby">--with-xmlrpc \</span></span><br><span class="line"><span class="ruby">--enable-soap \</span></span><br><span class="line"><span class="ruby">--enable-short-tags \</span></span><br><span class="line"><span class="ruby">--enable-static \</span></span><br><span class="line"><span class="ruby">--with-xsl \</span></span><br><span class="line"><span class="ruby">--with-fpm-user=nginx \</span></span><br><span class="line"><span class="ruby">--with-fpm-group=nginx \</span></span><br><span class="line"><span class="ruby">--enable-ftp \</span></span><br><span class="line"><span class="ruby">--enable-opcache=no</span></span><br><span class="line"><span class="ruby"></span></span><br><span class="line"><span class="ruby"><span class="comment"># ln -s /usr/local/mysql/lib/libmysqlclient.so.18  /usr/lib64/</span></span></span><br><span class="line"><span class="ruby"><span class="comment"># touch ext/phar/phar.phar</span></span></span><br><span class="line"><span class="ruby"><span class="comment"># make &amp;&amp; make install</span></span></span><br><span class="line"><span class="ruby"><span class="comment"># ln -s /usr/local/php-5.5.38/ /usr/local/php</span></span></span><br><span class="line"><span class="ruby"><span class="comment"># cp php.ini-production /usr/local/php/etc/php.ini</span></span></span><br></pre></td></tr></table></figure></p>
+<p>0x03 详细配置php-fpm<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mkdir /app/logs/ -p</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/php/etc/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> cp php-fpm.conf.default php-fpm.conf</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi php-fpm.conf</span></span><br><span class="line"></span><br><span class="line">[global]</span><br><span class="line">pid = /app/logs/php-fpm.pid</span><br><span class="line">error_log = /app/logs/php-fpm.log</span><br><span class="line">log_level = error</span><br><span class="line">rlimit_files = 32768</span><br><span class="line">events.mechanism = epoll</span><br><span class="line"></span><br><span class="line">[www]</span><br><span class="line">user = nginx</span><br><span class="line">group = nginx</span><br><span class="line">listen = 127.0.0.1:9000</span><br><span class="line">listen.owner = nginx</span><br><span class="line">listen.group = nginx</span><br><span class="line">pm = dynamic</span><br><span class="line">pm.max_children = 1024</span><br><span class="line">pm.start_servers = 16</span><br><span class="line">pm.min_spare_servers = 5</span><br><span class="line">pm.max_spare_servers = 20</span><br><span class="line">pm.max_requests = 2048</span><br><span class="line">slowlog = /app/logs/<span class="variable">$pool</span>.log.slow</span><br><span class="line">request_slowlog_timeout = 10</span><br><span class="line">php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f sec@bwapp.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/php/sbin/php-fpm</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> lsof -i :9000</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"/usr/local/php/sbin/php-fpm"</span> &gt;&gt; /etc/rc.local</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> cat /etc/rc.local</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl stop firewalld.service</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">disable</span> firewalld.service</span></span><br></pre></td></tr></table></figure>
+<p>0x04 让nginx解析php<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /usr/local/nginx/conf/extra/bwapp.conf</span></span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  www.bwapp.org bwapp.org;</span><br><span class="line">    <span class="attribute">root</span>   html/bwapp/bWAPP;</span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">index</span>  index.php index.html index.htm;</span><br><span class="line">        <span class="attribute">rewrite</span> /adminer /hellohacker.html <span class="literal">permanent</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.(php|php5)?$</span> &#123;</span><br><span class="line">        <span class="attribute">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">        <span class="attribute">fastcgi_index</span> index.php;</span><br><span class="line">        <span class="attribute">include</span> fastcgi.conf;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attribute">access_log</span> logs/access_bwapp.log main;</span><br><span class="line">    <span class="attribute">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.html;</span><br><span class="line">        <span class="attribute">location</span> = /50x.html &#123;</span><br><span class="line">        <span class="attribute">root</span>   html/bwapp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/nginx/sbin/nginx -t</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> /usr/<span class="built_in">local</span>/nginx/sbin/nginx -s reload</span></span><br></pre></td></tr></table></figure>
+<p>四,最后,对环境进行全面可用性检测<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">安装<span class="selector-tag">bwapp</span> 漏洞演练程序</span><br><span class="line">安装<span class="selector-tag">dvwa</span> 漏洞演练程序</span><br><span class="line">安装 <span class="selector-tag">Discuz</span> <span class="selector-tag">X3</span><span class="selector-class">.2</span> </span><br><span class="line">安装<span class="selector-tag">drupal</span> 7<span class="selector-class">.56</span></span><br><span class="line">安装 <span class="selector-tag">wordpress</span> 4<span class="selector-class">.8</span><span class="selector-class">.1</span></span><br><span class="line">安装 <span class="selector-tag">joomla</span> 3<span class="selector-class">.6</span><span class="selector-class">.5</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><br><br>End<br>&nbsp;&nbsp;&nbsp;&nbsp;写脚本,写脚本,写脚本,重要的事情说三遍,或者更暴力一点,配好了以后直接打成rpm包,以后如果是完全相同的系统,直接全程yum即可,不然得烦死,另外,此环境仅作为自己学习之用,所以基本没做过任何加固处理,严禁直接参考用于实际生产环境中,否则,一切后果自负</p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    klion
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/Midlnmp.html" title="php5.5.38 + mysql-5.5.32 + nginx-1.12.1 + centOS6.8_x64">https://evil-404.github.io/Midlnmp.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/env/" rel="tag"><i class="fa fa-tag"></i>env</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Oldlamp.html" rel="next" title="httpd 2.2.34  + mysql 5.1.68 + centOS 6.8_x64 + php 5.2.17">
+                <i class="fa fa-chevron-left"></i> httpd 2.2.34  + mysql 5.1.68 + centOS 6.8_x64 + php 5.2.17
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Midlamp.html" rel="prev" title="httpd 2.4.27 + php 5.6.31 + mysql 5.5.57 + centOS6.8_x64">
+                httpd 2.4.27 + php 5.6.31 + mysql 5.5.57 + centOS6.8_x64 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="嘶吼" target="_blank">嘶吼</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.anquanke.com" title="安全客" target="_blank">安全客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.aqniu.com" title="安全牛" target="_blank">安全牛</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.easyaq.com" title="E安全" target="_blank">E安全</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共298.9k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

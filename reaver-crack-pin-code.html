@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="wpa2," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="1,说到pin码就不得不提wps,它是一种特殊的无线认证协议,当路由器开启wps功能后,会随机生成一个8位的pin码,通过暴力枚举这个pin码(共11000中可能),就可以达到破解目标wifi的目的,很不错的现象是,现在很多路由器默认就开启了wps功能关于pin码爆破的具体原理简要分析,如下:&amp;nbsp;&amp;nbsp;前4位为第一部分,第5-7位为第二部分,最后1位为第三部分&amp;nbsp;&amp;nbsp;">
+<meta name="keywords" content="wpa2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用reaver破解目标pin码">
+<meta property="og:url" content="https://evil-404.github.io/reaver-crack-pin-code.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="1,说到pin码就不得不提wps,它是一种特殊的无线认证协议,当路由器开启wps功能后,会随机生成一个8位的pin码,通过暴力枚举这个pin码(共11000中可能),就可以达到破解目标wifi的目的,很不错的现象是,现在很多路由器默认就开启了wps功能关于pin码爆破的具体原理简要分析,如下:&amp;nbsp;&amp;nbsp;前4位为第一部分,第5-7位为第二部分,最后1位为第三部分&amp;nbsp;&amp;nbsp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://evil-404.github.io/img/pin.jpg">
+<meta property="og:image" content="https://evil-404.github.io/img/airmon.png">
+<meta property="og:image" content="https://evil-404.github.io/img/sec.png">
+<meta property="og:image" content="https://evil-404.github.io/img/reaver_finsal.png">
+<meta property="og:updated_time" content="2017-06-24T15:51:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用reaver破解目标pin码">
+<meta name="twitter:description" content="1,说到pin码就不得不提wps,它是一种特殊的无线认证协议,当路由器开启wps功能后,会随机生成一个8位的pin码,通过暴力枚举这个pin码(共11000中可能),就可以达到破解目标wifi的目的,很不错的现象是,现在很多路由器默认就开启了wps功能关于pin码爆破的具体原理简要分析,如下:&amp;nbsp;&amp;nbsp;前4位为第一部分,第5-7位为第二部分,最后1位为第三部分&amp;nbsp;&amp;nbsp;">
+<meta name="twitter:image" content="https://evil-404.github.io/img/pin.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/reaver-crack-pin-code.html"/>
+
+
+
+
+
+  <title>利用reaver破解目标pin码 | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/reaver-crack-pin-code.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">利用reaver破解目标pin码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-04-17T10:09:10+08:00">
+                2015-04-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-06-24T23:51:33+08:00">
+                2017-06-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/wpa-wpa2-crack/" itemprop="url" rel="index">
+                    <span itemprop="name">wpa/wpa2 crack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,003
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><br><br>1,说到pin码就不得不提wps,它是一种特殊的无线认证协议,当路由器开启wps功能后,会随机生成一个8位的pin码,通过暴力枚举这个pin码(共11000中可能),就可以达到破解目标wifi的目的,很不错的现象是,现在很多路由器默认就开启了wps功能<br><br><br>关于pin码爆破的具体原理简要分析,如下:<br>&nbsp;&nbsp;前4位为第一部分,第5-7位为第二部分,最后1位为第三部分<br>&nbsp;&nbsp;第一部分的验证跟第二部分没关联,最后1位的结果是根据第二部分计算得出的校验码<br>&nbsp;&nbsp;破解一开始是会先单独对第一部分进行pin码匹配,<br>&nbsp;&nbsp;也就是说先破解前4位pin码,而前4位也就是0000-9999共有10000个组合<br>&nbsp;&nbsp;当前4位pin码确定后再对第二部分进行pin码匹配,<br>&nbsp;&nbsp;再对5-7位进行破解,而5-7位是000-999,共有1000个组合<br>&nbsp;&nbsp;当前7位都确定后,最后1位也会自动得出,即破解完成<br>&nbsp;&nbsp;根据pin码破解的原理,可以看到只需要枚举11000种情况就会必然破解出pin码,<br>&nbsp;&nbsp;从而通过pin得到wifi密码,这么点儿组合对计算机来讲,破解出来是迟早的,不过实际很大程度上还要依赖于目标路由的网络状况和信号强弱<br>&nbsp;&nbsp;<img src="/img/pin.jpg" alt="pin码格式"><br></p>
+<p>2,具体的pin码破解流程如下,首先,依然是先开启网卡的监听模式:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># airmon-ng start wlan0</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/airmon.png" alt="开启网卡监听模式"><br></p>
+<p>3,而后,开始扫描附近所有开启了wps的无线设备,locked状态为’No’的,都可以作为下手的目标<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wash -i wlan0mon --ignore-fcs  这里有时会报fcs错误,加上该选项即可</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/sec.png" alt="扫描附近开了wps的无线设备"><br></p>
+<p>4,使用reaver工具爆破pin码,关于reaver 一些选项作用如下:<br>&nbsp;&nbsp;-i     监听后的网卡接口名称<br>&nbsp;&nbsp;-b  指定目标无线ap的mac地址<br>&nbsp;&nbsp;-a  自动检测目标AP最佳配置<br>&nbsp;&nbsp;-S  使用最小的DH key(提高破解速度)<br>&nbsp;&nbsp;-vv 显示详细的破解过程<br>&nbsp;&nbsp;-d  即delay每穷举一次的闲置时间预设为1秒<br>&nbsp;&nbsp;-t  即timeout每次穷举等待反馈的最长时间,即破解超时时长<br>&nbsp;&nbsp;-c  指定频道可以方便找到无线信号,如-c 1 指定1频道</p>
+<p>根据无线信号强弱针对性的调整下命令:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reaver -i wlan0mon -b MAC -a -S -vv -d0 -c 1  		信号非常好</span></span><br><span class="line"><span class="comment"># reaver -i wlan0mon -b MAC -a -S -vv -d2 -t 5 -c 1		信号普通</span></span><br><span class="line"><span class="comment"># reaver -i wlan0mon -b MAC -a -S -vv -d5 -c 1			信号一般</span></span><br><span class="line"><span class="comment"># reaver -i wlan0mon -b MAC -S -N -vv -c 4</span></span><br><span class="line"><span class="comment"># reaver -i wlan0mon -b DC:EE:06:96:B7:B8 -S -N -vv -c 6</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/reaver_finsal.png" alt="开始爆破pin码"><br></p>
+<p>最后,当reaver pin完之后会显示出目标的WPS PIN(正确的pin码)码和WPA PSK密码(正确的wifi密码)<br><br><br>5,假如目标的wpa psk密码被修改了,但wps功能却没有关,pin码也没有改,你还是可以直接用reaver再次获取目标wifi密码,如下:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reaver -i mon0 -b mac -p pin码</span></span><br></pre></td></tr></table></figure></p>
+<p><br></p>
+<h5 id="一点小结"><a href="#一点小结" class="headerlink" title="一点小结:"></a>一点小结:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;其实,搞清楚具体的破解原理之后,你会发现其实也并没什么实际性的技术含量,只需要写程序组包跑就是了,可能就是验证的过程有点儿复杂需要多花些时间,但工具(reaver)现在别人都已经为我们写好了,我们所能做的,会用即可,仅此而已,另外,个人并也极不建议一开始破解无线的时候就用这个方法,因为它的速度,大家也可以看到了,影响的因素太多,导致了它非常的慢,尤其是对实地渗透来讲,我们可能根本没有那么长的时间等,所以,能用aircrack搞定的就直接用aircrack来搞定,实在搞不定,再考虑这个也不迟,仅仅是个人建议而已……!</p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    klion
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/reaver-crack-pin-code.html" title="利用reaver破解目标pin码">https://evil-404.github.io/reaver-crack-pin-code.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/wpa2/" rel="tag"><i class="fa fa-tag"></i>wpa2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/auto-crack-wifi.html" rel="next" title="利用wifite脚本全自动获取握手包">
+                <i class="fa fa-chevron-left"></i> 利用wifite脚本全自动获取握手包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/python-basic.html" rel="prev" title="python 速成笔记 [基础语法 一]">
+                python 速成笔记 [基础语法 一] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="嘶吼" target="_blank">嘶吼</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.anquanke.com" title="安全客" target="_blank">安全客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.aqniu.com" title="安全牛" target="_blank">安全牛</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.easyaq.com" title="E安全" target="_blank">E安全</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#一点小结"><span class="nav-number">1.</span> <span class="nav-text">一点小结:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共298.9k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

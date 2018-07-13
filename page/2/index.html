@@ -1,0 +1,2676 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="别惹我,我疯起来连自己都黑！">
+<meta name="keywords" content="Evil-404,evil404,apt攻防">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Evil-404">
+<meta property="og:url" content="https://evil-404.github.io/page/2/index.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="别惹我,我疯起来连自己都黑！">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Evil-404">
+<meta name="twitter:description" content="别惹我,我疯起来连自己都黑！">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/page/2/"/>
+
+
+
+
+
+  <title>Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/ldap-sec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/ldap-sec.html" itemprop="url">初探 LDAP 安全 [ 一 ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T04:09:17+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:24:33+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LDAP安全/" itemprop="url" rel="index">
+                    <span itemprop="name">LDAP安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,572
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 ldap 的一些简单科普<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`ldap` 基于tcp/ip的轻量级目录访问协议,属于X.<span class="number">500</span>目录协议族的一个简化版本</span><br><span class="line">你可以暂时把它粗暴的理解成 `一种特殊类型的数据库` ,通常,这种数据库文件后缀都为`.ldif`,并使用特殊的节点查询语句来获取相应数据</span><br><span class="line">实际生产环境中,主要还是用它来做各种查询比较多,既是查询,也就意味着肯定会有大量的读操作</span><br><span class="line">虽然,ldap也支持一些简单的更新功能,即写,但一般都不会用,因为它在写方面的效率并不高</span><br><span class="line">如果真的是写比较多,直接用各种关系型数据库代替就好了,实在没必要用ldap,毕竟,术业有专攻</span><br><span class="line">另外,ldap 跨平台,功能简洁,易管理,配置,读性能也不错,亦可分布式部署`不知道是不是可以把它的分布式理解成windows域的目录树,目录林概念`</span><br><span class="line">用的最多的可能就是进行`集中身份验证`,最后,我们还需要知道的是,默认情况下,ldap的所有数据都是直接以明文传输的,容易被截获,不过好在它支持ssl</span><br></pre></td></tr></table></figure></p>
+<p>0x02 其它的一些常用目录服务工具<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">X</span><span class="selector-class">.500</span> 		过于庞大臃肿</span><br><span class="line"><span class="selector-tag">ldap</span>  		轻量且配置简单</span><br><span class="line"><span class="selector-tag">windows</span>活动目录  有平台限制</span><br><span class="line"><span class="selector-tag">NIS</span>		个人暂时还没接触过</span><br></pre></td></tr></table></figure></p>
+<p>0x03 了解ldap内部数据的大致存储方式<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">和常规关系型数据库不同的是,ldap并非按照常规的库,表,字段方式来存储数据</span><br><span class="line">而是按照一种特殊的倒树状结构层级来组织管理数据,此处的树指的就是目录信息树,即`DIT`</span><br><span class="line">所谓的目录信息树其实相当于专门用来进行读操作的数据库</span><br><span class="line">在DIT内部则由N个条目`entry`所组成,就相当于我们常规数据库表中每条具体的记录</span><br><span class="line">而条目的内容则是由具有唯一标识名`DN`的属性[Attribute]及属性对应的值[value]所组成的这么一个集合</span><br><span class="line">条目为ldap中最基础的操作单位,通常对ldap的增删改查都是以条目为基本单元进行的</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/ldap-sec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/tomcat-sec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/tomcat-sec.html" itemprop="url">Tomcat 安全部署实战指南</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T04:09:17+08:00">
+                2017-12-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:34:50+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tomcat-安全部署实战指南/" itemprop="url" rel="index">
+                    <span itemprop="name">Tomcat 安全部署实战指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,257
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于Tomcat,更多详情大家可直接参考百科说明<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span>//<span class="built_in">zh</span>.wikipedia<span class="meta">.org</span>/wiki/Apache_Tomcat</span><br></pre></td></tr></table></figure></p>
+<p>此次演示环境<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CentOS7 x86_64 	<span class="built_in">ip</span>: <span class="number">192.168</span><span class="meta">.3</span><span class="meta">.64</span></span><br><span class="line">Apache Tomcat/<span class="number">8.5</span><span class="meta">.24</span> 	建议大家使用较新版的稳定版本</span><br></pre></td></tr></table></figure></p>
+<p>0x02 首先,在正式部署Tomcat之前,需要先来准备好jdk环境,因为毕竟底层还是在靠java来处理,所以必须要先得有java的运行环境才行,其实,在实际生产环境中,也可以单独使用<code>jre</code>,不过个人觉得这和安全的关系并不大,试想,如果你手里都已经拿到了一个可以运行java的环境了,我在本地用对应版本的jdk编译好了再丢上运行也是一样,防不住啥,太泛泛<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> tar xf jdk-8u151-linux-x64.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mv jdk1.8.0_151/ /usr/<span class="built_in">local</span>/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/jdk1.8.0_151/ /usr/<span class="built_in">local</span>/jdk</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf apache-tomcat-8.5.24.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mv apache-tomcat-8.5.24 /usr/<span class="built_in">local</span>/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/apache-tomcat-8.5.24/ /usr/<span class="built_in">local</span>/tomcat</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ll /usr/<span class="built_in">local</span>/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> vi /etc/profile</span></span><br><span class="line">  export JAVA_HOME=/usr/local/jdk/ </span><br><span class="line">  export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH </span><br><span class="line">  export CLASSPATH=.$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar</span><br><span class="line">  export TOMCAT_HOME=/usr/local/tomcat</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">source</span> /etc/profile</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> java -version</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> javac</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/tomcat-sec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/samba-sec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/samba-sec.html" itemprop="url">跨平台快速文件共享 Samba</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T04:09:17+08:00">
+                2017-12-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:39:57+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Samba/" itemprop="url" rel="index">
+                    <span itemprop="name">Samba</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,427
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于smaba<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">主要用于实现不同系统平台间的文件共享,配置非常简单,轻量,适合用于常规办公内网环境中</span><br><span class="line">linux <span class="tag">&lt;<span class="name">==</span>&gt;</span> windows <span class="tag">&lt;<span class="name">==</span>&gt;</span> unix</span><br></pre></td></tr></table></figure></p>
+<p>此次演示环境<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CentOS6<span class="meta">.9</span> x86_64	<span class="built_in">ip</span>:<span class="number">192.168</span><span class="meta">.3</span><span class="meta">.55</span> samba服务器</span><br><span class="line">CentOS6<span class="meta">.9</span> x86_64	<span class="built_in">ip</span>:<span class="number">192.168</span><span class="meta">.3</span><span class="meta">.57</span> 用来模拟smb客户端进行访问测试</span><br></pre></td></tr></table></figure></p>
+<p>0x02 samba服务默认所监听的端口<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">137/udp,138/udp nmb 进程提供netbios解析,以满足基于 CIFS 协议的共享访问环境</span><br><span class="line">138/tcp,445/tcp<span class="built_in"> smb </span>进程主要为客户端提供文件共享,打印机服务以及用户权限验证</span><br></pre></td></tr></table></figure></p>
+<p>0x03 使用samba客户端工具 <code>smbclient</code>,其实有些类似于ftp的客户端工具,也是一种交互式的访问</p>
+<p><code>在linux下使用smbclient访问windows中的共享目录</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> smbclient -L 192.168.3.23 -U administrator</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> smbclient //192.168.3.23/linux_dir -U dcadmin</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mount -t cifs //192.168.3.23/linux_dir /mnt/windows/ -o username=dcadmin 注意,此处要使用cifs协议进行挂载</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/samba-sec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/Dns-tips.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Dns-tips.html" itemprop="url">DNS 深度理解 [ 一 ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-12T04:09:17+08:00">
+                2017-12-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:47:51+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNS-深度理解/" itemprop="url" rel="index">
+                    <span itemprop="name">DNS 深度理解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,897
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  22
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 首先,我们先来简单回顾下<code>DNS的基本解析流程</code>, 比较简单,如下<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">&gt; 以客户端浏览器访问 www.rootkit.org 域名为例,首先,它会去检查当前浏览器缓存,如果有,就直接响应,如果没有,就继续往下找</span></span><br><span class="line"><span class="ruby">  -&gt; 接着,操作系统会去检查自己的host文件,如果从中没找到对应关系,会再到系统dns缓存中查,如果缓存中有,就直接返回该域名所对应的ip</span></span><br><span class="line"><span class="ruby">    -&gt; 如果缓存中没有,则会向我们事先设置好的dns服务器 [ 一般有两个, 主 &amp; 备 ] 去请求,即所谓的<span class="string">`递归查询`</span>,dns服务器首先会到自身解析数据库中去查</span></span><br><span class="line"><span class="ruby">      -&gt; 如果dns服务器在自己的解析库中也没找到,它就会自动帮我们向根发送询问请求</span></span><br><span class="line"><span class="ruby">	-&gt; 此时,根看到要请求的是org的后缀,就会把org所在的ns服务器告诉我们的dns</span></span><br><span class="line"><span class="ruby">	  -&gt; 然后,我们的dns服务器就会去请求org所在的ns服务器</span></span><br><span class="line"><span class="ruby">	    -&gt; 当请求到达org ns服务器时,org一看域名是在rootkit这个域下的,就会把rootkit所在的ns服务器再告诉我们的dns服务器</span></span><br><span class="line"><span class="ruby">	       -&gt; 再然后,我们的dns服务器就会去请求rootkit这个域的ns服务器</span></span><br><span class="line"><span class="ruby">		 -&gt; rootkit这个域的ns服务器一看是要访问www就直接找到了www对应的A记录的ip,并把它丢给我们的dns,上面逐个询问的过程,即 <span class="string">`迭代查询`</span></span></span><br><span class="line"><span class="ruby">		   -&gt; 最后,我们的dns再把最终解析到的这个ip丢给我们的客户端,然后客户端就直接拿着去访问了,如下,访问google.com时的简易流程图</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Dns-tips.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/svn-config-sec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/svn-config-sec.html" itemprop="url">不再让 `泄露` 拖你的后腿 [ subversion篇 ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-11T04:09:17+08:00">
+                2017-12-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-23T09:56:26+08:00">
+                2017-12-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,237
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 svn<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">同属C/S架构,对于svn服务端来讲,任何一个文件,在任何时刻的变化,都会被svn详细记录,并自动备份修改之前的结果,方便后续回滚</span><br><span class="line">其实,底层也是靠一个独立的`文件系统 FSFS`在维护,更多内部工作细节,大家可以直接去参考百科说明,此处废话不多讲,我们真奔主题...</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>演示环境,注,此处为独立部署svn服务器,并非配合web服务一起使用<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.9_x86_64</span> <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.59</span></span><br><span class="line"><span class="selector-tag">win7cn</span>		 <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.70</span></span><br></pre></td></tr></table></figure></p>
+<p>0x02 作为一名入侵者,从<code>svn</code>中你都能发掘到什么宝藏<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">可能最容易拿到的就是数据库的各种连接账号密码,前提是,目标数据库允许外连,这样你才能更优雅的脱裤或者想办法构造上传webshell</span><br><span class="line">一些邮箱账号密码,如果目标有自己的vpn或者owa之类的入口还是很值得尝试的</span><br><span class="line">直接的后端代码,除了能局部审下代码之外,在注释里面也许还能看到一些关于开发人员的敏感信息</span><br><span class="line">其它的各种敏感配置信息,非常多,这里就不一一细说了</span><br><span class="line">注意,有些信息,确实不能让我们一刀毙敌,但高效的渗透往往是对各类敏感信息的相互配合及深度利用,这非常重要</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/svn-config-sec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/vsftp-secfig.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/vsftp-secfig.html" itemprop="url">简述 FTP 入侵与防御 [ vsftpd ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T04:09:17+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-23T10:02:47+08:00">
+                2017-12-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vsftp/" itemprop="url" rel="index">
+                    <span itemprop="name">vsftp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,570
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 首先,我们先来简单思考下,当你面对一台 ftp 时,到底能做些什么<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">挖<span class="number">0</span><span class="built_in">day</span>,抱歉,并不在今天的讨论范畴 ^_^</span><br><span class="line">允许匿名可写,直接上传webshell,一般极小的个人站才有可能,ftp目录即网站目录</span><br><span class="line">允许匿名下载,造成的敏感文件信息泄露</span><br><span class="line">爆破,亦可造成敏感配置泄露</span><br><span class="line">嗅探,搜集各种明文账号密码,然后再拿着这些账号密码,去撞目标的其它入口,或以此进行进一步的内网渗透</span><br><span class="line">提权,linux平台下基本不可能</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>0x02 相对主流的一些ftp工具<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">vsftpd</span></span> proftpd filezilla ...</span><br></pre></td></tr></table></figure></p>
+<p>0x03 深入理解ftp的主动与被动工作模式</p>
+<p><code>命令连接</code><br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在客户端向ftp服务端发起连接请求时,客户端会随机选择本地的某个tcp端口与ftp服务端的<span class="number">21</span>端口进行连接</span><br><span class="line">这中间会进行一系列的身份验证过程,待验证通过后,客户端与ftp服务端即会成功建立 `命令连接`</span><br><span class="line">所谓的 `命令传输连接` 也就是说,仅仅只会用这个连接来传输命令本身</span><br></pre></td></tr></table></figure></p>
+<p><code>主动模式</code><br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">在 `命令连接` 建立成功后,客户端可能还需要进行一系列的数据传输动作,如,上传,下载文件...</span><br><span class="line">此时,客户端会先在本地另启一个端口监听等待连接,并利用先前与ftp客户端建立好的`命令连接`通道,告诉ftp服务端客户端所监听的端口</span><br><span class="line">而后,ftp服务端会利用自身的<span class="number">20</span>端口和刚才ftp客户端所告知的端口进行数据连接,随后就开始利用此连接来进行各类数据传输</span><br><span class="line">注意,此时`数据连接`在建立的过程中,是ftp服务端的<span class="number">20</span>端口主动连接FTP客户端的随机端口的,也就是我们所说的`主动模式`</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/vsftp-secfig.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/apache-sec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/apache-sec.html" itemprop="url">如何将你的 apache 把控的'密不透风'</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-27T04:09:17+08:00">
+                2017-11-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-23T10:12:15+08:00">
+                2017-12-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/apachesec/" itemprop="url" rel="index">
+                    <span itemprop="name">apachesec</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,623
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 为防止配置或端口冲突,在装之前,你需要先仔细检查当前系统有没有装apache,如果有<code>先把apache服务停掉,然后卸载apache</code>,等会儿用源码重新编译安装<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> rpm -qa httpd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rpm -e --nodeps * 强制卸载apache</span></span><br></pre></td></tr></table></figure></p>
+<p>演示环境<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8</span> <span class="selector-tag">x86_64</span>    最小化,带基础库安装 <span class="selector-tag">eth0</span> : 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.45</span> <span class="selector-tag">eth1</span> : 192<span class="selector-class">.168</span><span class="selector-class">.4</span><span class="selector-class">.16</span> <span class="selector-tag">eth2</span> : 192<span class="selector-class">.168</span><span class="selector-class">.5</span><span class="selector-class">.16</span></span><br><span class="line"><span class="selector-tag">httpd-2</span><span class="selector-class">.2</span><span class="selector-class">.34</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> <span class="selector-tag">apache</span>官方提供的源码包</span><br></pre></td></tr></table></figure></p>
+<p>0x02 下载apache源码包,这里暂时选择2.2.x系列的最新版,不建议再用比这个还老的版本了,漏洞比较多<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> wget http://apache.website-solution.net/httpd/httpd-2.2.34.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf httpd-2.2.34.tar.gz &amp;&amp; <span class="built_in">cd</span> httpd-2.2.34</span></span><br></pre></td></tr></table></figure></p>
+<p>0x03 直接到源码中去<code>改掉apache的详细版本信息</code>,跟部署nginx一样,尽可能地扰乱入侵者的判断,这里就把它模拟成IIS 7.5,实际系统应为win server 2008r2<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># vi <span class="meta-keyword">include</span>/ap_release.h</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/apache-sec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/phpsec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/phpsec.html" itemprop="url">php-fpm.conf & php.ini 安全优化实践</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-24T04:09:17+08:00">
+                2017-11-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-24T21:07:40+08:00">
+                2017-12-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/phpsec/" itemprop="url" rel="index">
+                    <span itemprop="name">phpsec</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,880
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 php<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">其历史相对已经比较久远了,这里也就不废话了,属弱类型中一种解释型语言</span><br><span class="line">除了web开发以及写些简单的exp,暂未发现其它牛逼用途,暂以中小型web站点开发为主</span><br><span class="line">另外,低版本的php自身漏洞就比较多,建议,从现在开始就在新项目中使用php <span class="number">5.6</span><span class="selector-class">.x</span> 往后的版本</span><br><span class="line">好在官方维护的一直比较勤奋,主次版本都迭代的比较快,最新版已经到<span class="number">7.2</span>.<span class="number">0</span></span><br><span class="line">哼哼……是,<span class="string">'最好的语言'</span>... :)</span><br></pre></td></tr></table></figure></p>
+<p>0x02 此次演示环境<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8</span> <span class="selector-tag">x86_64</span>   最小化,带基础库安装 	<span class="selector-tag">eth0</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.42</span> <span class="selector-tag">eth1</span>: 192<span class="selector-class">.168</span><span class="selector-class">.4</span><span class="selector-class">.14</span>  <span class="selector-tag">eth2</span>: 192<span class="selector-class">.168</span><span class="selector-class">.5</span><span class="selector-class">.14</span></span><br><span class="line"><span class="selector-tag">php-5</span><span class="selector-class">.6</span><span class="selector-class">.32</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span>  官方提供的源码包</span><br></pre></td></tr></table></figure></p>
+<p>0x03 下载 <code>php-5.6.32.tar.gz</code>,并安装好php所需的各种依赖库<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install epel-release -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install -y zlib-devel libxml2-devel freetype-devel </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install -y libjpeg-devel  libpng-devel gd-devel curl-devel libxslt-devel</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install openssl openssl-devel libmcrypt libmcrypt-devel mcrypt mhash mhash-devel -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf libiconv-1.15.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> libiconv-1.15</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ./configure --prefix=/usr/<span class="built_in">local</span>/libiconv-1.15 &amp;&amp; make &amp;&amp; make install</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/libiconv-1.15/ /usr/<span class="built_in">local</span>/libiconv</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ll /usr/<span class="built_in">local</span>/libiconv/</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/phpsec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/mysqlconfigsec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/mysqlconfigsec.html" itemprop="url">给自己一个更安全的 mysql</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T04:09:17+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-05T19:32:06+08:00">
+                2017-12-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysqlsec/" itemprop="url" rel="index">
+                    <span itemprop="name">mysqlsec</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,060
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 在进行真正的 mysql 部署之前,我们不妨先来大致了解下,在实际入侵过程中,仅仅利用mysql,我们到底能干些什么,了解了这些最基本的点之后,我们再进行针对性防御:<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">普通用户权限下的 <span class="string">'增删改查'</span>,即 常规sql注入,俗称<span class="string">'脱裤'</span></span><br><span class="line">普通用户<span class="keyword">file</span>权限下的 <span class="string">'文件读写'</span>,可尝试读取各类敏感配置,如各类账号或者尝试直接往站点目录中写webshell</span><br><span class="line">root用户权限下的 <span class="string">'读写文件'</span> , <span class="string">'系统命令执行'</span>... 可读写是因为root本身就有<span class="keyword">file</span>权限,另外,如果直接以root身份运行mysql服务,亦可实现<span class="string">'提权'</span>的效果</span><br><span class="line">针对 <span class="string">'数据库连接'</span> 的<span class="string">'DDOS'</span>,单用户大批量数据库连接可能会导致mysql无法再提供服务</span><br></pre></td></tr></table></figure></p>
+<p>0x02 演示环境:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8</span> <span class="selector-tag">x86_64</span> 最小化,只带基础库安装  <span class="selector-tag">eth0</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.42</span> <span class="selector-tag">eth1</span>: 192<span class="selector-class">.168</span><span class="selector-class">.4</span><span class="selector-class">.14</span>  <span class="selector-tag">eth2</span>: 192<span class="selector-class">.168</span><span class="selector-class">.5</span><span class="selector-class">.14</span></span><br><span class="line"><span class="selector-tag">mysql-5</span><span class="selector-class">.6</span><span class="selector-class">.27-linux-glibc2</span><span class="selector-class">.5-x86_64</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span>  此次<span class="selector-tag">mysql</span>就不再手工编译了,时间比较长,直接用<span class="selector-tag">mysql</span>官方提供好的二进制包来做演示</span><br></pre></td></tr></table></figure></p>
+<p>0x03 下载,解压 mysql-5.6.27-linux-glibc2.5-x86_64.tar.gz<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> tar xf mysql-5.6.27-linux-glibc2.5-x86_64.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mv mysql-5.6.27-linux-glibc2.5-x86_64 /usr/<span class="built_in">local</span>/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/mysql-5.6.27-linux-glibc2.5-x86_64/ /usr/<span class="built_in">local</span>/mysql</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ls -l /usr/<span class="built_in">local</span>/mysql/</span></span><br></pre></td></tr></table></figure></p>
+<p>0x04 开始初始化mysql</p>
+<p>务必以一个伪用户身份来运行mysql服务,防止别人利用mysql进行提权,后面还会再细说,另外,web服务和数据库服务严禁用同一个系统用户,这样做主要是为了防止入侵者直接通过sql语句往网站目录中写webshell<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> useradd -s /sbin/nologin -M mysql</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/mysqlconfigsec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nginx-sec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/nginx-sec.html" itemprop="url">从 0 开始构建一个 "固若金汤" 的nginx</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T04:09:17+08:00">
+                2017-11-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-03T19:18:18+08:00">
+                2017-12-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginxsec/" itemprop="url" rel="index">
+                    <span itemprop="name">nginxsec</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7,206
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  29
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 nginx<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">配置灵活,简单,运行时占用系统资源较少,功能模块繁多,可扩展性极强,基于 <span class="keyword">C</span> ,整个工具大小<span class="number">1</span>M左右</span><br><span class="line">支持高并发,仅限于全部为纯静态文件的情况下,因为最终还要取决于后端 [ 脚本和数据库 ] 的实际处理速度</span><br><span class="line">默认 nginx 会自动选择最佳的网络<span class="keyword">I</span>/<span class="keyword">O</span>模型,和nginx不同的是,apache默认就会使用select模型,效率较低</span><br><span class="line">上面这些话的意思也就是说,你的<span class="keyword">C</span>要牛逼到一定的程度,不然,想做深度二次开发基本是扯淡,真心挺佩服毛子的</span><br><span class="line">更多说明,请直接参考官方文档...</span><br></pre></td></tr></table></figure></p>
+<p>0x02 正确理解 linux 对文件,目录,<code>[ 读 写 执行 ]</code> 权限的真正含义,这东西不能靠干说,因为根本理解不扎实,大家可以自己在系统中创建两个普通用户,不停地切换目录文件权限,以深入仔细体会,后面网站目录权限设置要用到这些基础,如果连这些都搞不清,想灵活应用就难了,耐心点,等透彻理解之后,你就会发现真TM简单 </p>
+<p>目录 <code>读[r / 4]</code> <code>写[w / 2]</code> <code>执行[x / 1]</code><br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">读:   <span class="keyword">ls</span> , dir <span class="string">...</span> 			表示可查看该目录下的文件列表</span><br><span class="line">写:   rm , mv, cp, mkdir ,touch <span class="string">...</span>	表示可在该目录下创建,删除,修改文件或者子目录,不过在这之前,一定要先有执行权限,不然进都进不去,又怎么写呢</span><br><span class="line">执行: <span class="keyword">cd</span>  <span class="string">...</span>				表示可进入该目录</span><br></pre></td></tr></table></figure></p>
+<p>文件 <code>读[r / 4]</code> <code>写[w / 2]</code> <code>执行[x / 1]</code><br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">读:	cat , tac , more , less ,head , tail <span class="string">...</span> 表示可查看该文件中的内容</span><br><span class="line">写:	vi , nano , <span class="keyword">echo</span> <span class="string">...</span>			 只表示可对文件中的 内容 进行增删改,删除文件还要取决于当前用户对该文件所在目录是否有写权限</span><br><span class="line">执行:	可执行文件,shell脚本<span class="string">...</span>			 在linux中任何文件都可以有执行权限,但只有可执行文件和脚本才能真正执行</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/nginx-sec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="嘶吼" target="_blank">嘶吼</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.anquanke.com" title="安全客" target="_blank">安全客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.aqniu.com" title="安全牛" target="_blank">安全牛</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.easyaq.com" title="E安全" target="_blank">E安全</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共298.9k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
