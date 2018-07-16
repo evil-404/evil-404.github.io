@@ -309,6 +309,396 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/keepalived-nginx.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/keepalived-nginx.html" itemprop="url">keepalived + nginx 初步实现高可用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-24T04:09:17+08:00">
+                2017-12-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:06:35+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/keepalived-高可用/" itemprop="url" rel="index">
+                    <span itemprop="name">keepalived 高可用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,205
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 keepalived<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">早期是专为 `LVS` 设计的,主要用来监控LVS集群中各个节点状态</span><br><span class="line">内部基于 `VRRP协议` 实现,即`虚拟路由冗余协议`,从名字不难看出,协议本身是用于保证实现路由节点高可用的</span><br></pre></td></tr></table></figure></p>
+<p>0x02 所谓的 VRRP 协议<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">简单来讲,即将N台提供相同功能的路由器组成一个路由器组,在这个组里有一个master和多个<span class="keyword">backup</span></span><br><span class="line">一般情况下,<span class="keyword">master</span>是由选举算法产生的,另外需要注意的是,只有在 <span class="keyword">master</span> 上才有一个用于对外提供服务的虚拟ip</span><br><span class="line">其它的<span class="keyword">backup</span>都是没有的,当<span class="keyword">master</span>在对外提供服务时,其它的<span class="keyword">backup</span>又在干什么呢</span><br><span class="line">很简单,当<span class="keyword">master</span>在对外提供服务时,它同时也在不停的向所有的<span class="keyword">backup</span>发送VRRP状态信息 <span class="string">`说白点儿就是心跳包`</span></span><br><span class="line">告诉所有<span class="keyword">backup</span>们,说,<span class="string">'我还没累死,你们先歇着,等我挂了,你们再上'</span>,然后,所有的<span class="keyword">backup</span>就会一直在那儿闲着不停地接收这样的状态信息</span><br><span class="line">当某一时刻,<span class="keyword">backup</span>突然没再接到这样的状态回应时,就说明<span class="keyword">master</span>已经光荣牺牲了</span><br><span class="line">所有的<span class="keyword">backup</span>会再重新用选举算法,把优先级最高的<span class="keyword">backup</span>升级为<span class="keyword">master</span>继续对外提供服务,以此保证了服务的持续可用性,即所谓的高可用</span><br></pre></td></tr></table></figure></p>
+<p>0x03 借助 keepalived 在web上的高可用实现<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">首先,在所有需要进行高可用的web节点机器上部署好keepalived,并在节点中设置一个master,其它的则全部设为<span class="keyword">backup</span></span><br><span class="line">一旦<span class="keyword">backup</span>接收不到来自<span class="keyword">master</span>的心跳数据,即认为<span class="keyword">master</span>已挂掉,<span class="keyword">backup</span>随即就会接管<span class="keyword">master</span>的所有资源数据</span><br><span class="line">当<span class="keyword">master</span>状态恢复时,<span class="keyword">backup</span>会把所有的资源数据再移交给<span class="keyword">master</span>处理,此,即为最简单的web高可用实现</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/keepalived-nginx.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nginx-static-dynamic.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/nginx-static-dynamic.html" itemprop="url">利用 `nginx反向代理` 实现的动静分离</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-22T04:09:17+08:00">
+                2017-12-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T20:12:56+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/动静分离/" itemprop="url" rel="index">
+                    <span itemprop="name">动静分离</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,340
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 <code>动静分离</code><br><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">主要用于一些较大型的站点架构,这样做一定程度上可以有效减轻后端节点压力,也就是说,有时候你在前端<span class="built_in">url</span>中看到的一个目录,其后端对应的很可能就是一个集群</span><br><span class="line">另外,这样会使网站更加静态化,利于缓存,可显著提高网站访问速度,有效实现前后端解耦,但这样无疑会加大开发的繁琐程度,前后端只能通过各种接口进行通信</span><br></pre></td></tr></table></figure></p>
+<p>0x02 此次演示环境<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">NginxHttp</span>	<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.49</span>	对应域名: <span class="selector-tag">reverse</span><span class="selector-class">.org</span>		<span class="selector-tag">nginx</span>反向代理服务器</span><br><span class="line"><span class="selector-tag">OldLamp</span>		<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.45</span>	对应域名: <span class="selector-tag">www</span><span class="selector-class">.bwapp</span><span class="selector-class">.cc</span>		假设为动态服务器</span><br><span class="line"><span class="selector-tag">OldLnmp</span>		<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.42</span>	对应域名: <span class="selector-tag">test</span><span class="selector-class">.bwapp</span><span class="selector-class">.org</span> 	假设为静态服务器</span><br></pre></td></tr></table></figure></p>
+<p>0x03 务必先统一所有机器的host解析,因为等会儿要直接用域名的方式往后抛,如下<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/hosts</span><br><span class="line">  <span class="number">192.168</span><span class="number">.3</span><span class="number">.42</span>	test.bwapp.org bwapp.org</span><br><span class="line">  <span class="number">192.168</span><span class="number">.3</span><span class="number">.45</span>	bwapp.cc www.bwapp.cc</span><br><span class="line">  <span class="number">192.168</span><span class="number">.3</span><span class="number">.75</span>  lvs.org</span><br><span class="line">  <span class="number">192.168</span><span class="number">.3</span><span class="number">.49</span>	reverse.org</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/nginx-static-dynamic.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/ldap-sec.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1859,404 +2249,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/mysqlconfigsec.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/mysqlconfigsec.html" itemprop="url">给自己一个更安全的 mysql</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T04:09:17+08:00">
-                2017-11-23
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-05T19:32:06+08:00">
-                2017-12-05
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysqlsec/" itemprop="url" rel="index">
-                    <span itemprop="name">mysqlsec</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4,060
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  16
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>0x01 在进行真正的 mysql 部署之前,我们不妨先来大致了解下,在实际入侵过程中,仅仅利用mysql,我们到底能干些什么,了解了这些最基本的点之后,我们再进行针对性防御:<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">普通用户权限下的 <span class="string">'增删改查'</span>,即 常规sql注入,俗称<span class="string">'脱裤'</span></span><br><span class="line">普通用户<span class="keyword">file</span>权限下的 <span class="string">'文件读写'</span>,可尝试读取各类敏感配置,如各类账号或者尝试直接往站点目录中写webshell</span><br><span class="line">root用户权限下的 <span class="string">'读写文件'</span> , <span class="string">'系统命令执行'</span>... 可读写是因为root本身就有<span class="keyword">file</span>权限,另外,如果直接以root身份运行mysql服务,亦可实现<span class="string">'提权'</span>的效果</span><br><span class="line">针对 <span class="string">'数据库连接'</span> 的<span class="string">'DDOS'</span>,单用户大批量数据库连接可能会导致mysql无法再提供服务</span><br></pre></td></tr></table></figure></p>
-<p>0x02 演示环境:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8</span> <span class="selector-tag">x86_64</span> 最小化,只带基础库安装  <span class="selector-tag">eth0</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.42</span> <span class="selector-tag">eth1</span>: 192<span class="selector-class">.168</span><span class="selector-class">.4</span><span class="selector-class">.14</span>  <span class="selector-tag">eth2</span>: 192<span class="selector-class">.168</span><span class="selector-class">.5</span><span class="selector-class">.14</span></span><br><span class="line"><span class="selector-tag">mysql-5</span><span class="selector-class">.6</span><span class="selector-class">.27-linux-glibc2</span><span class="selector-class">.5-x86_64</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span>  此次<span class="selector-tag">mysql</span>就不再手工编译了,时间比较长,直接用<span class="selector-tag">mysql</span>官方提供好的二进制包来做演示</span><br></pre></td></tr></table></figure></p>
-<p>0x03 下载,解压 mysql-5.6.27-linux-glibc2.5-x86_64.tar.gz<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> tar xf mysql-5.6.27-linux-glibc2.5-x86_64.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mv mysql-5.6.27-linux-glibc2.5-x86_64 /usr/<span class="built_in">local</span>/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/mysql-5.6.27-linux-glibc2.5-x86_64/ /usr/<span class="built_in">local</span>/mysql</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ls -l /usr/<span class="built_in">local</span>/mysql/</span></span><br></pre></td></tr></table></figure></p>
-<p>0x04 开始初始化mysql</p>
-<p>务必以一个伪用户身份来运行mysql服务,防止别人利用mysql进行提权,后面还会再细说,另外,web服务和数据库服务严禁用同一个系统用户,这样做主要是为了防止入侵者直接通过sql语句往网站目录中写webshell<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> useradd -s /sbin/nologin -M mysql</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/mysqlconfigsec.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nginx-sec.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/nginx-sec.html" itemprop="url">从 0 开始构建一个 "固若金汤" 的nginx</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T04:09:17+08:00">
-                2017-11-21
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-03T19:18:18+08:00">
-                2017-12-03
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginxsec/" itemprop="url" rel="index">
-                    <span itemprop="name">nginxsec</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  7,206
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  29
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>0x01 关于 nginx<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">配置灵活,简单,运行时占用系统资源较少,功能模块繁多,可扩展性极强,基于 <span class="keyword">C</span> ,整个工具大小<span class="number">1</span>M左右</span><br><span class="line">支持高并发,仅限于全部为纯静态文件的情况下,因为最终还要取决于后端 [ 脚本和数据库 ] 的实际处理速度</span><br><span class="line">默认 nginx 会自动选择最佳的网络<span class="keyword">I</span>/<span class="keyword">O</span>模型,和nginx不同的是,apache默认就会使用select模型,效率较低</span><br><span class="line">上面这些话的意思也就是说,你的<span class="keyword">C</span>要牛逼到一定的程度,不然,想做深度二次开发基本是扯淡,真心挺佩服毛子的</span><br><span class="line">更多说明,请直接参考官方文档...</span><br></pre></td></tr></table></figure></p>
-<p>0x02 正确理解 linux 对文件,目录,<code>[ 读 写 执行 ]</code> 权限的真正含义,这东西不能靠干说,因为根本理解不扎实,大家可以自己在系统中创建两个普通用户,不停地切换目录文件权限,以深入仔细体会,后面网站目录权限设置要用到这些基础,如果连这些都搞不清,想灵活应用就难了,耐心点,等透彻理解之后,你就会发现真TM简单 </p>
-<p>目录 <code>读[r / 4]</code> <code>写[w / 2]</code> <code>执行[x / 1]</code><br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">读:   <span class="keyword">ls</span> , dir <span class="string">...</span> 			表示可查看该目录下的文件列表</span><br><span class="line">写:   rm , mv, cp, mkdir ,touch <span class="string">...</span>	表示可在该目录下创建,删除,修改文件或者子目录,不过在这之前,一定要先有执行权限,不然进都进不去,又怎么写呢</span><br><span class="line">执行: <span class="keyword">cd</span>  <span class="string">...</span>				表示可进入该目录</span><br></pre></td></tr></table></figure></p>
-<p>文件 <code>读[r / 4]</code> <code>写[w / 2]</code> <code>执行[x / 1]</code><br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">读:	cat , tac , more , less ,head , tail <span class="string">...</span> 表示可查看该文件中的内容</span><br><span class="line">写:	vi , nano , <span class="keyword">echo</span> <span class="string">...</span>			 只表示可对文件中的 内容 进行增删改,删除文件还要取决于当前用户对该文件所在目录是否有写权限</span><br><span class="line">执行:	可执行文件,shell脚本<span class="string">...</span>			 在linux中任何文件都可以有执行权限,但只有可执行文件和脚本才能真正执行</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/nginx-sec.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2306,7 +2303,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-count">161</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2317,7 +2314,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-count">114</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2328,7 +2325,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-count">109</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2476,7 +2473,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共299.2k字</span>
+  <span class="post-count">博客全站共309.0k字</span>
 </div>
 
   

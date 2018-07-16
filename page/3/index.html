@@ -309,6 +309,399 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/mysqlconfigsec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/mysqlconfigsec.html" itemprop="url">给自己一个更安全的 mysql</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T04:09:17+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-05T19:32:06+08:00">
+                2017-12-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysqlsec/" itemprop="url" rel="index">
+                    <span itemprop="name">mysqlsec</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,060
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 在进行真正的 mysql 部署之前,我们不妨先来大致了解下,在实际入侵过程中,仅仅利用mysql,我们到底能干些什么,了解了这些最基本的点之后,我们再进行针对性防御:<br><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">普通用户权限下的 <span class="string">'增删改查'</span>,即 常规sql注入,俗称<span class="string">'脱裤'</span></span><br><span class="line">普通用户<span class="keyword">file</span>权限下的 <span class="string">'文件读写'</span>,可尝试读取各类敏感配置,如各类账号或者尝试直接往站点目录中写webshell</span><br><span class="line">root用户权限下的 <span class="string">'读写文件'</span> , <span class="string">'系统命令执行'</span>... 可读写是因为root本身就有<span class="keyword">file</span>权限,另外,如果直接以root身份运行mysql服务,亦可实现<span class="string">'提权'</span>的效果</span><br><span class="line">针对 <span class="string">'数据库连接'</span> 的<span class="string">'DDOS'</span>,单用户大批量数据库连接可能会导致mysql无法再提供服务</span><br></pre></td></tr></table></figure></p>
+<p>0x02 演示环境:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8</span> <span class="selector-tag">x86_64</span> 最小化,只带基础库安装  <span class="selector-tag">eth0</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.42</span> <span class="selector-tag">eth1</span>: 192<span class="selector-class">.168</span><span class="selector-class">.4</span><span class="selector-class">.14</span>  <span class="selector-tag">eth2</span>: 192<span class="selector-class">.168</span><span class="selector-class">.5</span><span class="selector-class">.14</span></span><br><span class="line"><span class="selector-tag">mysql-5</span><span class="selector-class">.6</span><span class="selector-class">.27-linux-glibc2</span><span class="selector-class">.5-x86_64</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span>  此次<span class="selector-tag">mysql</span>就不再手工编译了,时间比较长,直接用<span class="selector-tag">mysql</span>官方提供好的二进制包来做演示</span><br></pre></td></tr></table></figure></p>
+<p>0x03 下载,解压 mysql-5.6.27-linux-glibc2.5-x86_64.tar.gz<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> tar xf mysql-5.6.27-linux-glibc2.5-x86_64.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mv mysql-5.6.27-linux-glibc2.5-x86_64 /usr/<span class="built_in">local</span>/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/mysql-5.6.27-linux-glibc2.5-x86_64/ /usr/<span class="built_in">local</span>/mysql</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ls -l /usr/<span class="built_in">local</span>/mysql/</span></span><br></pre></td></tr></table></figure></p>
+<p>0x04 开始初始化mysql</p>
+<p>务必以一个伪用户身份来运行mysql服务,防止别人利用mysql进行提权,后面还会再细说,另外,web服务和数据库服务严禁用同一个系统用户,这样做主要是为了防止入侵者直接通过sql语句往网站目录中写webshell<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> useradd -s /sbin/nologin -M mysql</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/mysqlconfigsec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nginx-sec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/nginx-sec.html" itemprop="url">从 0 开始构建一个 "固若金汤" 的nginx</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T04:09:17+08:00">
+                2017-11-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-03T19:18:18+08:00">
+                2017-12-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginxsec/" itemprop="url" rel="index">
+                    <span itemprop="name">nginxsec</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7,206
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  29
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 nginx<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">配置灵活,简单,运行时占用系统资源较少,功能模块繁多,可扩展性极强,基于 <span class="keyword">C</span> ,整个工具大小<span class="number">1</span>M左右</span><br><span class="line">支持高并发,仅限于全部为纯静态文件的情况下,因为最终还要取决于后端 [ 脚本和数据库 ] 的实际处理速度</span><br><span class="line">默认 nginx 会自动选择最佳的网络<span class="keyword">I</span>/<span class="keyword">O</span>模型,和nginx不同的是,apache默认就会使用select模型,效率较低</span><br><span class="line">上面这些话的意思也就是说,你的<span class="keyword">C</span>要牛逼到一定的程度,不然,想做深度二次开发基本是扯淡,真心挺佩服毛子的</span><br><span class="line">更多说明,请直接参考官方文档...</span><br></pre></td></tr></table></figure></p>
+<p>0x02 正确理解 linux 对文件,目录,<code>[ 读 写 执行 ]</code> 权限的真正含义,这东西不能靠干说,因为根本理解不扎实,大家可以自己在系统中创建两个普通用户,不停地切换目录文件权限,以深入仔细体会,后面网站目录权限设置要用到这些基础,如果连这些都搞不清,想灵活应用就难了,耐心点,等透彻理解之后,你就会发现真TM简单 </p>
+<p>目录 <code>读[r / 4]</code> <code>写[w / 2]</code> <code>执行[x / 1]</code><br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">读:   <span class="keyword">ls</span> , dir <span class="string">...</span> 			表示可查看该目录下的文件列表</span><br><span class="line">写:   rm , mv, cp, mkdir ,touch <span class="string">...</span>	表示可在该目录下创建,删除,修改文件或者子目录,不过在这之前,一定要先有执行权限,不然进都进不去,又怎么写呢</span><br><span class="line">执行: <span class="keyword">cd</span>  <span class="string">...</span>				表示可进入该目录</span><br></pre></td></tr></table></figure></p>
+<p>文件 <code>读[r / 4]</code> <code>写[w / 2]</code> <code>执行[x / 1]</code><br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">读:	cat , tac , more , less ,head , tail <span class="string">...</span> 表示可查看该文件中的内容</span><br><span class="line">写:	vi , nano , <span class="keyword">echo</span> <span class="string">...</span>			 只表示可对文件中的 内容 进行增删改,删除文件还要取决于当前用户对该文件所在目录是否有写权限</span><br><span class="line">执行:	可执行文件,shell脚本<span class="string">...</span>			 在linux中任何文件都可以有执行权限,但只有可执行文件和脚本才能真正执行</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/nginx-sec.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/lsyncd.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1856,402 +2249,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/icmp-tunnel.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/icmp-tunnel.html" itemprop="url">利用icmp隧道 轻松穿透 tcp/udp四层 封锁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T07:25:29+08:00">
-                2017-11-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-05T20:08:04+08:00">
-                2017-12-05
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/icmp/" itemprop="url" rel="index">
-                    <span itemprop="name">icmp</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  795
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>关于icmp 隧道使用场景简单说明:<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">两台机器间,除了允许相互ping [ 即<span class="keyword">icmp</span>通信 ],其他的tcp/udp端口一律不允许,此时我们就可考虑利用<span class="keyword">icmp</span>隧道进行穿透</span><br></pre></td></tr></table></figure></p>
-<p>0x01 此次用于演示的环境大致如下:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">lnmp01</span>  	<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.30</span> 	入侵者机器		</span><br><span class="line"><span class="selector-tag">MidLAMP</span> 	<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.19</span>	为目标<span class="selector-tag">linux</span>机器,即<span class="selector-tag">icmp</span>跳板机	</span><br><span class="line"><span class="selector-tag">win2008R2cn</span>	<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.23</span>	为目标<span class="selector-tag">windows</span>机器,开启了3389</span><br><span class="line"><span class="selector-tag">win7en</span> 		<span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.17</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lnmp01想访问win2008R2cn的3389,由于win2008R2cn开了防火墙且做了ip限制,没法直接从lnmp01上进行访问</span><br><span class="line">虽然win2008R2cn开启了防火墙,但好在MidLAMP能ping通win2008R2cn,即没有阻断它们之间的icmp通信</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/icmp-tunnel.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/teamviewer-vpn.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/teamviewer-vpn.html" itemprop="url">内网渗透之 teamviewer隧道</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T22:47:48+08:00">
-                2017-10-28
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-11-21T09:53:33+08:00">
-                2017-11-21
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/teamviewer/" itemprop="url" rel="index">
-                    <span itemprop="name">teamviewer</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  631
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><br><br>0x01 关于teamviewer<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一款优秀的远控工具,通信数据全程加密,用户量也非常庞大,想必大家早都用烂了,这里就不多废话了,咱们直奔主题...</span><br></pre></td></tr></table></figure></p>
-<p>0x02 此次实验环境:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">win2008R2cn</span>  <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.134</span> 假设为目标内网中的一台已控<span class="selector-tag">win</span>服务器,已装好<span class="selector-tag">teamviewer</span>且为启动状态,<span class="selector-tag">vpn</span>功能也已打开</span><br><span class="line"><span class="selector-tag">win7en</span> 	     <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.17</span>   假设为自己本地内网中的一台普通<span class="selector-tag">win</span>机器,已装好<span class="selector-tag">teamviewer</span>且为启动状态,<span class="selector-tag">vpn</span>功能也已打开</span><br></pre></td></tr></table></figure></p>
-<p>0x03 想实现的最终目的<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">通过teamviewer自带的vpn功能,对目标内网进行渗透</span><br><span class="line">想在目标win2008R2cn和本地win7en之间通过teamviewer搭建一条专有通道,方便对目标内网进一步渗透</span><br><span class="line">即通过teamviewer 实现简易的 '双内网'通信</span><br></pre></td></tr></table></figure></p>
-<p>0x04 在两端机器上安装好teamviewer,务必记得安装时,选择’高级’安装,把’vpn功能’都勾选上,主要就是用这个功能<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/teamviewer-vpn.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2301,7 +2303,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-count">161</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2312,7 +2314,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-count">114</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2323,7 +2325,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-count">109</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2471,7 +2473,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共299.2k字</span>
+  <span class="post-count">博客全站共309.0k字</span>
 </div>
 
   

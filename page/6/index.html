@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/socat-meterpreter.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/log-find.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="VK">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/socat-meterpreter.html" itemprop="url">如何利用 socat 更方便地穿透目标内网</a></h1>
+                <a class="post-title-link" href="/log-find.html" itemprop="url">入侵取证 [ web日志分析初步 ]</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T03:46:52+08:00">
-                2017-08-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-02T03:46:52+08:00">
+                2017-08-02
               </time>
             
 
@@ -356,7 +356,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:38:07+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:36:00+08:00">
                 2017-10-23
               </time>
             
@@ -378,8 +378,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/socat/" itemprop="url" rel="index">
-                    <span itemprop="name">socat</span>
+                  <a href="/categories/log/" itemprop="url" rel="index">
+                    <span itemprop="name">log</span>
                   </a>
                 </span>
 
@@ -409,7 +409,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,114
+                  3,160
                 </span>
               
 
@@ -425,7 +425,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  12
                 </span>
               
             </div>
@@ -447,14 +447,13 @@
 
       
         
-          <p><br><br>0x01 此次环境说明:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">lnmp01</span>	假设为目标<span class="selector-tag">DMZ</span>段机器,等会儿会作为<span class="selector-tag">proxy</span>端</span><br><span class="line">假设其公网<span class="selector-tag">ip</span>为 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.30</span></span><br><span class="line">假设其内网<span class="selector-tag">ip</span>为 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.167</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">win7</span>  假设为目标内网机器</span><br><span class="line">假设其内网<span class="selector-tag">ip</span>为 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.144</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本地机器</span><br><span class="line">假设本地内网<span class="selector-tag">ip</span>为 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.15</span></span><br></pre></td></tr></table></figure>
-<p>0x02 需要注意的一些前提条件<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本地机器能ping通lnmp01,lnmp01和目标内网中的win7能互通</span><br></pre></td></tr></table></figure></p>
-<p>0x03 最终目的,实现双内网通信,即在我自己的内网中操作目标内网中的机器,当然,实现双内网通信的方式还有非常多,比如常用的几种方法:<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">最传统的是通过在vps利用lcx listen做转发,然后再在本地bind上去</span><br><span class="line">另外,还是通过vps搭建vpn,本地先连到vpn内网中,再在vps上用lcx tran通过vpn内网转发到本地</span><br><span class="line">还有,利用meterpreter自带的端口转发功能,当然啦,那个是通过meterpreter隧道自己来实现的,也就是说你要先把meterpreter的shell先弹回来,因为这个并非今天重点,暂不多做介绍,有兴趣可自行深度挖掘研究</span><br><span class="line">再有,在一些高级点的马中也自带了各种内网代理功能....</span><br><span class="line">最后,就是接下来咱们要详细说明的这种,利用socat和目标DMZ建立双向通道,然后带出目标内网中所有机器的流量</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+          <p><br><br>0x01 前言<br>&nbsp;&nbsp;&nbsp;&nbsp;既然是取证, 不妨就从一个稍微全局点的角度来理解,最先应该搞清楚的, 可能就是, 到底哪些地方会留下入侵者的痕迹 , 这次单单就以最基础的web服务 [ 暂不涉及脚本引擎,数据库及系统方面的东西 ] 基本取证流程为例, 其实很简单,入侵者一般喜欢从哪里下手,就必然会在那里留下痕迹, 可能在此之前我们还需要搞清楚客户端的http数据到底都是从什么地方过来的, 有GET 的 URL 中传来的数据 , POST 中传来的数据,从http头中获取的各类客户端数据 [ 如,cookie,user-agent,Referer,X-Forwarded-For ], 像这些很基础的东西,早该在最开始部署服务的时候就想到,不然,等到真出事的那一天,自己真正能掌握的资料就着实比较少了</p>
+<p>0x02 环境简介<br>&nbsp;&nbsp;&nbsp;&nbsp;暂以 nginx 为例,一个最基本的日志格式大概是下面这个样子,当然,这种格式可能会造成你的日志文件特别大 [ 存的东西多嘛 ], 但实际部署时还是需要你根据自己的实际的业务来,这里也仅仅只是做个参考</p>
+<p>先在指定的 server 标签中定义好cookie变量<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line">    <span class="builtin-name">set</span> <span class="variable">$dm_cookie</span> <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$http_cookie</span> ~* <span class="string">"(.+)(?:;|$)"</span>) &#123;</span><br><span class="line">        <span class="builtin-name">set</span> <span class="variable">$dm_cookie</span> <span class="variable">$1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时再回到 nginx 主配置文件中, 引用刚刚设置的cookie变量, 这样, 头里面的那几个字段数据就都可以被记录了<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">http</span> &#123;</span><br><span class="line">...</span><br><span class="line">    log_format <span class="keyword">main</span> <span class="string">'<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span>  [<span class="variable">$time_local</span>]  '</span></span><br><span class="line">    <span class="string">' "<span class="variable">$request</span>" <span class="variable">$request_body</span> <span class="variable">$status</span>  <span class="variable">$body_bytes_sent</span>  '</span></span><br><span class="line">    <span class="string">' "<span class="variable">$http_referer</span>"  "<span class="variable">$http_user_agent</span>"  "<span class="variable">$http_x_forwarded_for</span>" "<span class="variable">$dm_cookie</span>" '</span>;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/socat-meterpreter.html#more" rel="contents">
+            <a class="btn" href="/log-find.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -506,7 +505,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/bypasswaf-on-database.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/ELK-LOG.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="VK">
@@ -525,7 +524,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/bypasswaf-on-database.html" itemprop="url">bypasswaf for mysql [数据库层面之特殊字符篇]</a></h1>
+                <a class="post-title-link" href="/ELK-LOG.html" itemprop="url">利用 ELK 深度定制实时入侵日志分析平台初步</a></h1>
         
 
         <div class="post-meta">
@@ -537,8 +536,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T03:46:52+08:00">
-                2017-08-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-02T03:46:52+08:00">
+                2017-08-02
               </time>
             
 
@@ -553,8 +552,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:39:53+08:00">
-                2017-10-23
+              <time title="更新于" itemprop="dateModified" datetime="2017-11-19T16:44:35+08:00">
+                2017-11-19
               </time>
             
           </span>
@@ -575,8 +574,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bypasswaf/" itemprop="url" rel="index">
-                    <span itemprop="name">bypasswaf</span>
+                  <a href="/categories/ELK/" itemprop="url" rel="index">
+                    <span itemprop="name">ELK</span>
                   </a>
                 </span>
 
@@ -606,7 +605,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,024
+                  1,931
                 </span>
               
 
@@ -622,7 +621,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  9
                 </span>
               
             </div>
@@ -644,10 +643,209 @@
 
       
         
-          <p><br><br>0x01 先准备好用于测试库表及数据:<br><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">create</span> <span class="keyword">database</span> injection;</span><br><span class="line">mysql&gt; use injection;</span><br><span class="line">mysql&gt; <span class="keyword">CREATE</span> TABLE <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="symbol">`user`</span>(</span><br><span class="line">	<span class="symbol">`id`</span> INT UNSIGNED AUTO_INCREMENT,</span><br><span class="line">	<span class="symbol">`username`</span> VARCHAR(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	<span class="symbol">`password`</span> VARCHAR(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	<span class="symbol">`email`</span> VARCHAR(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	<span class="keyword">PRIMARY</span> <span class="keyword">KEY</span> ( <span class="symbol">`id`</span> )</span><br><span class="line">	)ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line">mysql&gt; <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">user</span>(username,<span class="keyword">password</span>,email) <span class="keyword">values</span>(<span class="string">'gentoo'</span>,<span class="string">'superman'</span>,<span class="string">'sec@rootkit.org'</span>);</span><br><span class="line">mysql&gt; <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">user</span>(username,<span class="keyword">password</span>,email) <span class="keyword">values</span>(<span class="string">'arch'</span>,<span class="string">'welcome'</span>,<span class="string">'lin@hook.org'</span>);</span><br><span class="line">mysql&gt; <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">user</span>(username,<span class="keyword">password</span>,email) <span class="keyword">values</span>(<span class="string">'admin'</span>,<span class="string">'loginpass'</span>,<span class="string">'xlion@priv.org'</span>);</span><br></pre></td></tr></table></figure></p>
+          <p><br><br>0x01 首先,快速安装配置好jdk 1.8,因为ES基于java:<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># export LANG=en</span></span><br><span class="line"><span class="comment"># tar xf jdk-8u131-linux-x64.tar.gz</span></span><br><span class="line"><span class="comment"># mv jdk1.8.0_131/ /usr/local/jdk</span></span><br><span class="line"><span class="comment"># ll /usr/local/jdk</span></span><br><span class="line"><span class="comment"># chown -R root.root /usr/local/jdk/</span></span><br><span class="line"><span class="comment"># ll /usr/local/jdk</span></span><br><span class="line"><span class="comment"># vi /etc/profile</span></span><br><span class="line">  <span class="builtin-name">export</span> <span class="attribute">JAVA_HOME</span>=/usr/local/jdk/</span><br><span class="line">  <span class="builtin-name">export</span> <span class="attribute">PATH</span>=<span class="variable">$JAVA_HOME</span>/bin:$JAVA_HOME/jre/bin:$PATH</span><br><span class="line">  <span class="builtin-name">export</span> <span class="attribute">CLASSPATH</span>=.$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tools.jar</span><br><span class="line">  <span class="builtin-name">export</span> <span class="attribute">TOMCAT_HOME</span>=/usr/local/tomcat</span><br><span class="line"><span class="comment"># source /etc/profile</span></span><br><span class="line"><span class="comment"># java -version</span></span><br><span class="line"><span class="comment"># javac</span></span><br></pre></td></tr></table></figure></p>
+<p>0x02 再来熟悉一些必要的关于elasticsearch的基础概念:<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">索引 -&gt; 文档 -&gt; 分片和副本</span><br></pre></td></tr></table></figure></p>
+<p>0x03 下载配置 elasticsearch:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.2.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar -xf elasticsearch-1.7.2.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mv elasticsearch-1.7.2 /usr/<span class="built_in">local</span>/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/elasticsearch-1.7.2/ /usr/<span class="built_in">local</span>/elasticsearch</span></span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/bypasswaf-on-database.html#more" rel="contents">
+            <a class="btn" href="/ELK-LOG.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/waf-for-modsecurity.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/waf-for-modsecurity.html" itemprop="url">ModSecurity 生产级WAF部署优化 [一]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T03:46:52+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-09-24T16:25:00+08:00">
+                2017-09-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ModSecurity/" itemprop="url" rel="index">
+                    <span itemprop="name">ModSecurity</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,609
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><br><br>0x01 用大白话来简单说明 WAF 最基本的工作流程<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">捕获客户端的各种请求 -&gt; 匹配WAF拦截规则 -&gt; 命中规则后的处理动作 -&gt; 将整个拦截过程记录到指定的日志文件中 -&gt; 脚本绘制实时攻击图表</span><br></pre></td></tr></table></figure></p>
+<p>0x02 关于modsecurity<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一款老牌的开源 <span class="selector-tag">WAF</span>,相信经常搞渗透的朋友,对市面上经常用的几款<span class="selector-tag">WAF</span>,都早已非常熟悉,废话不多说,咱们直奔主题</span><br><span class="line">本次,我们只是单单把它部署到可用的状态,关于规则深度定制,绕过以及白名单设置是我们面的事情</span><br><span class="line">个人非常不建议把<span class="selector-tag">modsecurity</span>和<span class="selector-tag">nginx</span>一起用,实际测试中,问题还非常的多,关于<span class="selector-tag">nginx</span>更推荐用<span class="selector-tag">naxsi</span><span class="selector-attr">[后面再单独说]</span></span><br><span class="line">至于源码包,可自行去 <span class="selector-tag">modsecurity</span> 的官方站点下载  <span class="selector-tag">www</span><span class="selector-class">.modsecurity</span><span class="selector-class">.org</span></span><br></pre></td></tr></table></figure></p>
+<p>0x03 首先,先编译安装好基本的LAMP环境 [具体编译安装过程,可自行参考博客相关文章] ,这里暂时就直接用之前编译好的环境来演示<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">httpd</span> 2<span class="selector-class">.4</span><span class="selector-class">.27</span> + <span class="selector-tag">php</span> 5<span class="selector-class">.6</span><span class="selector-class">.31</span> + <span class="selector-tag">mysql</span> 5<span class="selector-class">.5</span><span class="selector-class">.57</span> + <span class="selector-tag">centOS6</span><span class="selector-class">.8_x64</span></span><br></pre></td></tr></table></figure></p>
+<p>0x04 先停掉apache,因为等会儿要编译modsecurity生成对应的库<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pkill httpd</span></span><br></pre></td></tr></table></figure></p>
+<p>0x05 开始编译安装 modsecurity,一如往常,务必先装好一些必要的依赖库,不然中间会有很多的麻烦<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install httpd-devel apr apr-util-devel apr-devel pcre pcre-devel libxml2 libxml2-devel curl-devel zlib zlib-devel openssl openssl-devel -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> modsecurity-2.9.2</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ./configure --with-apxs=/usr/<span class="built_in">local</span>/httpd/bin/apxs   生成modsecurity的so</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/waf-for-modsecurity.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -895,7 +1093,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/waf-for-modsecurity.html">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/bypasswaf-on-database.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="VK">
@@ -914,7 +1112,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/waf-for-modsecurity.html" itemprop="url">ModSecurity 生产级WAF部署优化 [一]</a></h1>
+                <a class="post-title-link" href="/bypasswaf-on-database.html" itemprop="url">bypasswaf for mysql [数据库层面之特殊字符篇]</a></h1>
         
 
         <div class="post-meta">
@@ -942,8 +1140,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-09-24T16:25:00+08:00">
-                2017-09-24
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:39:53+08:00">
+                2017-10-23
               </time>
             
           </span>
@@ -964,8 +1162,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ModSecurity/" itemprop="url" rel="index">
-                    <span itemprop="name">ModSecurity</span>
+                  <a href="/categories/bypasswaf/" itemprop="url" rel="index">
+                    <span itemprop="name">bypasswaf</span>
                   </a>
                 </span>
 
@@ -995,7 +1193,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,609
+                  1,024
                 </span>
               
 
@@ -1011,7 +1209,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8
+                  5
                 </span>
               
             </div>
@@ -1033,14 +1231,207 @@
 
       
         
-          <p><br><br>0x01 用大白话来简单说明 WAF 最基本的工作流程<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">捕获客户端的各种请求 -&gt; 匹配WAF拦截规则 -&gt; 命中规则后的处理动作 -&gt; 将整个拦截过程记录到指定的日志文件中 -&gt; 脚本绘制实时攻击图表</span><br></pre></td></tr></table></figure></p>
-<p>0x02 关于modsecurity<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一款老牌的开源 <span class="selector-tag">WAF</span>,相信经常搞渗透的朋友,对市面上经常用的几款<span class="selector-tag">WAF</span>,都早已非常熟悉,废话不多说,咱们直奔主题</span><br><span class="line">本次,我们只是单单把它部署到可用的状态,关于规则深度定制,绕过以及白名单设置是我们面的事情</span><br><span class="line">个人非常不建议把<span class="selector-tag">modsecurity</span>和<span class="selector-tag">nginx</span>一起用,实际测试中,问题还非常的多,关于<span class="selector-tag">nginx</span>更推荐用<span class="selector-tag">naxsi</span><span class="selector-attr">[后面再单独说]</span></span><br><span class="line">至于源码包,可自行去 <span class="selector-tag">modsecurity</span> 的官方站点下载  <span class="selector-tag">www</span><span class="selector-class">.modsecurity</span><span class="selector-class">.org</span></span><br></pre></td></tr></table></figure></p>
-<p>0x03 首先,先编译安装好基本的LAMP环境 [具体编译安装过程,可自行参考博客相关文章] ,这里暂时就直接用之前编译好的环境来演示<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">httpd</span> 2<span class="selector-class">.4</span><span class="selector-class">.27</span> + <span class="selector-tag">php</span> 5<span class="selector-class">.6</span><span class="selector-class">.31</span> + <span class="selector-tag">mysql</span> 5<span class="selector-class">.5</span><span class="selector-class">.57</span> + <span class="selector-tag">centOS6</span><span class="selector-class">.8_x64</span></span><br></pre></td></tr></table></figure></p>
-<p>0x04 先停掉apache,因为等会儿要编译modsecurity生成对应的库<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pkill httpd</span></span><br></pre></td></tr></table></figure></p>
-<p>0x05 开始编译安装 modsecurity,一如往常,务必先装好一些必要的依赖库,不然中间会有很多的麻烦<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install httpd-devel apr apr-util-devel apr-devel pcre pcre-devel libxml2 libxml2-devel curl-devel zlib zlib-devel openssl openssl-devel -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> modsecurity-2.9.2</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ./configure --with-apxs=/usr/<span class="built_in">local</span>/httpd/bin/apxs   生成modsecurity的so</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure></p>
+          <p><br><br>0x01 先准备好用于测试库表及数据:<br><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">create</span> <span class="keyword">database</span> injection;</span><br><span class="line">mysql&gt; use injection;</span><br><span class="line">mysql&gt; <span class="keyword">CREATE</span> TABLE <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="symbol">`user`</span>(</span><br><span class="line">	<span class="symbol">`id`</span> INT UNSIGNED AUTO_INCREMENT,</span><br><span class="line">	<span class="symbol">`username`</span> VARCHAR(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	<span class="symbol">`password`</span> VARCHAR(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	<span class="symbol">`email`</span> VARCHAR(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	<span class="keyword">PRIMARY</span> <span class="keyword">KEY</span> ( <span class="symbol">`id`</span> )</span><br><span class="line">	)ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line">mysql&gt; <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">user</span>(username,<span class="keyword">password</span>,email) <span class="keyword">values</span>(<span class="string">'gentoo'</span>,<span class="string">'superman'</span>,<span class="string">'sec@rootkit.org'</span>);</span><br><span class="line">mysql&gt; <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">user</span>(username,<span class="keyword">password</span>,email) <span class="keyword">values</span>(<span class="string">'arch'</span>,<span class="string">'welcome'</span>,<span class="string">'lin@hook.org'</span>);</span><br><span class="line">mysql&gt; <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">user</span>(username,<span class="keyword">password</span>,email) <span class="keyword">values</span>(<span class="string">'admin'</span>,<span class="string">'loginpass'</span>,<span class="string">'xlion@priv.org'</span>);</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/waf-for-modsecurity.html#more" rel="contents">
+            <a class="btn" href="/bypasswaf-on-database.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/socat-meterpreter.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/socat-meterpreter.html" itemprop="url">如何利用 socat 更方便地穿透目标内网</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T03:46:52+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:38:07+08:00">
+                2017-10-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/socat/" itemprop="url" rel="index">
+                    <span itemprop="name">socat</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,114
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><br><br>0x01 此次环境说明:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">lnmp01</span>	假设为目标<span class="selector-tag">DMZ</span>段机器,等会儿会作为<span class="selector-tag">proxy</span>端</span><br><span class="line">假设其公网<span class="selector-tag">ip</span>为 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.30</span></span><br><span class="line">假设其内网<span class="selector-tag">ip</span>为 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.167</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">win7</span>  假设为目标内网机器</span><br><span class="line">假设其内网<span class="selector-tag">ip</span>为 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.144</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本地机器</span><br><span class="line">假设本地内网<span class="selector-tag">ip</span>为 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.15</span></span><br></pre></td></tr></table></figure>
+<p>0x02 需要注意的一些前提条件<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本地机器能ping通lnmp01,lnmp01和目标内网中的win7能互通</span><br></pre></td></tr></table></figure></p>
+<p>0x03 最终目的,实现双内网通信,即在我自己的内网中操作目标内网中的机器,当然,实现双内网通信的方式还有非常多,比如常用的几种方法:<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">最传统的是通过在vps利用lcx listen做转发,然后再在本地bind上去</span><br><span class="line">另外,还是通过vps搭建vpn,本地先连到vpn内网中,再在vps上用lcx tran通过vpn内网转发到本地</span><br><span class="line">还有,利用meterpreter自带的端口转发功能,当然啦,那个是通过meterpreter隧道自己来实现的,也就是说你要先把meterpreter的shell先弹回来,因为这个并非今天重点,暂不多做介绍,有兴趣可自行深度挖掘研究</span><br><span class="line">再有,在一些高级点的马中也自带了各种内网代理功能....</span><br><span class="line">最后,就是接下来咱们要详细说明的这种,利用socat和目标DMZ建立双向通道,然后带出目标内网中所有机器的流量</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/socat-meterpreter.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1860,399 +2251,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/readme-Framework.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/readme-Framework.html" itemprop="url">关于各类环境部署简要说明</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-09T10:43:32+08:00">
-                2017-07-09
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-10-23T18:41:27+08:00">
-                2017-10-23
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/env/" itemprop="url" rel="index">
-                    <span itemprop="name">env</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,024
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><br><br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">为了更加贴近实战的学习,所有相关的部署配置,均是按照实际生产标准来的,力求做到真实,也是为了方便大家更靠谱的学习...</span><br><span class="line">作为一个对技术深度有追求的渗透者,你极度有必要熟知其中涉及到安全问题的每一个配置参数选项的具体作用,每一次权限映射背后所带来的实际利用价值...</span><br><span class="line">大家可能也看到了,在实际部署过程中,基本都特别标明了详细的版本号,比如,php5<span class="number">.2</span>,php5<span class="number">.3</span>及php5<span class="number">.5</span>,因为有些漏洞特性只能针对特定的版本才会有用,所以不得不费点儿劲....</span><br><span class="line">就整个部署过程来讲,其实也是一个非常好的学习进步的机会,你完全可以通过这种实际部署更深的去理解某些漏洞产生的根因,而不用再人云亦云[用事实说话],说白点儿,这就是在潜移默化的积累,积累的多了,自然就触类旁通,根本不用什么高大上的东西</span><br><span class="line">你要做的只是把前人的优秀经验彻彻底底的真正变成你自己的知识储备,然后在此基础上灵活变通改进,足矣,虽然短时间会比别人走的慢点,但你会收获的更多,甚至看到很多别人看不见的东西,很显然,这种方式对于<span class="string">'天才'</span>或者<span class="string">'神童'</span>,是完全不适用的,但那毕竟只是极小的一部分人</span><br><span class="line">脚踏实地,一步步的来,不要总觉得这也不重要[觉得这也很low],那也不重要[ 那也很low],然后你就以这种态度持续了很多年,而等再回头看那些曾经一直默默踏踏实实坚持到现在的人,已经把你甩的很远了,再想追上,难于上青天...</span><br><span class="line">还是那句话,<span class="string">"运维会的那一套,你要比他还精通,你才有可能搞定他,开发会的那一套,你要比他还娴熟,才有可能挖到更有价值的洞...."</span>,我跟大家起点都一样,也一直在为此而不懈努力着</span><br><span class="line">不为任何人,就为了你自己,学习吧,哪怕每天进步一点点,起码你不会因为一天碌碌无为而感到空虚....</span><br><span class="line">人生苦短,能做点自己喜欢的事情应该珍惜,个人一直坚信<span class="string">"唯一不变的,就是一直在变"</span>,安于现状,不思进取,自以为是,乃致命毒药....</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/readme-Framework.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nosql-redis.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/nosql-redis.html" itemprop="url">Nosql 攻防第二弹 [ redis ]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-09T03:46:52+08:00">
-                2017-07-09
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-20T09:38:58+08:00">
-                2017-12-20
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2,819
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  12
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><br><br>0x01 其实<code>redis</code>跟<code>memcached</code> 单从功用上来讲,基本差不太多,只是在数据量非常大的情况下,memcached 就会有很多的问题,但redis在这方面却恰巧做的还不错,且redis所支持的功能更加全面,也能更好的适应一些比较复杂的业务逻辑,下面则是关于redis的一些优良特性<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">所支持的数据类型较丰富</span><br><span class="line">支持持久化存储</span><br><span class="line">支持主从复制</span><br><span class="line">性能强悍,并发可超十万</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>此次演示环境<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8_x86_64</span>   <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.42</span> 	<span class="selector-tag">Oldlnmp</span>  	<span class="selector-tag">root</span>权限下的<span class="selector-tag">redis</span>未授权</span><br><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8_x86_64</span>   <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.66</span> 	<span class="selector-tag">RedisMaster</span> 	为加固过的<span class="selector-tag">redis</span></span><br><span class="line"><span class="selector-tag">Ubuntu16</span><span class="selector-class">.04</span> <span class="selector-tag">server</span> <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.67</span> 	<span class="selector-tag">RedisSlave</span>	<span class="selector-tag">root</span>权限下的<span class="selector-tag">redis</span>未授权</span><br><span class="line"><span class="selector-tag">Ubuntu16</span><span class="selector-class">.04</span> <span class="selector-tag">LTS</span>	   <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.12</span>     <span class="selector-tag">Metasploit</span>	为<span class="selector-tag">redis</span>客户端</span><br><span class="line"><span class="selector-tag">win7cn</span>		   <span class="selector-tag">ip</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.60</span>	后续连<span class="selector-tag">webshell</span>用</span><br></pre></td></tr></table></figure></p>
-<p>0x02 开始安装部署 redis,此处暂以最新版为例进行演示,为了避免redis自身的一些漏洞,建议使用最新版的稳定版本<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> wget http://download.redis.io/releases/redis-4.0.6.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf redis-4.0.6.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> redis-4.0.6</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make MALLOC=jemalloc</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make PREFIX=/usr/<span class="built_in">local</span>/redis-4.0.6 install</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/redis-4.0.6/ /usr/<span class="built_in">local</span>/redis</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/redis/bin/:<span class="variable">$PATH</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"export PATH=/usr/local/redis/bin/:<span class="variable">$PATH</span>"</span> &gt;&gt; ~/.bash_profile</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> redis-server -h</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/nosql-redis.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2302,7 +2305,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-count">161</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2313,7 +2316,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">112</span>
+                  <span class="site-state-item-count">114</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2324,7 +2327,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">107</span>
+                  <span class="site-state-item-count">109</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2472,7 +2475,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共299.2k字</span>
+  <span class="post-count">博客全站共309.0k字</span>
 </div>
 
   
