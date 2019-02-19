@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="APT," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Evil-404" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="专注APT攻击与防御 https://micropoor.blogspot.com/  微软官方时刻关注列表网址: https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx   比如常用的几个已公布的exp：KB2592799，KB3000061，KB2592799等。快速查找未打补丁的exp，可以最安全的减少目标机的未">
+<meta name="keywords" content="APT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows提权-快速查找exp(第一课)">
+<meta property="og:url" content="https://evil-404.github.io/windows提权-快速查找exp-第一课.html">
+<meta property="og:site_name" content="Evil-404">
+<meta property="og:description" content="专注APT攻击与防御 https://micropoor.blogspot.com/  微软官方时刻关注列表网址: https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx   比如常用的几个已公布的exp：KB2592799，KB3000061，KB2592799等。快速查找未打补丁的exp，可以最安全的减少目标机的未">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://evil-404.github.io/img/1550595114660.png">
+<meta property="og:image" content="https://evil-404.github.io/img/1550595352246.png">
+<meta property="og:image" content="https://evil-404.github.io/img/1550595359280.png">
+<meta property="og:image" content="https://evil-404.github.io/img/1550595368915.png">
+<meta property="og:updated_time" content="2019-02-19T16:57:29.681Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows提权-快速查找exp(第一课)">
+<meta name="twitter:description" content="专注APT攻击与防御 https://micropoor.blogspot.com/  微软官方时刻关注列表网址: https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx   比如常用的几个已公布的exp：KB2592799，KB3000061，KB2592799等。快速查找未打补丁的exp，可以最安全的减少目标机的未">
+<meta name="twitter:image" content="https://evil-404.github.io/img/1550595114660.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'LPBE9XRFRL',
+      apiKey: '246a90c6ff16be5d5708e201cf6d7158',
+      indexName: 'API',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字搜索","hits_empty":"“没有找到与 ${query} 相关的内容”","hits_stats":"“搜索到 ${hits} 条相关记录，共耗时 ${time} ms”"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://evil-404.github.io/windows提权-快速查找exp-第一课.html"/>
+
+
+
+
+
+  <title>windows提权-快速查找exp(第一课) | Evil-404</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Evil-404</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">专注于 APT 攻防研究,致力于高质量实用干货分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-nav">
+          <a href="/nav/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            导航
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/windows提权-快速查找exp-第一课.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">windows提权-快速查找exp(第一课)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-20T00:39:06+08:00">
+                2019-02-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-02-20T00:57:29+08:00">
+                2019-02-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Micropoor/" itemprop="url" rel="index">
+                    <span itemprop="name">Micropoor</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  746
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>专注APT攻击与防御</p>
+<p><a href="https://micropoor.blogspot.com/" target="_blank" rel="noopener">https://micropoor.blogspot.com/</a></p>
+</blockquote>
+<p>微软官方时刻关注列表网址:</p>
+<p><a href="https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx" target="_blank" rel="noopener">https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx</a></p>
+<p><img src="/img/1550595114660.png" alt="1550595114660"></p>
+<blockquote>
+<p>比如常用的几个已公布的exp：KB2592799，KB3000061，KB2592799等。<br>快速查找未打补丁的exp，可以最安全的减少目标机的未知错误，以免影响业务。<br>命令行下执行检测未打补丁的命令如下：<br>systeminfo&gt;micropoor.txt&amp;(for %i in ( KB977165 KB2160329 KB2503665 KB2592799<br>KB2707511 KB2829361 KB2850851 KB3000061 KB3045171 KB3077657 KB3079904<br>KB3134228 KB3143141 KB3141780 ) do @type micropoor.txt|@find /i “%i”|| @echo<br>%i you can fuck)&amp;del /f /q /a micropoor.txt</p>
+</blockquote>
+<p><strong><strong>一般实战中在类似 tmp目录等可写目录下执行：如C:\tmp&gt;<br>以11-080为例</strong></strong></p>
+<p><img src="/img/1550595352246.png" alt="1550595352246"></p>
+<p><img src="/img/1550595359280.png" alt="1550595359280"></p>
+<p><img src="/img/1550595368915.png" alt="1550595368915"></p>
+<h4 id="exp注："><a href="#exp注：" class="headerlink" title="exp注："></a>exp注：</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">MS17<span class="number">-017</span> [KB4013081] [GDI Palette Objects Local Privilege Escalation]</span><br><span class="line">(windows <span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-8464</span> [LNK Remote Code Execution Vulnerability] (windows</span><br><span class="line"><span class="number">10</span>/<span class="number">8.1</span>/<span class="number">7</span>/<span class="number">2016</span>/<span class="number">2010</span>/<span class="number">2008</span>)</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-0213</span> [Windows COM Elevation of Privilege Vulnerability] (windows</span><br><span class="line"><span class="number">10</span>/<span class="number">8.1</span>/<span class="number">7</span>/<span class="number">2016</span>/<span class="number">2010</span>/<span class="number">2008</span>)</span><br><span class="line">MS17<span class="number">-010</span> [KB4013389] [Windows Kernel Mode Drivers] (windows</span><br><span class="line"><span class="number">7</span>/<span class="number">2008</span>/<span class="number">2003</span>/XP)</span><br><span class="line">MS16<span class="number">-135</span> [KB3199135] [Windows Kernel Mode Drivers] (<span class="number">2016</span>)</span><br><span class="line">MS16<span class="number">-111</span> [KB3186973] [kernel api] (Windows <span class="number">10</span> <span class="number">10586</span> (<span class="number">32</span>/<span class="number">64</span>)/<span class="number">8.1</span>)</span><br><span class="line">MS16<span class="number">-098</span> [KB3178466] [Kernel Driver] (Win <span class="number">8.1</span>)</span><br><span class="line">MS16<span class="number">-075</span> [KB3164038] [Hot Potato] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">2012</span>)</span><br><span class="line">MS16<span class="number">-034</span> [KB3143145] [Kernel Driver] (<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">10</span>/<span class="number">2012</span>)</span><br><span class="line">MS16<span class="number">-032</span> [KB3143141] [Secondary Logon Handle] (<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">10</span>/<span class="number">2012</span>)</span><br><span class="line">MS16<span class="number">-016</span> [KB3136041] [WebDAV] (<span class="number">2008</span>/Vista/<span class="number">7</span>)</span><br><span class="line">MS15<span class="number">-097</span> [KB3089656] [remote code execution] (win8<span class="number">.1</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-076</span> [KB3067505] [RPC] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-077</span> [KB3077657] [ATM] (XP/Vista/Win7/Win8/<span class="number">2000</span>/<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-061</span> [KB3057839] [Kernel Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-051</span> [KB3057191] [Windows Kernel Mode Drivers]</span><br><span class="line">(<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-010</span> [KB3036220] [Kernel Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS15<span class="number">-015</span> [KB3031432] [Kernel Driver] (Win7/<span class="number">8</span>/<span class="number">8.1</span>/<span class="number">2012</span>/RT/<span class="number">2012</span> R2/<span class="number">2008</span></span><br><span class="line">R2)</span><br><span class="line">MS15<span class="number">-001</span> [KB3023266] [Kernel Driver] (<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS14<span class="number">-070</span> [KB2989935] [Kernel Driver] (<span class="number">2003</span>)</span><br><span class="line">MS14<span class="number">-068</span> [KB3011780] [Domain Privilege Escalation] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS14<span class="number">-058</span> [KB3000061] [Win32k.sys] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS14<span class="number">-040</span> [KB2975684] [AFD Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS14<span class="number">-002</span> [KB2914368] [NDProxy] (<span class="number">2003</span>/XP)</span><br><span class="line">MS13<span class="number">-053</span> [KB2850851] [win32k.sys] (XP/Vista/<span class="number">2003</span>/<span class="number">2008</span>/win <span class="number">7</span>)</span><br><span class="line">MS13<span class="number">-046</span> [KB2840221] [dxgkrnl.sys] (Vista/<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>)</span><br><span class="line">MS13<span class="number">-005</span> [KB2778930] [Kernel Mode Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/win7/<span class="number">8</span>)</span><br><span class="line">MS12<span class="number">-042</span> [KB2972621] [Service Bus] (<span class="number">2008</span>/<span class="number">2012</span>/win7)</span><br><span class="line">MS12<span class="number">-020</span> [KB2671387] [RDP] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/XP)</span><br><span class="line">MS11<span class="number">-080</span> [KB2592799] [AFD.sys] (<span class="number">2003</span>/XP)</span><br><span class="line">MS11<span class="number">-062</span> [KB2566454] [NDISTAPI] (<span class="number">2003</span>/XP)</span><br><span class="line">MS11<span class="number">-046</span> [KB2503665] [AFD.sys] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/XP)</span><br><span class="line">MS11<span class="number">-011</span> [KB2393802] [kernel Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/XP/Vista)</span><br><span class="line">MS10<span class="number">-092</span> [KB2305420] [Task Scheduler] (<span class="number">2008</span>/<span class="number">7</span>)</span><br><span class="line">MS10<span class="number">-065</span> [KB2267960] [FastCGI] (IIS <span class="number">5.1</span>, <span class="number">6.0</span>, <span class="number">7.0</span>, and <span class="number">7.5</span>)</span><br><span class="line">MS10<span class="number">-059</span> [KB982799] [ACL-Churraskito] (<span class="number">2008</span>/<span class="number">7</span>/Vista)</span><br><span class="line">MS10<span class="number">-048</span> [KB2160329] [win32k.sys] (XP SP2 &amp; SP3/<span class="number">2003</span> SP2/Vista SP1 &amp;</span><br><span class="line">SP2/<span class="number">2008</span> Gold &amp; SP2 &amp; R2/Win7)</span><br><span class="line">MS10<span class="number">-015</span> [KB977165] [KiTrap0D] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/XP)</span><br><span class="line">MS10<span class="number">-012</span> [KB971468] [SMB Client Trans2 stack overflow] (Windows</span><br><span class="line"><span class="number">7</span>/<span class="number">2008</span>R2)</span><br><span class="line">MS09<span class="number">-050</span> [KB975517] [Remote Code Execution] (<span class="number">2008</span>/Vista)</span><br><span class="line">MS09<span class="number">-020</span> [KB970483] [IIS <span class="number">6.0</span>] (IIS <span class="number">5.1</span> and <span class="number">6.0</span>)</span><br><span class="line">MS09<span class="number">-012</span> [KB959454] [Chimichurri] (Vista/win7/<span class="number">2008</span>/Vista)</span><br><span class="line">MS08<span class="number">-068</span> [KB957097] [Remote Code Execution] (<span class="number">2000</span>/XP)</span><br><span class="line">MS08<span class="number">-067</span> [KB958644] [Remote Code Execution] (Windows <span class="number">2000</span>/XP/Server</span><br><span class="line"><span class="number">2003</span>/Vista/Server <span class="number">2008</span>)</span><br><span class="line">MS08<span class="number">-066</span> [] [] (Windows <span class="number">2000</span>/XP/Server <span class="number">2003</span>)</span><br><span class="line">MS08<span class="number">-025</span> [KB941693] [Win32.sys] (XP/<span class="number">2003</span>/<span class="number">2008</span>/Vista)</span><br><span class="line">MS06<span class="number">-040</span> [KB921883] [Remote Code Execution] (<span class="number">2003</span>/xp/<span class="number">2000</span>)</span><br><span class="line">MS05<span class="number">-039</span> [KB899588] [PnP Service] (Win <span class="number">9</span>X/ME/NT/<span class="number">2000</span>/XP/<span class="number">2003</span>)</span><br><span class="line">MS03<span class="number">-026</span> [KB823980] [Buffer Overrun In RPC Interface]</span><br><span class="line">(/NT/<span class="number">2000</span>/XP/<span class="number">2003</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="已对外公开exp注："><a href="#已对外公开exp注：" class="headerlink" title="已对外公开exp注："></a>已对外公开exp注：</h4><p><a href="https://github.com/SecWiki/windows-kernel-exploits" target="_blank" rel="noopener">https://github.com/SecWiki/windows-kernel-exploits</a><br><a href="https://github.com/WindowsExploits/Exploits" target="_blank" rel="noopener">https://github.com/WindowsExploits/Exploits</a><br><a href="https://github.com/AusJock/Privilege-Escalation" target="_blank" rel="noopener">https://github.com/AusJock/Privilege-Escalation</a></p>
+
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    VK
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://evil-404.github.io/windows提权-快速查找exp-第一课.html" title="windows提权-快速查找exp(第一课)">https://evil-404.github.io/windows提权-快速查找exp-第一课.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/APT/" rel="tag"><i class="fa fa-tag"></i>APT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/gaia.html" rel="next" title="一个不错的项目(gaia)">
+                <i class="fa fa-chevron-left"></i> 一个不错的项目(gaia)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg"
+                alt="VK" />
+            
+              <p class="site-author-name" itemprop="name">VK</p>
+              <p class="site-description motion-element" itemprop="description">别惹我,我疯起来连自己都黑！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">115</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:evil-404@protonmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/HackwithGithub" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-globe"></i>
+                安全资讯
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.freebuf.com" title="FreeBuf" target="_blank">FreeBuf</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.secfree.com" title="指尖安全" target="_blank">指尖安全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sec-wiki.com" title="SecWiki" target="_blank">SecWiki</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xz.aliyun.com" title="先知社区" target="_blank">先知社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.4hou.com" title="嘶吼" target="_blank">嘶吼</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.anquanke.com" title="安全客" target="_blank">安全客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.aqniu.com" title="安全牛" target="_blank">安全牛</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.easyaq.com" title="E安全" target="_blank">E安全</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+       
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#exp注："><span class="nav-number">1.</span> <span class="nav-text">exp注：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#已对外公开exp注："><span class="nav-number">2.</span> <span class="nav-text">已对外公开exp注：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+<div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("07/01/2018 15:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VK</span>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共310.0k字</span>
+</div>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://evil-404.github.io/">Evil-404</a> 维护</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v="></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

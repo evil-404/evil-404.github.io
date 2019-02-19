@@ -1940,7 +1940,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6ae433;
+  background: #8a59b6;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3191,10 +3191,6 @@ hr {
   font-size: 50px;
   font-family: 'Comic Sans MS', sans-serif;
   color: #17435f;
-}
-.site-subtitle {
-  font-size: 15px;
-  color: #fff;
 }
 body {
   background: url("https://ws1.sinaimg.cn/large/baeae4e0ly1ft0gp0160ej23zx2hyqva.jpg");

@@ -319,6 +319,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/SquirrelMail-RCE.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/SquirrelMail-RCE.html" itemprop="url">SquirrelMail < 1.4.23 RCE [CVE-2017-7692]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T07:40:00+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-24T10:05:31+08:00">
+                2017-10-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SquirrelMail-Rce/" itemprop="url" rel="index">
+                    <span itemprop="name">SquirrelMail Rce</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,154
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><br><br>0x01 环境简介<br>&nbsp;&nbsp;&nbsp;&nbsp;关于 SquirrelMail 就不用多说了吧[一套开源php 邮件程序][说实话,用这套程序的目标还是蛮多的,尼玛,不说了,都是泪……],在重现漏洞利用之前,我们需要先把邮件服务器简单搭起来,这里以centos 6.8 x86 为例 [为了避免安装过程出问题,iptables和selinux已事先全部关闭],大致的配置过程如下,下面是具体测试环境:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">kali</span> 2017: 执行<span class="selector-tag">SquirrelMail_RCE_exploit</span><span class="selector-class">.sh</span>  利用脚本</span><br><span class="line"><span class="selector-tag">centos</span> 6<span class="selector-class">.8</span> <span class="selector-tag">x86</span>:  完全模拟真实的生产环境,<span class="selector-tag">lamp</span>全程源码包编译配置<span class="selector-attr">[后期会把各种配置细节更新上来]</span></span><br><span class="line"><span class="selector-tag">SquirrelMail</span>版本 1<span class="selector-class">.4</span><span class="selector-class">.20</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/SquirrelMail-RCE.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/kali-config.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2050,196 +2243,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/hidden-webshell.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/hidden-webshell.html" itemprop="url">放心地种下你的webshell 之 webshell隐藏小记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-05T12:31:04+08:00">
-                2016-10-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-08-24T08:14:21+08:00">
-                2017-08-24
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/webshell-hidden/" itemprop="url" rel="index">
-                    <span itemprop="name">webshell hidden</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,533
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><br><br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">拿到webshell以后的第一件事儿,就是顺手把webshell时间属性改为和同目录下其它文件相同的时间戳,一般在大马里或其它的一些webshell管理工具都提供了类似的功能</span><br><span class="line">尽量放在那些程序员和管理都不会经常光顾到的目录中,比如:各种第三方工具(phpmyadmin)的一些插件目录,主题目录以及临时目录等等……</span><br><span class="line">webshell所在目录层级自然是越深越好,平时网站不出问题的话,一般四五级目录下很少会被人注意到……</span><br><span class="line">webshell的名字尽量不要太招摇,尤其是像带有<span class="keyword">shell</span><span class="bash">,spy,hack,0day,love,shit……这种很典型常见的关键字(我们渗透最最终的目的还是希望拿到自己想要的东西而不被人察觉,不要因为自己的无知和愚蠢,而造成一些不必要的麻烦),……,在给webshell起名字的时候尽量模仿着当前目录的一些名字特征来取,以混淆视听,比如,我们在目标网站目录中,发现有个叫<span class="string">'node.tpl.php'</span>的文件,那我们就可以模仿他取个叫<span class="string">'plugins.tpl.php'</span>的名字,这样相对容易蒙混过关</span></span><br><span class="line"><span class="bash">webshell里面尽量不要用带有类似<span class="built_in">eval</span>这种的危险特征,如果是在linux中管理员只需要find grep 一句话就能锁定特征,除了<span class="built_in">eval</span>,还有比如:<span class="built_in">exec</span>,system,passthru,shell_exec,assert……这些函数都最好不要用,你可以尝试创建个自定义函数,然后调用它,函数里面可以接你的webshell参数,不仅能在一定程度上延长webshell的存活时间,也加大了管理的查找难度,可以暂时性躲避一些功能比较简陋的waf查杀,此外,我们也可以使用一些类似:call_user_func,call_user_func_array,诸如此类的回调函数特性来想办法构造我们的webshell,关于webshell免杀,后续会专门再说,这里先提一嘴</span></span><br><span class="line"><span class="bash">你也可以尝试直接把一句话函数插到目标网站自己的脚本文件里面,当然最好是一个非常不起眼的地方,比如:函数库文件,配置文件里面等等,然后你再到另一个导该函数库的脚本文件中去调用那个一句话…</span></span><br><span class="line"><span class="bash">如果已经拿到服务器权限,可以把网站日志中的所有关于webshell的访问记录以及渗透时造成的一些网站报错记录以及你自己的一些ip访问日志,顺手删掉或者替换都行,如果是linux那就很好办了,sed或者egrep几句话就搞定了,如果windows,嫌麻烦就清空吧,关于记录清理也是个比较大的问题,后续单独说</span></span><br><span class="line"><span class="bash">尝试利用静态文件(比如,各类图片,css,js,html,txt文件等等)隐藏一句话,然后用.htaccess 进行解析,不这过需要目标开启重写才行,例如.htaccess实现自解析,确实比较老套了,基于.htaccess实现的变种其实还有非常多,这里就不一一说了</span></span><br><span class="line"><span class="bash">利用php.ini或者user.ini来解析你的webshell,想必大家也已经用的比较多了,烂大街了</span></span><br><span class="line"><span class="bash">如果是大马的话,尽量把里面的一些注释和作者信息全部都去掉,比如intitle能搜到的各种信息等等,最好先通读代码,把里面的webshell箱子剔除一下,推荐用开源的大马,方便定制,记住,我们的webshell尽量不要编码,因为编码也并不能很好解决waf的问题,你知道的,正常的脚本文件是绝对不会编码的,一旦稍微有经验的程序员或者管理看到这些东西,肯定就会被发现,还有,大马中一般都会带有pass或者password类的字符,建议把这些敏感字段全部换成别的,因为管理依然可以通过这种方式快速定位到我们的webshell</span></span><br><span class="line"><span class="bash">养成好习惯,为了防止权限很快丢失,最好再上传几个备用webshell到不同的目录位置,注意,每个webshell的路径和名字千万不要都一样更不要在同一个目录下,多跳几层,传上去以后确定shell正常访问就可以了,不到万不得已不用去访问它,防止留的日志太多,暴露自己</span></span><br><span class="line"><span class="bash">在你已经有机器权限的情况下,还可以看看管理员还有没有自己写的一些webshell监测脚本,比如一些非常可疑的硬链接</span></span><br><span class="line"><span class="bash">上传图片马,然后再到另一个不起眼的地方尝试去包含它,也是烂大街的东西了,想必大家也已非常熟悉</span></span><br><span class="line"><span class="bash">如果有可能的话,可以抽空审计下目标代码,尝试在正常的代码中利用回掉的方式构造执行自己的webshell,这种没有任何文件的后门确实比较隐蔽</span></span><br><span class="line"><span class="bash">脚本执行完以后进行自删除,然后直接把webshell代码驻留在内存中,当然,这种方式有个非常大的弊端,一旦目标重启web服务就废了</span></span><br><span class="line"><span class="bash">尝试给webshell文件设置一些特殊属性</span></span><br><span class="line"><span class="bash">更多,待续……</span></span><br></pre></td></tr></table></figure></p>
-<p><br><br>小结:<br>&nbsp;&nbsp;&nbsp;&nbsp;上面这些都是自己根据实际渗透中的一些经验以及基于前人的基础上,顺手整理的,不过,无疑中发现个很有意思的事情,不知道是哪位朋友拿着自己曾经残缺的笔记,发了出去,然后网上转的到处都是,嘿嘿……不过没关系啦,反正我在乎的只是技术本身,除此之外的东西,不值一提,当然,基于上面思路的变种肯定还会有非常非常多,也期待能和大家一起多交流,待续…</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2294,7 +2297,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-count">162</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2305,7 +2308,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">114</span>
+                  <span class="site-state-item-count">115</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2316,7 +2319,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-count">110</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2456,7 +2459,7 @@ show_date_time();
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -2464,7 +2467,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共309.1k字</span>
+  <span class="post-count">博客全站共310.0k字</span>
 </div>
 
   

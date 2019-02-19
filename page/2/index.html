@@ -319,6 +319,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/modify-hacked.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/modify-hacked.html" itemprop="url">用shell对指定站点进行简单的实时入侵预警</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-26T08:57:31+08:00">
+                2017-12-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-27T16:04:52+08:00">
+                2017-12-27
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webhack/" itemprop="url" rel="index">
+                    <span itemprop="name">webhack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  375
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># author by klion</span></span><br><span class="line"><span class="comment"># 2017.12.25</span></span><br><span class="line"><span class="comment"># Real-time monitoring of Web Directory script</span></span><br><span class="line"></span><br><span class="line">web_dir=<span class="string">"/usr/local/nginx/html/bwapp/bWAPP/"</span></span><br><span class="line">oldnum=`wc -l web_history_db.log | awk -F <span class="string">" "</span> <span class="string">'&#123;print $1&#125;'</span>`</span><br><span class="line">newnum=`find <span class="variable">$web_dir</span> -<span class="built_in">type</span> f | wc -l`</span><br><span class="line">md5num=`md5sum -c web_history_db.log | grep -i FAILED | wc -l`</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先对指定的站点目录创建指纹库</span></span><br><span class="line">[ ! -f web_history_db.log  ] &amp;&amp; &#123;</span><br><span class="line">    find <span class="variable">$web_dir</span> -<span class="built_in">type</span> f | xargs md5sum &gt; ./web_history_db.log</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 和新文件对比指纹,如果发现不对,就马上发信通知,并带上被改动的文件路径一起</span></span><br><span class="line">[ <span class="variable">$md5num</span> -ne 0 ] &amp;&amp; &#123;</span><br><span class="line">    md5sum -c web_history_db.log | grep -i <span class="string">"FAILED"</span> | awk -F <span class="string">":"</span> <span class="string">'&#123;print $1&#125;'</span> &gt; web_mod_`date +%Y-%m-%d-%H-%M-%S`.web.log</span><br><span class="line">    log_file=`ls -l *.web.log | head -n 1 | awk -F <span class="string">" "</span> <span class="string">'&#123;print $9&#125;'</span>`</span><br><span class="line">    mail -s <span class="string">"Your website may be hacked, Please check it as soon as possible"</span> klion@protonmail.com &lt; <span class="variable">$log_file</span>;sleep 5</span><br><span class="line">    rm -fr <span class="variable">$log_file</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对比文件个数,发现不对,同样是立马发信,因为有可能要同时监控很多个站点目录,所以就顺便把具体的站点路径也带上了</span></span><br><span class="line">[ <span class="variable">$oldnum</span> -ne <span class="variable">$newnum</span>  ] &amp;&amp; &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"website directory is <span class="variable">$web_dir</span>"</span> | mail -s <span class="string">"web directory have new file created "</span> klion@protonmail.com ;sleep 5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/modify-hacked.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/keepalived-nginx.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2064,201 +2257,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/phpsec.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/phpsec.html" itemprop="url">php-fpm.conf & php.ini 安全优化实践</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-24T04:09:17+08:00">
-                2017-11-24
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-24T21:07:40+08:00">
-                2017-12-24
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/phpsec/" itemprop="url" rel="index">
-                    <span itemprop="name">phpsec</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3,880
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  16
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>0x01 关于 php<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">其历史相对已经比较久远了,这里也就不废话了,属弱类型中一种解释型语言</span><br><span class="line">除了web开发以及写些简单的exp,暂未发现其它牛逼用途,暂以中小型web站点开发为主</span><br><span class="line">另外,低版本的php自身漏洞就比较多,建议,从现在开始就在新项目中使用php <span class="number">5.6</span><span class="selector-class">.x</span> 往后的版本</span><br><span class="line">好在官方维护的一直比较勤奋,主次版本都迭代的比较快,最新版已经到<span class="number">7.2</span>.<span class="number">0</span></span><br><span class="line">哼哼……是,<span class="string">'最好的语言'</span>... :)</span><br></pre></td></tr></table></figure></p>
-<p>0x02 此次演示环境<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8</span> <span class="selector-tag">x86_64</span>   最小化,带基础库安装 	<span class="selector-tag">eth0</span>: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.42</span> <span class="selector-tag">eth1</span>: 192<span class="selector-class">.168</span><span class="selector-class">.4</span><span class="selector-class">.14</span>  <span class="selector-tag">eth2</span>: 192<span class="selector-class">.168</span><span class="selector-class">.5</span><span class="selector-class">.14</span></span><br><span class="line"><span class="selector-tag">php-5</span><span class="selector-class">.6</span><span class="selector-class">.32</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span>  官方提供的源码包</span><br></pre></td></tr></table></figure></p>
-<p>0x03 下载 <code>php-5.6.32.tar.gz</code>,并安装好php所需的各种依赖库<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install epel-release -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install -y zlib-devel libxml2-devel freetype-devel </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install -y libjpeg-devel  libpng-devel gd-devel curl-devel libxslt-devel</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> yum install openssl openssl-devel libmcrypt libmcrypt-devel mcrypt mhash mhash-devel -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf libiconv-1.15.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> libiconv-1.15</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ./configure --prefix=/usr/<span class="built_in">local</span>/libiconv-1.15 &amp;&amp; make &amp;&amp; make install</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ln -s /usr/<span class="built_in">local</span>/libiconv-1.15/ /usr/<span class="built_in">local</span>/libiconv</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ll /usr/<span class="built_in">local</span>/libiconv/</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/phpsec.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2313,7 +2311,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-count">162</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2324,7 +2322,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">114</span>
+                  <span class="site-state-item-count">115</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2335,7 +2333,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-count">110</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2475,7 +2473,7 @@ show_date_time();
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -2483,7 +2481,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共309.1k字</span>
+  <span class="post-count">博客全站共310.0k字</span>
 </div>
 
   

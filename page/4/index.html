@@ -319,6 +319,201 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/termite.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/termite.html" itemprop="url">灵活击穿目标多级内网纵深 [ termite ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-03T04:09:17+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-05T20:07:29+08:00">
+                2017-12-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/termite/" itemprop="url" rel="index">
+                    <span itemprop="name">termite</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  914
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于termite <code>[ Earthworm的升级版 ]</code>,程序地址, <a href="http://rootkiter.com/Termite/" target="_blank" rel="noopener">http://rootkiter.com/Termite/</a><br><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一款极度小巧灵活的跳板机,有别于传统socks代理,它对于复杂内网环境下的渗透适用性更强,操作也极为简便</span><br><span class="line">废话不多说,大家可自行在实战中多多体会,工具本身其实并无好坏,大部分还在乎用工具的人,退一万步来讲,即使工具再好,也顶不住别人用的烂 ^<span class="keyword">_</span>^</span><br><span class="line">在此也非常感谢 rootkiter 的无私贡献,真心希望圈子能多一些这样少说话多做事的人 ^<span class="keyword">_</span>^</span><br></pre></td></tr></table></figure></p>
+<p>0x02 程序分为两部分,<code>admin[为控制端]</code>和<code>agent[为代理端节点]</code>,admin和agent所有选项用途均一致<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">l 指定本地socks端口,等待远程连</span></span><br><span class="line"><span class="ruby">-c 指定远程socks机器ip</span></span><br><span class="line"><span class="ruby">-p 指定远程socks机器端口</span></span><br></pre></td></tr></table></figure></p>
+<p>0x03 此次模拟环境如下:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">lnmp01</span>	  	假设为我们自己的<span class="selector-tag">vps</span> 	其公网<span class="selector-tag">ip</span>为: 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.30</span></span><br><span class="line"><span class="selector-tag">MidLAMP</span>	  	目标内网的<span class="selector-tag">linux</span>机器 	其内网<span class="selector-tag">ip</span>为: 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.192</span> </span><br><span class="line"><span class="selector-tag">win2008r2cn</span>	目标内网的<span class="selector-tag">win</span>机器 	其内网<span class="selector-tag">ip</span>为: 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.134</span></span><br><span class="line"><span class="selector-tag">win7cn</span>		入侵者本地内网机器	其内网<span class="selector-tag">ip</span>为: 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.168</span> <span class="selector-attr">[因为这里用虚拟机模拟的,所以内网段和目标一样]</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/termite.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/icmp-tunnel.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2058,199 +2253,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/inetd-backdoor.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/inetd-backdoor.html" itemprop="url">基于 inetd 后门的简要分析及利用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-23T12:21:14+08:00">
-                2017-10-23
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-06T09:14:24+08:00">
-                2017-12-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/inetd/" itemprop="url" rel="index">
-                    <span itemprop="name">inetd</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  878
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><br><br>0x01 理解<code>inetd</code>是干什么的<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">通俗来讲就是一个监听外部网络请求 [就是一个socket] 的系统守护进程,其实有很多比较古老的服务都是基于此守护进程的</span><br><span class="line">具体怎么工作的呢,其实非常简单,当inetd接收到一个外部请求后,它会根据这个请求到自己的配置文件中去找到实际处理它的程序</span><br><span class="line">然后再把接收到的这个socket交给那个程序去处理,问题恰巧也就出在这里</span><br><span class="line">如果来自外部的某个socket是要执行一个可交互的<span class="keyword">shell</span><span class="bash"> [比如,我们已经在目标系统的inetd配置文件中事先定义好],这岂不是就相当于一个简易的<span class="built_in">bind</span>型后门</span></span><br><span class="line"><span class="bash">另外,关于使用inet的好处就是,不用每个服务都再单独起个进程,这样可以有效降低系统资源消耗,你甚至也可以一定程度上把它理解成linux中的<span class="string">'svchost.exe'</span>进程</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/inetd-backdoor.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2305,7 +2307,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-count">162</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2316,7 +2318,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">114</span>
+                  <span class="site-state-item-count">115</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2327,7 +2329,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-count">110</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2467,7 +2469,7 @@ show_date_time();
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -2475,7 +2477,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共309.1k字</span>
+  <span class="post-count">博客全站共310.0k字</span>
 </div>
 
   
