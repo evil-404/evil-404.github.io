@@ -319,6 +319,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/modify-webshell.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/modify-webshell.html" itemprop="url">实时精准侦测站点目录中的各类 webshell</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-26T08:57:31+08:00">
+                2017-12-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T19:55:20+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webhack/" itemprop="url" rel="index">
+                    <span itemprop="name">webhack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  278
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># author by klion</span></span><br><span class="line"><span class="comment"># 2017.12.25</span></span><br><span class="line"><span class="comment"># Delete webshell auto </span></span><br><span class="line"></span><br><span class="line">webshell_log=<span class="string">"/var/log/webshell.log"</span></span><br><span class="line">upload_shell=<span class="string">"/var/log/modify.tmp"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只要一检测到有新事件发生就立马打包上传检测</span></span><br><span class="line">[ -s <span class="variable">$webshell_log</span> ] &amp;&amp;&#123;</span><br><span class="line">    awk -F <span class="string">" "</span> <span class="string">'&#123;print $3&#125;'</span> <span class="variable">$webshell_log</span> |grep -E <span class="string">".php$"</span>| sort -u &gt; <span class="variable">$upload_shell</span></span><br><span class="line">    cat <span class="variable">$upload_shell</span> |xargs zip ./maybeshell.zip</span><br><span class="line">    <span class="built_in">echo</span> `curl https://scanner.baidu.com/enqueue -F archive=@maybeshell.zip` | mail -s <span class="string">"webshell detect url api"</span> klion@protonmail.com </span><br><span class="line">    sleep 5</span><br><span class="line">    &gt; <span class="variable">$webshell_log</span> &amp;&amp; &gt; <span class="variable">$upload_shell</span> &amp;&amp; rm -fr ./maybeshell.zip</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/modify-webshell.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/modify-hacked.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2061,202 +2254,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/apache-sec.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/apache-sec.html" itemprop="url">如何将你的 apache 把控的'密不透风'</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-27T04:09:17+08:00">
-                2017-11-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-23T10:12:15+08:00">
-                2017-12-23
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/apachesec/" itemprop="url" rel="index">
-                    <span itemprop="name">apachesec</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3,623
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  16
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>0x01 为防止配置或端口冲突,在装之前,你需要先仔细检查当前系统有没有装apache,如果有<code>先把apache服务停掉,然后卸载apache</code>,等会儿用源码重新编译安装<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> rpm -qa httpd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rpm -e --nodeps * 强制卸载apache</span></span><br></pre></td></tr></table></figure></p>
-<p>演示环境<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CentOS6</span><span class="selector-class">.8</span> <span class="selector-tag">x86_64</span>    最小化,带基础库安装 <span class="selector-tag">eth0</span> : 192<span class="selector-class">.168</span><span class="selector-class">.3</span><span class="selector-class">.45</span> <span class="selector-tag">eth1</span> : 192<span class="selector-class">.168</span><span class="selector-class">.4</span><span class="selector-class">.16</span> <span class="selector-tag">eth2</span> : 192<span class="selector-class">.168</span><span class="selector-class">.5</span><span class="selector-class">.16</span></span><br><span class="line"><span class="selector-tag">httpd-2</span><span class="selector-class">.2</span><span class="selector-class">.34</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> <span class="selector-tag">apache</span>官方提供的源码包</span><br></pre></td></tr></table></figure></p>
-<p>0x02 下载apache源码包,这里暂时选择2.2.x系列的最新版,不建议再用比这个还老的版本了,漏洞比较多<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> wget http://apache.website-solution.net/httpd/httpd-2.2.34.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar xf httpd-2.2.34.tar.gz &amp;&amp; <span class="built_in">cd</span> httpd-2.2.34</span></span><br></pre></td></tr></table></figure></p>
-<p>0x03 直接到源码中去<code>改掉apache的详细版本信息</code>,跟部署nginx一样,尽可能地扰乱入侵者的判断,这里就把它模拟成IIS 7.5,实际系统应为win server 2008r2<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># vi <span class="meta-keyword">include</span>/ap_release.h</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/apache-sec.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2311,7 +2308,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">163</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2481,7 +2478,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共309.9k字</span>
+  <span class="post-count">博客全站共312.4k字</span>
 </div>
 
   

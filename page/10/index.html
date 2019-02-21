@@ -319,6 +319,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/nishang.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/nishang.html" itemprop="url">powershell 渗透框架[ nishang ]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-06T10:16:14+08:00">
+                2016-10-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-10-18T10:20:49+08:00">
+                2017-10-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/powershell/" itemprop="url" rel="index">
+                    <span itemprop="name">powershell</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,446
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  19
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><br><br>0x01 前言<br>&nbsp;&nbsp;&nbsp;&nbsp;注意,powershell只能针对win7以后的系统使用,此之前的win系统是没有引入powershell的,powershell是什么这里就不废话了,大家请自行谷歌,在使用各种powrshell脚本过程中,系统权限自然也是越高越好,权限越大你能在系统中操作的范围就越广,至于为什么要选择powershell,想必大家早已心知肚明,免杀,可直接跟系统api交互,容易定制,轻量,远程加载执行,对目标系统的影响极小……好处众多,这里就不多啰嗦了,说破天,我们最终的目的还是希望能在实际渗透中把它用起来,不然,实际价值何在呢</p>
+<p>0x02 关于nishang<br>&nbsp;&nbsp;&nbsp;&nbsp;今天我们就先来看看第一款powershell渗透框架<code>其实,个人觉得把它称为powershell渗透框架似乎更合适些</code>,<code>nishang</code> [想必现在早已家喻户晓],关于nishang中的各个ps脚本的选项用法,在其脚本代码的最前面都有详细说明,使用前请务必仔细阅读,因为系统默认是禁止执行ps脚本的,所以实际用的时候后面都会带上bypass选项<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set-ExecutionPolicy Unrestricted  如果你得到的是一个交互式的ps shell,也可以用该命令来放开脚本执行限制</span><br><span class="line"><span class="comment"># powershell –exec bypass –Command "Get-Host | Select-Object Version"  查看当前powershell版本,有些脚本只能在指定的powershell版本中执行</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/nishang.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/hidden-webshell.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2054,202 +2248,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/iptables-portfward.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/iptables-portfward.html" itemprop="url">通向彼岸 之内网代理转发 [ 系统篇 iptables ]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-19T23:57:38+08:00">
-                2016-09-19
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-11-10T10:06:38+08:00">
-                2017-11-10
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iptabbles/" itemprop="url" rel="index">
-                    <span itemprop="name">iptabbles</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  680
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><br><br>0x01 前言<br>&nbsp;&nbsp;&nbsp;&nbsp;作用和netsh差不多,这里就不废话了,直接看操作,还是同样的情况,只不过你此时拿下的是边界的一台linux服务器,依然想通过这台机器直接去访问内网的其它机器</p>
-<p>0x02 环境大致如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">边界linux机器(centos <span class="number">6.8</span>en) 		<span class="symbol">ip:</span><span class="number">192.168</span>.<span class="number">3.40</span>(假设为目标机器的公网ip) <span class="number">192.168</span>.<span class="number">32.129</span>(假设为目标的内网ip) </span><br><span class="line">要访问的内网windows机器(win <span class="number">2008</span>r2cn) 	<span class="symbol">ip:</span><span class="number">192.168</span>.<span class="number">32.134</span> </span><br><span class="line">攻击者机器(win7cn) 			<span class="symbol">ip:</span><span class="number">192.168</span>.<span class="number">3.251</span></span><br></pre></td></tr></table></figure></p>
-<p>0x03 最终目的<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过边界的linux机器访问内网中的windows机器上的指定服务</span><br></pre></td></tr></table></figure></p>
-<p>0x04 具体过程如下,首先,编辑边界linux机器的路由转发配置文件,开启其路由转发功能<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sed -i '/net.ipv4.ip_forward/ s/\(.*= \).*/\11/' /etc/sysctl.conf</span></span><br><span class="line"><span class="comment"># cat /etc/sysctl.conf | grep "net.ipv4.ip_forward"</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/iptables-portfward.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2304,7 +2302,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">163</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2474,7 +2472,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共309.9k字</span>
+  <span class="post-count">博客全站共312.4k字</span>
 </div>
 
   

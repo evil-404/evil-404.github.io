@@ -319,6 +319,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/Linux提权-依赖exp篇-（第二课）.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Linux提权-依赖exp篇-（第二课）.html" itemprop="url">Linux提权-依赖exp篇 （第二课）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-21T22:32:52+08:00">
+                2019-02-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-02-21T22:56:20+08:00">
+                2019-02-21
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Micropoor/" itemprop="url" rel="index">
+                    <span itemprop="name">Micropoor</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,432
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="exp注："><a href="#exp注：" class="headerlink" title="exp注："></a>exp注：</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">CVE<span class="number">-2017</span><span class="number">-1000367</span> [Sudo] (Sudo <span class="number">1.8</span><span class="number">.6</span>p7 - <span class="number">1.8</span><span class="number">.20</span>)</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-1000112</span> [a memory corruption due to UFO to non-UFO path switch]</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-7494</span> [Samba Remote execution] (Samba <span class="number">3.5</span><span class="number">.0</span><span class="number">-4.6</span><span class="number">.4</span>/<span class="number">4.5</span><span class="number">.10</span>/<span class="number">4.4</span><span class="number">.14</span>)</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-7308</span> [a signedness issue in AF_PACKET sockets] (Linux kernel through <span class="number">4.10</span><span class="number">.6</span>)</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-6074</span> [a double-free in DCCP protocol] (Linux kernel through <span class="number">4.9</span><span class="number">.11</span>)</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-5123</span> ['waitid()'] (Kernel <span class="number">4.14</span><span class="number">.0</span>-rc4+)</span><br><span class="line">CVE<span class="number">-2016</span><span class="number">-9793</span> [a signedness issue with SO_SNDBUFFORCE and SO_RCVBUFFORCE socket options]  (Linux kernel before <span class="number">4.8</span><span class="number">.14</span>)</span><br><span class="line">CVE<span class="number">-2016</span><span class="number">-5195</span> [Dirty cow] (Linux kernel&gt;<span class="number">2.6</span><span class="number">.22</span> (released in <span class="number">2007</span>))</span><br><span class="line">CVE<span class="number">-2016</span><span class="number">-2384</span> [a double-free in USB MIDI driver]  (Linux kernel before <span class="number">4.5</span>)</span><br><span class="line">CVE<span class="number">-2016</span><span class="number">-0728</span> [pp_key] (<span class="number">3.8</span><span class="number">.0</span>, <span class="number">3.8</span><span class="number">.1</span>, <span class="number">3.8</span><span class="number">.2</span>, <span class="number">3.8</span><span class="number">.3</span>, <span class="number">3.8</span><span class="number">.4</span>, <span class="number">3.8</span><span class="number">.5</span>, <span class="number">3.8</span><span class="number">.6</span>, <span class="number">3.8</span><span class="number">.7</span>, <span class="number">3.8</span><span class="number">.8</span>, <span class="number">3.8</span><span class="number">.9</span>, <span class="number">3.9</span>, <span class="number">3.10</span>, <span class="number">3.11</span>, <span class="number">3.12</span>, <span class="number">3.13</span>,<span class="number">3.4</span><span class="number">.0</span>, <span class="number">3.5</span><span class="number">.0</span>, <span class="number">3.6</span><span class="number">.0</span>, <span class="number">3.7</span><span class="number">.0</span>, <span class="number">3.8</span><span class="number">.0</span>, <span class="number">3.8</span><span class="number">.5</span>, <span class="number">3.8</span><span class="number">.6</span>, <span class="number">3.8</span><span class="number">.9</span>, <span class="number">3.9</span><span class="number">.0</span>, <span class="number">3.9</span><span class="number">.6</span>,<span class="number">3.10</span><span class="number">.0</span>, <span class="number">3.10</span><span class="number">.6</span>, <span class="number">3.11</span><span class="number">.0</span>, <span class="number">3.12</span><span class="number">.0</span>, <span class="number">3.13</span><span class="number">.0</span>, <span class="number">3.13</span><span class="number">.1</span>)</span><br><span class="line">CVE<span class="number">-2015</span><span class="number">-7547</span> [glibc getaddrinfo] (before Glibc <span class="number">2.9</span>)</span><br><span class="line">CVE<span class="number">-2015</span><span class="number">-1328</span> [overlayfs] (<span class="number">3.13</span>, <span class="number">3.16</span><span class="number">.0</span>, <span class="number">3.19</span><span class="number">.0</span>)</span><br><span class="line">CVE<span class="number">-2014</span><span class="number">-5284</span> [OSSEC] (<span class="number">2.8</span>)</span><br><span class="line">CVE<span class="number">-2014</span><span class="number">-4699</span> [ptrace] (before <span class="number">3.15</span><span class="number">.4</span>)</span><br><span class="line">CVE<span class="number">-2014</span><span class="number">-4014</span>  [Local Privilege Escalation] (before <span class="number">3.14</span><span class="number">.8</span>)</span><br><span class="line">CVE<span class="number">-2014</span><span class="number">-3153</span> [futex]  (<span class="number">3.3</span><span class="number">.5</span> ,<span class="number">3.3</span><span class="number">.4</span> ,<span class="number">3.3</span><span class="number">.2</span> ,<span class="number">3.2</span><span class="number">.13</span> ,<span class="number">3.2</span><span class="number">.9</span> ,<span class="number">3.2</span><span class="number">.1</span> ,<span class="number">3.1</span><span class="number">.8</span> ,<span class="number">3.0</span><span class="number">.5</span> ,<span class="number">3.0</span><span class="number">.4</span> ,<span class="number">3.0</span><span class="number">.2</span> ,<span class="number">3.0</span><span class="number">.1</span> ,<span class="number">2.6</span><span class="number">.39</span> ,<span class="number">2.6</span><span class="number">.38</span> ,<span class="number">2.6</span><span class="number">.37</span> ,<span class="number">2.6</span><span class="number">.35</span> ,<span class="number">2.6</span><span class="number">.34</span> ,<span class="number">2.6</span><span class="number">.33</span> ,<span class="number">2.6</span><span class="number">.32</span> ,<span class="number">2.6</span><span class="number">.9</span> ,<span class="number">2.6</span><span class="number">.8</span>,<span class="number">2.6</span><span class="number">.7</span> ,<span class="number">2.6</span><span class="number">.6</span> ,<span class="number">2.6</span><span class="number">.5</span> ,<span class="number">2.6</span><span class="number">.4</span> ,<span class="number">3.2</span><span class="number">.2</span> ,<span class="number">3.0</span><span class="number">.18</span> ,<span class="number">3.0</span> ,<span class="number">2.6</span><span class="number">.8</span><span class="number">.1</span>)</span><br><span class="line">CVE<span class="number">-2014</span><span class="number">-0196</span> [rawmodePTY] (<span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>, <span class="number">2.6</span><span class="number">.34</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.36</span>, <span class="number">2.6</span><span class="number">.37</span>, <span class="number">2.6</span><span class="number">.38</span>, <span class="number">2.6</span><span class="number">.39</span>, <span class="number">3.14</span>, <span class="number">3.15</span>)</span><br><span class="line">CVE<span class="number">-2014</span><span class="number">-0038</span> [timeoutpwn] (<span class="number">3.4</span>, <span class="number">3.5</span>, <span class="number">3.6</span>, <span class="number">3.7</span>, <span class="number">3.8</span>, <span class="number">3.8</span><span class="number">.9</span>, <span class="number">3.9</span>, <span class="number">3.10</span>, <span class="number">3.11</span>, <span class="number">3.12</span>, <span class="number">3.13</span>, <span class="number">3.4</span><span class="number">.0</span>, <span class="number">3.5</span><span class="number">.0</span>, <span class="number">3.6</span><span class="number">.0</span>, <span class="number">3.7</span><span class="number">.0</span>, <span class="number">3.8</span><span class="number">.0</span>, <span class="number">3.8</span><span class="number">.5</span>, <span class="number">3.8</span><span class="number">.6</span>, <span class="number">3.8</span><span class="number">.9</span>, <span class="number">3.9</span><span class="number">.0</span>, <span class="number">3.9</span><span class="number">.6</span>, <span class="number">3.10</span><span class="number">.0</span>, <span class="number">3.10</span><span class="number">.6</span>, <span class="number">3.11</span><span class="number">.0</span>, <span class="number">3.12</span><span class="number">.0</span>, <span class="number">3.13</span><span class="number">.0</span>, <span class="number">3.13</span><span class="number">.1</span>)</span><br><span class="line"> CVE<span class="number">-2013</span><span class="number">-2094</span> [perf_swevent] (<span class="number">3.0</span><span class="number">.0</span>, <span class="number">3.0</span><span class="number">.1</span>, <span class="number">3.0</span><span class="number">.2</span>, <span class="number">3.0</span><span class="number">.3</span>, <span class="number">3.0</span><span class="number">.4</span>, <span class="number">3.0</span><span class="number">.5</span>, <span class="number">3.0</span><span class="number">.6</span>, <span class="number">3.1</span><span class="number">.0</span>, <span class="number">3.2</span>, <span class="number">3.3</span>, <span class="number">3.4</span><span class="number">.0</span>, <span class="number">3.4</span><span class="number">.1</span>, <span class="number">3.4</span><span class="number">.2</span>, <span class="number">3.4</span><span class="number">.3</span>, <span class="number">3.4</span><span class="number">.4</span>,<span class="number">3.4</span><span class="number">.5</span>, <span class="number">3.4</span><span class="number">.6</span>, <span class="number">3.4</span><span class="number">.8</span>, <span class="number">3.4</span><span class="number">.9</span>, <span class="number">3.5</span>, <span class="number">3.6</span>, <span class="number">3.7</span>, <span class="number">3.8</span><span class="number">.0</span>, <span class="number">3.8</span><span class="number">.1</span>, <span class="number">3.8</span><span class="number">.2</span>, <span class="number">3.8</span><span class="number">.3</span>,<span class="number">3.8</span><span class="number">.4</span>, <span class="number">3.8</span><span class="number">.5</span>, <span class="number">3.8</span><span class="number">.6</span>, <span class="number">3.8</span><span class="number">.7</span>, <span class="number">3.8</span><span class="number">.8</span>, <span class="number">3.8</span><span class="number">.9</span>)</span><br><span class="line">CVE<span class="number">-2013</span><span class="number">-1858</span> [clown-newuser] (<span class="number">3.3</span><span class="number">-3.8</span>)</span><br><span class="line">CVE<span class="number">-2013</span><span class="number">-1763</span> [__sock_diag_rcv_msg] (before <span class="number">3.8</span><span class="number">.3</span>)</span><br><span class="line">CVE<span class="number">-2013</span><span class="number">-0268</span> [msr]  (<span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>,<span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>,<span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>, <span class="number">2.6</span><span class="number">.34</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.36</span>, <span class="number">2.6</span><span class="number">.37</span>,<span class="number">2.6</span><span class="number">.38</span>, <span class="number">2.6</span><span class="number">.39</span>, <span class="number">3.0</span><span class="number">.0</span>,<span class="number">3.0</span><span class="number">.1</span>, <span class="number">3.0</span><span class="number">.2</span>, <span class="number">3.0</span><span class="number">.3</span>, <span class="number">3.0</span><span class="number">.4</span>, <span class="number">3.0</span><span class="number">.5</span>, <span class="number">3.0</span><span class="number">.6</span>, <span class="number">3.1</span><span class="number">.0</span>, <span class="number">3.2</span>, <span class="number">3.3</span>, <span class="number">3.4</span>, <span class="number">3.5</span>, <span class="number">3.6</span>, <span class="number">3.7</span><span class="number">.0</span>, <span class="number">3.7</span><span class="number">.6</span>)</span><br><span class="line">CVE<span class="number">-2012</span><span class="number">-3524</span> [libdbus] (libdbus <span class="number">1.5</span>.x and earlier)</span><br><span class="line">CVE<span class="number">-2012</span><span class="number">-0056</span> [memodipper] (<span class="number">2.6</span><span class="number">.39</span>, <span class="number">3.0</span><span class="number">.0</span>, <span class="number">3.0</span><span class="number">.1</span>, <span class="number">3.0</span><span class="number">.2</span>, <span class="number">3.0</span><span class="number">.3</span>, <span class="number">3.0</span><span class="number">.4</span>, <span class="number">3.0</span><span class="number">.5</span>, <span class="number">3.0</span><span class="number">.6</span>, <span class="number">3.1</span><span class="number">.0</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-4347</span> [american-sign-language] ( <span class="number">2.6</span><span class="number">.0</span>, <span class="number">2.6</span><span class="number">.1</span>, <span class="number">2.6</span><span class="number">.2</span>, <span class="number">2.6</span><span class="number">.3</span>, <span class="number">2.6</span><span class="number">.4</span>, <span class="number">2.6</span><span class="number">.5</span>, <span class="number">2.6</span><span class="number">.6</span>, <span class="number">2.6</span><span class="number">.7</span>, <span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.9</span>,<span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>, <span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>,<span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>, <span class="number">2.6</span><span class="number">.34</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.36</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-4258</span> [full-nelson] (<span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.37</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-4073</span> [half_nelson] (<span class="number">2.6</span><span class="number">.0</span>, <span class="number">2.6</span><span class="number">.1</span>, <span class="number">2.6</span><span class="number">.2</span>, <span class="number">2.6</span><span class="number">.3</span>, <span class="number">2.6</span><span class="number">.4</span>, <span class="number">2.6</span><span class="number">.5</span>, <span class="number">2.6</span><span class="number">.6</span>, <span class="number">2.6</span><span class="number">.7</span>, <span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.9</span>,<span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>,<span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>,<span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>,<span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>,<span class="number">2.6</span><span class="number">.34</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.36</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-3904</span> [rds] (<span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>, <span class="number">2.6</span><span class="number">.34</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.36</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-3437</span> [pktcdvd] (<span class="number">2.6</span><span class="number">.0</span>, <span class="number">2.6</span><span class="number">.1</span>, <span class="number">2.6</span><span class="number">.2</span>, <span class="number">2.6</span><span class="number">.3</span>, <span class="number">2.6</span><span class="number">.4</span>, <span class="number">2.6</span><span class="number">.5</span>, <span class="number">2.6</span><span class="number">.6</span>, <span class="number">2.6</span><span class="number">.7</span>, <span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.9</span>,<span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>, <span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>,<span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>, <span class="number">2.6</span><span class="number">.34</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.36</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-3301</span> [ptrace_kmod2] (<span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>, <span class="number">2.6</span><span class="number">.34</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-3081</span> [video4linux] (<span class="number">2.6</span><span class="number">.0</span>, <span class="number">2.6</span><span class="number">.1</span>, <span class="number">2.6</span><span class="number">.2</span>, <span class="number">2.6</span><span class="number">.3</span>, <span class="number">2.6</span><span class="number">.4</span>, <span class="number">2.6</span><span class="number">.5</span>, <span class="number">2.6</span><span class="number">.6</span>, <span class="number">2.6</span><span class="number">.7</span>, <span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.9</span>, <span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>,<span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-2959</span> [can_bcm] (<span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>, <span class="number">2.6</span><span class="number">.34</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.36</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-1146</span> [reiserfs] (<span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>, <span class="number">2.6</span><span class="number">.32</span>, <span class="number">2.6</span><span class="number">.33</span>, <span class="number">2.6</span><span class="number">.34</span>)</span><br><span class="line">CVE<span class="number">-2010</span><span class="number">-0415</span> [do_pages_move] (<span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>)</span><br><span class="line">CVE<span class="number">-2009</span><span class="number">-3547</span> [pipe.c_32bit] (<span class="number">2.4</span><span class="number">.4</span>, <span class="number">2.4</span><span class="number">.5</span>, <span class="number">2.4</span><span class="number">.6</span>, <span class="number">2.4</span><span class="number">.7</span>, <span class="number">2.4</span><span class="number">.8</span>, <span class="number">2.4</span><span class="number">.9</span>, <span class="number">2.4</span><span class="number">.10</span>, <span class="number">2.4</span><span class="number">.11</span>, <span class="number">2.4</span><span class="number">.12</span>, <span class="number">2.4</span><span class="number">.13</span>,<span class="number">2.4</span><span class="number">.14</span>, <span class="number">2.4</span><span class="number">.15</span>, <span class="number">2.4</span><span class="number">.16</span>, <span class="number">2.4</span><span class="number">.17</span>, <span class="number">2.4</span><span class="number">.18</span>, <span class="number">2.4</span><span class="number">.19</span>, <span class="number">2.4</span><span class="number">.20</span>, <span class="number">2.4</span><span class="number">.21</span>, <span class="number">2.4</span><span class="number">.22</span>, <span class="number">2.4</span><span class="number">.23</span>, <span class="number">2.4</span><span class="number">.24</span>, <span class="number">2.4</span><span class="number">.25</span>,<span class="number">2.4</span><span class="number">.26</span>, <span class="number">2.4</span><span class="number">.27</span>, <span class="number">2.4</span><span class="number">.28</span>,<span class="number">2.4</span><span class="number">.29</span>, <span class="number">2.4</span><span class="number">.30</span>, <span class="number">2.4</span><span class="number">.31</span>, <span class="number">2.4</span><span class="number">.32</span>, <span class="number">2.4</span><span class="number">.33</span>, <span class="number">2.4</span><span class="number">.34</span>, <span class="number">2.4</span><span class="number">.35</span>, <span class="number">2.4</span><span class="number">.36</span>, <span class="number">2.4</span><span class="number">.37</span>,<span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>,<span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>,<span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>,<span class="number">2.6</span><span class="number">.30</span>, <span class="number">2.6</span><span class="number">.31</span>)</span><br><span class="line">CVE<span class="number">-2009</span><span class="number">-2698</span> [udp_sendmsg_32bit] (<span class="number">2.6</span><span class="number">.1</span>, <span class="number">2.6</span><span class="number">.2</span>, <span class="number">2.6</span><span class="number">.3</span>, <span class="number">2.6</span><span class="number">.4</span>, <span class="number">2.6</span><span class="number">.5</span>, <span class="number">2.6</span><span class="number">.6</span>, <span class="number">2.6</span><span class="number">.7</span>, <span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.9</span>, <span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>, <span class="number">2.6</span><span class="number">.13</span>,  <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>)</span><br><span class="line">CVE<span class="number">-2009</span><span class="number">-2692</span> [sock_sendpage] (<span class="number">2.4</span><span class="number">.4</span>, <span class="number">2.4</span><span class="number">.5</span>, <span class="number">2.4</span><span class="number">.6</span>, <span class="number">2.4</span><span class="number">.7</span>, <span class="number">2.4</span><span class="number">.8</span>, <span class="number">2.4</span><span class="number">.9</span>, <span class="number">2.4</span><span class="number">.10</span>, <span class="number">2.4</span><span class="number">.11</span>, <span class="number">2.4</span><span class="number">.12</span>, <span class="number">2.4</span><span class="number">.13</span>,<span class="number">2.4</span><span class="number">.14</span>, <span class="number">2.4</span><span class="number">.15</span>, <span class="number">2.4</span><span class="number">.16</span>,<span class="number">2.4</span><span class="number">.17</span>, <span class="number">2.4</span><span class="number">.18</span>, <span class="number">2.4</span><span class="number">.19</span>, <span class="number">2.4</span><span class="number">.20</span>, <span class="number">2.4</span><span class="number">.21</span>, <span class="number">2.4</span><span class="number">.22</span>, <span class="number">2.4</span><span class="number">.23</span>, <span class="number">2.4</span><span class="number">.24</span>, <span class="number">2.4</span><span class="number">.25</span>, <span class="number">2.4</span><span class="number">.26</span>, <span class="number">2.4</span><span class="number">.27</span>, <span class="number">2.4</span><span class="number">.28</span>,<span class="number">2.4</span><span class="number">.29</span>, <span class="number">2.4</span><span class="number">.30</span>, <span class="number">2.4</span><span class="number">.31</span>, <span class="number">2.4</span><span class="number">.32</span>, <span class="number">2.4</span><span class="number">.33</span>, <span class="number">2.4</span><span class="number">.34</span>, <span class="number">2.4</span><span class="number">.35</span>, <span class="number">2.4</span><span class="number">.36</span>, <span class="number">2.4</span><span class="number">.37</span>,<span class="number">2.6</span><span class="number">.0</span>, <span class="number">2.6</span><span class="number">.1</span>, <span class="number">2.6</span><span class="number">.2</span>, <span class="number">2.6</span><span class="number">.3</span>, <span class="number">2.6</span><span class="number">.4</span>, <span class="number">2.6</span><span class="number">.5</span>, <span class="number">2.6</span><span class="number">.6</span>, <span class="number">2.6</span><span class="number">.7</span>, <span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.9</span>, <span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>,<span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>)</span><br><span class="line">CVE<span class="number">-2009</span><span class="number">-2692</span> [sock_sendpage2] (<span class="number">2.4</span><span class="number">.4</span>, <span class="number">2.4</span><span class="number">.5</span>, <span class="number">2.4</span><span class="number">.6</span>, <span class="number">2.4</span><span class="number">.7</span>, <span class="number">2.4</span><span class="number">.8</span>, <span class="number">2.4</span><span class="number">.9</span>, <span class="number">2.4</span><span class="number">.10</span>, <span class="number">2.4</span><span class="number">.11</span>, <span class="number">2.4</span><span class="number">.12</span>, <span class="number">2.4</span><span class="number">.13</span>, <span class="number">2.4</span><span class="number">.14</span>, <span class="number">2.4</span><span class="number">.15</span>, <span class="number">2.4</span><span class="number">.16</span>, <span class="number">2.4</span><span class="number">.17</span>, <span class="number">2.4</span><span class="number">.18</span>, <span class="number">2.4</span><span class="number">.19</span>, <span class="number">2.4</span><span class="number">.20</span>, <span class="number">2.4</span><span class="number">.21</span>, <span class="number">2.4</span><span class="number">.22</span>, <span class="number">2.4</span><span class="number">.23</span>, <span class="number">2.4</span><span class="number">.24</span>, <span class="number">2.4</span><span class="number">.25</span>,<span class="number">2.4</span><span class="number">.26</span>, <span class="number">2.4</span><span class="number">.27</span>, <span class="number">2.4</span><span class="number">.28</span>,<span class="number">2.4</span><span class="number">.29</span>, <span class="number">2.4</span><span class="number">.30</span>, <span class="number">2.4</span><span class="number">.31</span>, <span class="number">2.4</span><span class="number">.32</span>, <span class="number">2.4</span><span class="number">.33</span>, <span class="number">2.4</span><span class="number">.34</span>, <span class="number">2.4</span><span class="number">.35</span>, <span class="number">2.4</span><span class="number">.36</span>, <span class="number">2.4</span><span class="number">.37</span>, <span class="number">2.6</span><span class="number">.0</span>, <span class="number">2.6</span><span class="number">.1</span>, <span class="number">2.6</span><span class="number">.2</span>,<span class="number">2.6</span><span class="number">.3</span>, <span class="number">2.6</span><span class="number">.4</span>, <span class="number">2.6</span><span class="number">.5</span>, <span class="number">2.6</span><span class="number">.6</span>, <span class="number">2.6</span><span class="number">.7</span>, <span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.9</span>, <span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>, <span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>,<span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>,<span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>, <span class="number">2.6</span><span class="number">.30</span>)</span><br><span class="line">CVE<span class="number">-2009</span><span class="number">-1337</span> [exit_notify] (<span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>)</span><br><span class="line">CVE<span class="number">-2009</span><span class="number">-1185</span> [udev] (<span class="number">2.6</span><span class="number">.25</span>, <span class="number">2.6</span><span class="number">.26</span>, <span class="number">2.6</span><span class="number">.27</span>, <span class="number">2.6</span><span class="number">.28</span>, <span class="number">2.6</span><span class="number">.29</span>)</span><br><span class="line">CVE<span class="number">-2008</span><span class="number">-4210</span> [ftrex] (<span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>, <span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>,<span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>)</span><br><span class="line">CVE<span class="number">-2008</span><span class="number">-0600</span> [vmsplice2] (<span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>)</span><br><span class="line">CVE<span class="number">-2008</span><span class="number">-0600</span> [vmsplice1] (<span class="number">2.6</span><span class="number">.17</span>, <span class="number">2.6</span><span class="number">.18</span>, <span class="number">2.6</span><span class="number">.19</span>, <span class="number">2.6</span><span class="number">.20</span>, <span class="number">2.6</span><span class="number">.21</span>, <span class="number">2.6</span><span class="number">.22</span>, <span class="number">2.6</span><span class="number">.23</span>, <span class="number">2.6</span><span class="number">.24</span>, <span class="number">2.6</span><span class="number">.24</span><span class="number">.1</span>)</span><br><span class="line">CVE<span class="number">-2006</span><span class="number">-3626</span> [h00lyshit] (<span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>, <span class="number">2.6</span><span class="number">.12</span>, <span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>)</span><br><span class="line">CVE<span class="number">-2006</span><span class="number">-2451</span> [raptor_prctl] (<span class="number">2.6</span><span class="number">.13</span>, <span class="number">2.6</span><span class="number">.14</span>, <span class="number">2.6</span><span class="number">.15</span>, <span class="number">2.6</span><span class="number">.16</span>, <span class="number">2.6</span><span class="number">.17</span>)</span><br><span class="line">CVE<span class="number">-2005</span><span class="number">-0736</span> [krad3] (<span class="number">2.6</span><span class="number">.5</span>, <span class="number">2.6</span><span class="number">.7</span>, <span class="number">2.6</span><span class="number">.8</span>, <span class="number">2.6</span><span class="number">.9</span>, <span class="number">2.6</span><span class="number">.10</span>, <span class="number">2.6</span><span class="number">.11</span>)</span><br><span class="line">CVE<span class="number">-2005</span><span class="number">-1263</span> [binfmt_elf.c] (Linux kernel <span class="number">2.</span>x.x to <span class="number">2.2</span><span class="number">.27</span>-rc2, <span class="number">2.4</span>.x to <span class="number">2.4</span><span class="number">.31</span>-pre1, and <span class="number">2.6</span>.x to <span class="number">2.6</span><span class="number">.12</span>-rc4)</span><br><span class="line">CVE<span class="number">-2004</span><span class="number">-1235</span> [elflbl] (<span class="number">2.4</span><span class="number">.29</span>)</span><br><span class="line">CVE-N/A [caps_to_root]  (<span class="number">2.6</span><span class="number">.34</span>, <span class="number">2.6</span><span class="number">.35</span>, <span class="number">2.6</span><span class="number">.36</span>)</span><br><span class="line">CVE<span class="number">-2004</span><span class="number">-0077</span> [mremap_pte] (<span class="number">2.4</span><span class="number">.20</span>, <span class="number">2.2</span><span class="number">.24</span>, <span class="number">2.4</span><span class="number">.25</span>, <span class="number">2.4</span><span class="number">.26</span>, <span class="number">2.4</span><span class="number">.27</span>)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Linux提权-依赖exp篇-（第二课）.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/windows提权-快速查找exp-第一课.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -366,8 +559,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-02-20T01:21:39+08:00">
-                2019-02-20
+              <time title="更新于" itemprop="dateModified" datetime="2019-02-21T22:37:18+08:00">
+                2019-02-21
               </time>
             
           </span>
@@ -815,7 +1008,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,644
+                  1,690
                 </span>
               
 
@@ -831,7 +1024,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  10
+                  11
                 </span>
               
             </div>
@@ -1008,7 +1201,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  9,482
+                  9,498
                 </span>
               
 
@@ -1381,7 +1574,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,072
+                  3,095
                 </span>
               
 
@@ -1423,6 +1616,199 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/after-roding.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/cobalt-strike-spawn.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/cobalt-strike-spawn.html" itemprop="url">灵活使用 cobalt strike 的 `spawn` 功能</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-29T04:09:17+08:00">
+                2017-12-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T19:34:30+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spawn/" itemprop="url" rel="index">
+                    <span itemprop="name">spawn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,053
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 beacon 强大的派生功能<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">简单理解,所谓的`派生`,即仅仅通过一个beacon shell就可以再孵化出n个shell,shell与shell之间相当于以一种级联的形式存在的</span><br><span class="line">而团队服务器则位于这些节点的根节点位置,连接这些节点的则是`beacon隧道`自己,此功能可有效提高一个渗透团队成员间的协同作战能力,快速共享渗透资源</span><br><span class="line">当然,这也势必会在后期形成一个非常复杂的`渗透网络`,不过这也正好方便大家同时多点切入,说白点儿,其实就类似于一个大型的分布式入侵系统</span><br><span class="line">而这一切的根本保证就是我们在公网中的各个团队服务器节点,只要团队服务器节点不挂,权限就不太容易丢,除非活不干净,被人主动发现了</span><br><span class="line">因为其内部涉及到的细节还非常深,也绝不是一两句话就能说清楚的,但作为使用者,我们只需理解其大致的工作流程即可</span><br><span class="line">如果你自己真的有非常强的 RAT &amp; 逆向 &amp; 协议分析 能力,可以再继续深入研究,始终认为,cobalt strike 确实是一个非常值得深入学习的优秀样本</span><br><span class="line">如果能真正把它搞通透了,基础协议这一块对你来讲,基本就不再有盲区,废话不多说,我们还是在实战中多多体会吧...</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/cobalt-strike-spawn.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1668,199 +2054,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/cobalt-strike-spawn.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/cobalt-strike-spawn.html" itemprop="url">灵活使用 cobalt strike 的 `spawn` 功能</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-29T04:09:17+08:00">
-                2017-12-29
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T19:34:30+08:00">
-                2017-12-30
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spawn/" itemprop="url" rel="index">
-                    <span itemprop="name">spawn</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,053
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>0x01 关于 beacon 强大的派生功能<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">简单理解,所谓的`派生`,即仅仅通过一个beacon shell就可以再孵化出n个shell,shell与shell之间相当于以一种级联的形式存在的</span><br><span class="line">而团队服务器则位于这些节点的根节点位置,连接这些节点的则是`beacon隧道`自己,此功能可有效提高一个渗透团队成员间的协同作战能力,快速共享渗透资源</span><br><span class="line">当然,这也势必会在后期形成一个非常复杂的`渗透网络`,不过这也正好方便大家同时多点切入,说白点儿,其实就类似于一个大型的分布式入侵系统</span><br><span class="line">而这一切的根本保证就是我们在公网中的各个团队服务器节点,只要团队服务器节点不挂,权限就不太容易丢,除非活不干净,被人主动发现了</span><br><span class="line">因为其内部涉及到的细节还非常深,也绝不是一两句话就能说清楚的,但作为使用者,我们只需理解其大致的工作流程即可</span><br><span class="line">如果你自己真的有非常强的 RAT &amp; 逆向 &amp; 协议分析 能力,可以再继续深入研究,始终认为,cobalt strike 确实是一个非常值得深入学习的优秀样本</span><br><span class="line">如果能真正把它搞通透了,基础协议这一块对你来讲,基本就不再有盲区,废话不多说,我们还是在实战中多多体会吧...</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/cobalt-strike-spawn.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/powershell-pic-execute.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2043,199 +2236,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/modify-webshell.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/modify-webshell.html" itemprop="url">实时精准侦测站点目录中的各类 webshell</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-26T08:57:31+08:00">
-                2017-12-26
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T19:55:20+08:00">
-                2017-12-30
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/webhack/" itemprop="url" rel="index">
-                    <span itemprop="name">webhack</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  278
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># author by klion</span></span><br><span class="line"><span class="comment"># 2017.12.25</span></span><br><span class="line"><span class="comment"># Delete webshell auto </span></span><br><span class="line"></span><br><span class="line">webshell_log=<span class="string">"/var/log/webshell.log"</span></span><br><span class="line">upload_shell=<span class="string">"/var/log/modify.tmp"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只要一检测到有新事件发生就立马打包上传检测</span></span><br><span class="line">[ -s <span class="variable">$webshell_log</span> ] &amp;&amp;&#123;</span><br><span class="line">    awk -F <span class="string">" "</span> <span class="string">'&#123;print $3&#125;'</span> <span class="variable">$webshell_log</span> |grep -E <span class="string">".php$"</span>| sort -u &gt; <span class="variable">$upload_shell</span></span><br><span class="line">    cat <span class="variable">$upload_shell</span> |xargs zip ./maybeshell.zip</span><br><span class="line">    <span class="built_in">echo</span> `curl https://scanner.baidu.com/enqueue -F archive=@maybeshell.zip` | mail -s <span class="string">"webshell detect url api"</span> klion@protonmail.com </span><br><span class="line">    sleep 5</span><br><span class="line">    &gt; <span class="variable">$webshell_log</span> &amp;&amp; &gt; <span class="variable">$upload_shell</span> &amp;&amp; rm -fr ./maybeshell.zip</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/modify-webshell.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2290,7 +2290,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-count">163</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2460,7 +2460,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共309.9k字</span>
+  <span class="post-count">博客全站共312.4k字</span>
 </div>
 
   
