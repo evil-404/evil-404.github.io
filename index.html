@@ -366,7 +366,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-02-20T00:57:29+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-02-20T01:21:39+08:00">
                 2019-02-20
               </time>
             
@@ -419,7 +419,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  746
+                  787
                 </span>
               
 
@@ -457,25 +457,22 @@
 
       
         
-          
-            <blockquote>
+          <blockquote>
 <p>专注APT攻击与防御</p>
 <p><a href="https://micropoor.blogspot.com/" target="_blank" rel="noopener">https://micropoor.blogspot.com/</a></p>
 </blockquote>
-<p>微软官方时刻关注列表网址:</p>
-<p><a href="https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx" target="_blank" rel="noopener">https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx</a></p>
+<h4 id="微软官方时刻关注列表网址"><a href="#微软官方时刻关注列表网址" class="headerlink" title="微软官方时刻关注列表网址:"></a>微软官方时刻关注列表网址:</h4><p><a href="https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx" target="_blank" rel="noopener">https://technet.microsoft.com/zh-cn/library/security/dn639106.aspx</a></p>
 <p><img src="/img/1550595114660.png" alt="1550595114660"></p>
 <blockquote>
-<p>比如常用的几个已公布的exp：KB2592799，KB3000061，KB2592799等。<br>快速查找未打补丁的exp，可以最安全的减少目标机的未知错误，以免影响业务。<br>命令行下执行检测未打补丁的命令如下：<br>systeminfo&gt;micropoor.txt&amp;(for %i in ( KB977165 KB2160329 KB2503665 KB2592799<br>KB2707511 KB2829361 KB2850851 KB3000061 KB3045171 KB3077657 KB3079904<br>KB3134228 KB3143141 KB3141780 ) do @type micropoor.txt|@find /i “%i”|| @echo<br>%i you can fuck)&amp;del /f /q /a micropoor.txt</p>
+<p>比如常用的几个已公布的exp：KB2592799，KB3000061，KB2592799等。<br>快速查找未打补丁的exp，可以最安全的减少目标机的未知错误，以免影响业务。</p>
 </blockquote>
-<p><strong><strong>一般实战中在类似 tmp目录等可写目录下执行：如C:\tmp&gt;<br>以11-080为例</strong></strong></p>
-<p><img src="/img/1550595352246.png" alt="1550595352246"></p>
-<p><img src="/img/1550595359280.png" alt="1550595359280"></p>
-<p><img src="/img/1550595368915.png" alt="1550595368915"></p>
-<h4 id="exp注："><a href="#exp注：" class="headerlink" title="exp注："></a>exp注：</h4><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">MS17<span class="number">-017</span> [KB4013081] [GDI Palette Objects Local Privilege Escalation]</span><br><span class="line">(windows <span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-8464</span> [LNK Remote Code Execution Vulnerability] (windows</span><br><span class="line"><span class="number">10</span>/<span class="number">8.1</span>/<span class="number">7</span>/<span class="number">2016</span>/<span class="number">2010</span>/<span class="number">2008</span>)</span><br><span class="line">CVE<span class="number">-2017</span><span class="number">-0213</span> [Windows COM Elevation of Privilege Vulnerability] (windows</span><br><span class="line"><span class="number">10</span>/<span class="number">8.1</span>/<span class="number">7</span>/<span class="number">2016</span>/<span class="number">2010</span>/<span class="number">2008</span>)</span><br><span class="line">MS17<span class="number">-010</span> [KB4013389] [Windows Kernel Mode Drivers] (windows</span><br><span class="line"><span class="number">7</span>/<span class="number">2008</span>/<span class="number">2003</span>/XP)</span><br><span class="line">MS16<span class="number">-135</span> [KB3199135] [Windows Kernel Mode Drivers] (<span class="number">2016</span>)</span><br><span class="line">MS16<span class="number">-111</span> [KB3186973] [kernel api] (Windows <span class="number">10</span> <span class="number">10586</span> (<span class="number">32</span>/<span class="number">64</span>)/<span class="number">8.1</span>)</span><br><span class="line">MS16<span class="number">-098</span> [KB3178466] [Kernel Driver] (Win <span class="number">8.1</span>)</span><br><span class="line">MS16<span class="number">-075</span> [KB3164038] [Hot Potato] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">2012</span>)</span><br><span class="line">MS16<span class="number">-034</span> [KB3143145] [Kernel Driver] (<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">10</span>/<span class="number">2012</span>)</span><br><span class="line">MS16<span class="number">-032</span> [KB3143141] [Secondary Logon Handle] (<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">10</span>/<span class="number">2012</span>)</span><br><span class="line">MS16<span class="number">-016</span> [KB3136041] [WebDAV] (<span class="number">2008</span>/Vista/<span class="number">7</span>)</span><br><span class="line">MS15<span class="number">-097</span> [KB3089656] [remote code execution] (win8<span class="number">.1</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-076</span> [KB3067505] [RPC] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-077</span> [KB3077657] [ATM] (XP/Vista/Win7/Win8/<span class="number">2000</span>/<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-061</span> [KB3057839] [Kernel Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-051</span> [KB3057191] [Windows Kernel Mode Drivers]</span><br><span class="line">(<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>/<span class="number">2012</span>)</span><br><span class="line">MS15<span class="number">-010</span> [KB3036220] [Kernel Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS15<span class="number">-015</span> [KB3031432] [Kernel Driver] (Win7/<span class="number">8</span>/<span class="number">8.1</span>/<span class="number">2012</span>/RT/<span class="number">2012</span> R2/<span class="number">2008</span></span><br><span class="line">R2)</span><br><span class="line">MS15<span class="number">-001</span> [KB3023266] [Kernel Driver] (<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS14<span class="number">-070</span> [KB2989935] [Kernel Driver] (<span class="number">2003</span>)</span><br><span class="line">MS14<span class="number">-068</span> [KB3011780] [Domain Privilege Escalation] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS14<span class="number">-058</span> [KB3000061] [Win32k.sys] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS14<span class="number">-040</span> [KB2975684] [AFD Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>/<span class="number">8</span>)</span><br><span class="line">MS14<span class="number">-002</span> [KB2914368] [NDProxy] (<span class="number">2003</span>/XP)</span><br><span class="line">MS13<span class="number">-053</span> [KB2850851] [win32k.sys] (XP/Vista/<span class="number">2003</span>/<span class="number">2008</span>/win <span class="number">7</span>)</span><br><span class="line">MS13<span class="number">-046</span> [KB2840221] [dxgkrnl.sys] (Vista/<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/<span class="number">7</span>)</span><br><span class="line">MS13<span class="number">-005</span> [KB2778930] [Kernel Mode Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">2012</span>/win7/<span class="number">8</span>)</span><br><span class="line">MS12<span class="number">-042</span> [KB2972621] [Service Bus] (<span class="number">2008</span>/<span class="number">2012</span>/win7)</span><br><span class="line">MS12<span class="number">-020</span> [KB2671387] [RDP] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/XP)</span><br><span class="line">MS11<span class="number">-080</span> [KB2592799] [AFD.sys] (<span class="number">2003</span>/XP)</span><br><span class="line">MS11<span class="number">-062</span> [KB2566454] [NDISTAPI] (<span class="number">2003</span>/XP)</span><br><span class="line">MS11<span class="number">-046</span> [KB2503665] [AFD.sys] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/XP)</span><br><span class="line">MS11<span class="number">-011</span> [KB2393802] [kernel Driver] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/XP/Vista)</span><br><span class="line">MS10<span class="number">-092</span> [KB2305420] [Task Scheduler] (<span class="number">2008</span>/<span class="number">7</span>)</span><br><span class="line">MS10<span class="number">-065</span> [KB2267960] [FastCGI] (IIS <span class="number">5.1</span>, <span class="number">6.0</span>, <span class="number">7.0</span>, and <span class="number">7.5</span>)</span><br><span class="line">MS10<span class="number">-059</span> [KB982799] [ACL-Churraskito] (<span class="number">2008</span>/<span class="number">7</span>/Vista)</span><br><span class="line">MS10<span class="number">-048</span> [KB2160329] [win32k.sys] (XP SP2 &amp; SP3/<span class="number">2003</span> SP2/Vista SP1 &amp;</span><br><span class="line">SP2/<span class="number">2008</span> Gold &amp; SP2 &amp; R2/Win7)</span><br><span class="line">MS10<span class="number">-015</span> [KB977165] [KiTrap0D] (<span class="number">2003</span>/<span class="number">2008</span>/<span class="number">7</span>/XP)</span><br><span class="line">MS10<span class="number">-012</span> [KB971468] [SMB Client Trans2 stack overflow] (Windows</span><br><span class="line"><span class="number">7</span>/<span class="number">2008</span>R2)</span><br><span class="line">MS09<span class="number">-050</span> [KB975517] [Remote Code Execution] (<span class="number">2008</span>/Vista)</span><br><span class="line">MS09<span class="number">-020</span> [KB970483] [IIS <span class="number">6.0</span>] (IIS <span class="number">5.1</span> and <span class="number">6.0</span>)</span><br><span class="line">MS09<span class="number">-012</span> [KB959454] [Chimichurri] (Vista/win7/<span class="number">2008</span>/Vista)</span><br><span class="line">MS08<span class="number">-068</span> [KB957097] [Remote Code Execution] (<span class="number">2000</span>/XP)</span><br><span class="line">MS08<span class="number">-067</span> [KB958644] [Remote Code Execution] (Windows <span class="number">2000</span>/XP/Server</span><br><span class="line"><span class="number">2003</span>/Vista/Server <span class="number">2008</span>)</span><br><span class="line">MS08<span class="number">-066</span> [] [] (Windows <span class="number">2000</span>/XP/Server <span class="number">2003</span>)</span><br><span class="line">MS08<span class="number">-025</span> [KB941693] [Win32.sys] (XP/<span class="number">2003</span>/<span class="number">2008</span>/Vista)</span><br><span class="line">MS06<span class="number">-040</span> [KB921883] [Remote Code Execution] (<span class="number">2003</span>/xp/<span class="number">2000</span>)</span><br><span class="line">MS05<span class="number">-039</span> [KB899588] [PnP Service] (Win <span class="number">9</span>X/ME/NT/<span class="number">2000</span>/XP/<span class="number">2003</span>)</span><br><span class="line">MS03<span class="number">-026</span> [KB823980] [Buffer Overrun In RPC Interface]</span><br><span class="line">(/NT/<span class="number">2000</span>/XP/<span class="number">2003</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="已对外公开exp注："><a href="#已对外公开exp注：" class="headerlink" title="已对外公开exp注："></a>已对外公开exp注：</h4><p><a href="https://github.com/SecWiki/windows-kernel-exploits" target="_blank" rel="noopener">https://github.com/SecWiki/windows-kernel-exploits</a><br><a href="https://github.com/WindowsExploits/Exploits" target="_blank" rel="noopener">https://github.com/WindowsExploits/Exploits</a><br><a href="https://github.com/AusJock/Privilege-Escalation" target="_blank" rel="noopener">https://github.com/AusJock/Privilege-Escalation</a></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/windows提权-快速查找exp-第一课.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -818,7 +815,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,584
+                  1,644
                 </span>
               
 
@@ -1011,7 +1008,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  9,746
+                  9,482
                 </span>
               
 
@@ -1027,7 +1024,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  61
+                  59
                 </span>
               
             </div>
@@ -1384,7 +1381,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,049
+                  3,072
                 </span>
               
 
@@ -1426,199 +1423,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/after-roding.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/cobalt-strike-spawn.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="VK">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Evil-404">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/cobalt-strike-spawn.html" itemprop="url">灵活使用 cobalt strike 的 `spawn` 功能</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-29T04:09:17+08:00">
-                2017-12-29
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T19:34:30+08:00">
-                2017-12-30
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spawn/" itemprop="url" rel="index">
-                    <span itemprop="name">spawn</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,053
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>0x01 关于 beacon 强大的派生功能<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">简单理解,所谓的`派生`,即仅仅通过一个beacon shell就可以再孵化出n个shell,shell与shell之间相当于以一种级联的形式存在的</span><br><span class="line">而团队服务器则位于这些节点的根节点位置,连接这些节点的则是`beacon隧道`自己,此功能可有效提高一个渗透团队成员间的协同作战能力,快速共享渗透资源</span><br><span class="line">当然,这也势必会在后期形成一个非常复杂的`渗透网络`,不过这也正好方便大家同时多点切入,说白点儿,其实就类似于一个大型的分布式入侵系统</span><br><span class="line">而这一切的根本保证就是我们在公网中的各个团队服务器节点,只要团队服务器节点不挂,权限就不太容易丢,除非活不干净,被人主动发现了</span><br><span class="line">因为其内部涉及到的细节还非常深,也绝不是一两句话就能说清楚的,但作为使用者,我们只需理解其大致的工作流程即可</span><br><span class="line">如果你自己真的有非常强的 RAT &amp; 逆向 &amp; 协议分析 能力,可以再继续深入研究,始终认为,cobalt strike 确实是一个非常值得深入学习的优秀样本</span><br><span class="line">如果能真正把它搞通透了,基础协议这一块对你来讲,基本就不再有盲区,废话不多说,我们还是在实战中多多体会吧...</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/cobalt-strike-spawn.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1813,6 +1617,199 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/cobalt-strike-dns.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://evil-404.github.io/cobalt-strike-spawn.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VK">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/baeae4e0ly1fsu7yzju7lj20af0a0wej.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Evil-404">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/cobalt-strike-spawn.html" itemprop="url">灵活使用 cobalt strike 的 `spawn` 功能</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-29T04:09:17+08:00">
+                2017-12-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-12-30T19:34:30+08:00">
+                2017-12-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spawn/" itemprop="url" rel="index">
+                    <span itemprop="name">spawn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,053
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>0x01 关于 beacon 强大的派生功能<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">简单理解,所谓的`派生`,即仅仅通过一个beacon shell就可以再孵化出n个shell,shell与shell之间相当于以一种级联的形式存在的</span><br><span class="line">而团队服务器则位于这些节点的根节点位置,连接这些节点的则是`beacon隧道`自己,此功能可有效提高一个渗透团队成员间的协同作战能力,快速共享渗透资源</span><br><span class="line">当然,这也势必会在后期形成一个非常复杂的`渗透网络`,不过这也正好方便大家同时多点切入,说白点儿,其实就类似于一个大型的分布式入侵系统</span><br><span class="line">而这一切的根本保证就是我们在公网中的各个团队服务器节点,只要团队服务器节点不挂,权限就不太容易丢,除非活不干净,被人主动发现了</span><br><span class="line">因为其内部涉及到的细节还非常深,也绝不是一两句话就能说清楚的,但作为使用者,我们只需理解其大致的工作流程即可</span><br><span class="line">如果你自己真的有非常强的 RAT &amp; 逆向 &amp; 协议分析 能力,可以再继续深入研究,始终认为,cobalt strike 确实是一个非常值得深入学习的优秀样本</span><br><span class="line">如果能真正把它搞通透了,基础协议这一块对你来讲,基本就不再有盲区,废话不多说,我们还是在实战中多多体会吧...</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/cobalt-strike-spawn.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2463,7 +2460,7 @@ show_date_time();
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共310.0k字</span>
+  <span class="post-count">博客全站共309.9k字</span>
 </div>
 
   
